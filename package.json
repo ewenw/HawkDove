@@ -1,0 +1,8 @@
+{
+    "name": "hawkdove",
+    "version": "0.0.1",
+    "description": "This is a nodeGame game based on dictator",
+    "author": "Ewen <wang.yuxu@husky.neu.edu>",
+    "license": "MIT/X11",
+    "homepage": "http://nodegame.org"
+}
