@@ -68,10 +68,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             var root = document.body;
             var widgetsDiv = W.gid('widgets');
             var w = node.widgets;
-            var survey = node.widgets.append('ChoiceManager', widgetsDiv, {
+            this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
                 id: 'survey',
                 title: false,
-                shuffleForms: true,
                 forms: [
                     w.get('ChoiceTable', {
                         id: 'age',
@@ -89,7 +88,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [
                             'Male', 'Female', 'Other', 'Do not want to say'
                         ],
-                        shuffleChoices: true,
                         title: false,
                         requiredChoice: true
                     }),
@@ -99,6 +97,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [
                             'No high school', 'High school/GED', 'Some college', 'College graduate', 'Higher'
                         ],
+                        title: false,
+                        requiredChoice: true
                     }),
                     w.get('ChoiceTable', {
                         id: 'location',
@@ -106,7 +106,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         choices: [
                             'US', 'India', 'Other', 'Do not want to say'
                         ],
-                        shuffleChoices: true,
                         title: false,
                         requiredChoice: true
                     })
