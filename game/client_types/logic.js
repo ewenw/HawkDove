@@ -30,13 +30,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Initialize the client.
     });
 
-    stager.extendStep('instructions', {
-        cb: function() {
-            console.log('Instructions.');
-        }
-    });
+    
 
-    stager.extendStep('game', {
+    /*stager.extendStep('game', {
         matcher: {
             roles: [ 'DICTATOR', 'OBSERVER' ],
             match: 'round_robin',
@@ -73,11 +69,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.memory.save(channel.getGameDir() + 'data/data_' +
                                   node.nodename + '.json');
         }
-    });
+    });*/
 
     stager.setOnGameOver(function() {
 
-        // Something to do.
+         console.log("Moving player to waiting room");
 
     });
 

@@ -12,8 +12,6 @@ var constants = ngc.constants;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    // Must implement the stages here.
-
-    // ...
+    
 
 };

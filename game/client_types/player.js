@@ -47,18 +47,86 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', header);
         this.visualTimer = node.widgets.append('VisualTimer', header);
-
         this.doneButton = node.widgets.append('DoneButton', header);
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
     });
 
+    stager.extendStep('welcome', {
+        frame: 'welcome.htm'
+    });
+
     stager.extendStep('instructions', {
         frame: 'instructions.htm'
     });
 
-    stager.extendStep('game', {
+    stager.extendStep('survey', 
+    {
+        frame: 'survey.htm',
+        cb: function(){
+            var root = document.body;
+            var widgetsDiv = W.gid('widgets');
+            var w = node.widgets;
+            var survey = node.widgets.append('ChoiceManager', widgetsDiv, {
+                id: 'survey',
+                title: false,
+                shuffleForms: true,
+                forms: [
+                    w.get('ChoiceTable', {
+                        id: 'age',
+                        mainText: 'What is your age group?',
+                        choices: [
+                            '18-20', '21-30', '31-40', '41-50',
+                            '51-60', '61-70', '71+', 'Do not want to say'
+                        ],
+                        title: false,
+                        requiredChoice: true
+                    }),
+                    w.get('ChoiceTable', {
+                        id: 'gender',
+                        mainText: 'What is your gender?',
+                        choices: [
+                            'Male', 'Female', 'Other', 'Do not want to say'
+                        ],
+                        shuffleChoices: true,
+                        title: false,
+                        requiredChoice: true
+                    }),
+                    w.get('ChoiceTable', {
+                        id: 'education',
+                        mainText: 'What is your highest level of education?',
+                        choices: [
+                            'No high school', 'High school/GED', 'Some college', 'College graduate', 'Higher'
+                        ],
+                    }),
+                    w.get('ChoiceTable', {
+                        id: 'location',
+                        mainText: 'What is your location?',
+                        choices: [
+                            'US', 'India', 'Other', 'Do not want to say'
+                        ],
+                        shuffleChoices: true,
+                        title: false,
+                        requiredChoice: true
+                    })
+                ]
+            });
+
+            
+        },
+        done: function() {
+            var answers;
+            answers = this.survey.getValues({
+                markAttempt: true,
+                highlight: true
+            });
+            if (!answers.isCorrect) return false;
+            return answers;
+        }
+    });
+
+    /*stager.extendStep('game', {
         donebutton: false,
         frame: 'game.htm',
         roles: {
@@ -125,7 +193,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.visualTimer.setToZero();
         }
     });
-
+*/
     game = setup;
     game.plot = stager.getState();
     return game;
