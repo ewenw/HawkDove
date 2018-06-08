@@ -26,7 +26,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // Initialize the client.
 
-        var header, frame;
+        var frame;
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function(n) {
@@ -41,13 +41,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         };
 
         // Setup page: header + frame.
-        header = W.generateHeader();
+        this.header = W.generateHeader();
         frame = W.generateFrame();
 
         // Add widgets.
-        this.visualRound = node.widgets.append('VisualRound', header);
-        this.visualTimer = node.widgets.append('VisualTimer', header);
-        this.doneButton = node.widgets.append('DoneButton', header);
+        this.visualRound = node.widgets.append('VisualRound', this.header);
+        this.visualTimer = node.widgets.append('VisualTimer', this.header);
+        this.doneButton = node.widgets.append('DoneButton', this.header);
+        this.doneButton._setText('Next');
+        this.backButton = document.createElement('input');
+        this.backButton.setAttribute('type', 'button');
+        this.backButton.setAttribute('id', 'backbutton');
+        this.backButton.setAttribute('class', 'btn btn-lg btn-secondary');
+        this.backButton.setAttribute('value', 'Back');
+        this.backButton.onclick = function(){
+            var curStage = node.game.getCurrentGameStage();
+            var stepId = curStage.step;
+            if(stepId > 0){
+                //console.log(stepId);
+                curStage.step = curStage.step-1;
+                node.game.gotoStep(curStage);
+            }
+            
+        }
+        this.header.appendChild(this.backButton);
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
@@ -123,6 +140,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             if (!answers.isCorrect) return false;
             return answers;
         }
+    });
+
+    stager.extendStep('practice', {
+        donebutton: false,
+        frame: 'practice.htm',
     });
 
     /*stager.extendStep('game', {
