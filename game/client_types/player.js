@@ -58,7 +58,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             var curStage = node.game.getCurrentGameStage();
             var stepId = curStage.step;
             if(stepId > 0){
-                //console.log(stepId);
                 curStage.step = curStage.step-1;
                 node.game.gotoStep(curStage);
             }
