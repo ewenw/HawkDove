@@ -16,7 +16,7 @@ module.exports = function(stager, settings) {
         .step('welcome')
         .step('instructions')
         .step('survey')
-        .stage('tutorial-play')
+        .stage('game')
         .step('practice')
         .gameover();
         //.repeat('game', settings.REPEAT)

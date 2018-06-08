@@ -21,12 +21,14 @@ var publishLevels = constants.publishLevels;
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     var game;
-
+    stager.setDefaultStepRule(stepRules.SOLO_STEP);
     stager.setOnInit(function() {
 
         // Initialize the client.
 
         var frame;
+
+        
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function(n) {
@@ -48,6 +50,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
+       
         this.backButton = document.createElement('input');
         this.backButton.setAttribute('type', 'button');
         this.backButton.setAttribute('id', 'backbutton');
@@ -64,23 +67,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
         this.header.appendChild(this.backButton);
 
-        this.nextButton = document.createElement('input');
-        this.nextButton.setAttribute('type', 'button');
-        this.nextButton.setAttribute('id', 'nextbutton');
-        this.nextButton.setAttribute('class', 'btn btn-lg btn-primary');
-        this.nextButton.setAttribute('value', 'Next');
-        this.nextButton.onclick = function(){
-            var curStage = node.game.getCurrentGameStage();
-            var stepId = curStage.step;
-            curStage.step = curStage.step+1;
-            node.game.gotoStep(curStage);            
-        }
-        this.header.appendChild(this.nextButton);
-
-        if(!this.doneButton){
-            this.doneButton = node.widgets.append('DoneButton', this.header);
-            this.doneButton._setText('Done');
-        }
+        this.doneButton = node.widgets.append('DoneButton', this.header);
+        this.doneButton._setText('Done');
+        
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
@@ -89,16 +78,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('welcome', {
         frame: 'welcome.htm',
         cb: function(){
-            this.doneButton.button.style.visibility = "hidden"; 
-            this.nextButton.style.visibility = "visible";
+           // this.doneButton.button.style.visibility = "hidden"; 
+           // this.nextButton.style.visibility = "visible";
         }
     });
 
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
         cb: function(){
-            this.doneButton.button.style.visibility = "hidden"; 
-            this.nextButton.style.visibility = "visible";
+            //this.doneButton.button.style.visibility = "hidden"; 
+            //this.nextButton.style.visibility = "visible";
         }
     });
 
@@ -109,8 +98,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             var root = document.body;
             var widgetsDiv = W.gid('widgets');
             var w = node.widgets;
-            this.nextButton.style.visibility = "hidden"; 
-            this.doneButton.button.style.visibility = "visible";
+           // this.nextButton.style.visibility = "hidden"; 
+           // this.doneButton.button.style.visibility = "visible";
             this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
                 id: 'survey',
                 title: false,
@@ -170,23 +159,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'practice.htm',
         cb: function(){
-            var symbols = ['#', '@', '$', '%', '^', '*'];
+            var symbols = ['3', '4', '1', '2', '6', '5'];
             var neighborsDiv = W.gid('players');
+            var angle = 150 / symbols.length;
+            var offset = 180;
             this.neighbors = [];
             for(var i=0; i<symbols.length; i++){
-                this.neighbors[i] = document.createElement('input');
-                this.neighbors[i].setAttribute('type', 'button');
-                this.neighbors[i].setAttribute('id', 'nextbutton');
-                this.neighbors[i].setAttribute('class', 'btn btn-lg btn-primary');
-                this.neighbors[i].setAttribute('value', symbols[i]);
+                this.neighbors[i] = document.createElement('button');
+                this.neighbors[i].setAttribute('class', 'circle-badge');
+                this.neighbors[i].innerHTML = symbols[i];
                 this.neighbors[i].style.position = 'absolute';
-                this.neighbors[i].style.left = (i * 60 + 200) + 'px';
-                this.neighbors[i].style.top = (i * 60 + 200) + 'px';
-                this.neighbors[i].onclick = function(){
-                    console.log(i + " clicked.");  
-                }
+                var rads = (offset + angle * (i+1)) * Math.PI / 180;
+                var x = Math.cos(rads) * 200;
+                var y = Math.sin(rads) * 200;
+                this.neighbors[i].style.left = (x + 500) + 'px';
+                this.neighbors[i].style.top = (y + 500) + 'px';
                 neighborsDiv.appendChild(this.neighbors[i]);
             }
+            this.neighbors[2].onclick = function(){
+                window.location.href = '#popup1';
+            };
         }
     });
 

@@ -28,7 +28,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
 
     });
-    //stager.setDefaultStepRule(stepRules.WAIT);
+    stager.setDefaultStepRule(stepRules.WAIT);
 
 
     /*stager.extendStep('game', {
