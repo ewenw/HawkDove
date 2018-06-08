@@ -27,10 +27,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function() {
 
-        // Initialize the client.
     });
+    //stager.setDefaultStepRule(stepRules.WAIT);
 
-    
 
     /*stager.extendStep('game', {
         matcher: {
