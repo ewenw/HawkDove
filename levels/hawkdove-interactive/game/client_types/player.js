@@ -192,7 +192,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function(){
            var zbtn = W.gid('zbtn');
            zbtn.onclick = function(){
-                node.say('practice-done');
+                node.done();
            };
         }
     });

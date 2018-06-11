@@ -12,19 +12,12 @@
 module.exports = function(stager, settings) {
 
      stager
-        .stage('tutorial')
-        .step('welcome')
-        .step('instructions')
-        .step('survey')
         .stage('game')
-        .step('practice')
-        .step('practice_respond')
+        .repeat('game', settings.REPEAT)
         .gameover();
         //.repeat('game', settings.REPEAT)
         //.next('end')
         //.gameover();
 
-    // Modify the stager to skip one stage.
-    stager.skip('tutorial');
     return stager.getState();
 };

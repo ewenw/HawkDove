@@ -26,13 +26,25 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     counter = counter ? ++counter : settings.SESSION_ID || 1;
 
     stager.setOnInit(function() {
-        node.on.data('practice-done', function(msg) {
-            console.log('Moving player ' + msg.from + ' to waiting room.');
-            channel.moveClientToGameLevel(msg.from, 'hawkdove-interactive',
-                                              gameRoom.name);	
-        });
+
     });
     stager.setDefaultStepRule(stepRules.WAIT);
+
+
+    /*
+
+    stager.extendStep('end', {
+        cb: function() {
+            node.game.memory.save(channel.getGameDir() + 'data/data_' +
+                                  node.nodename + '.json');
+        }
+    });*/
+
+    stager.setOnGameOver(function() {
+
+         console.log("Moving player to waiting room");
+
+    });
 
     // Here we group together the definition of the game logic.
     return {
