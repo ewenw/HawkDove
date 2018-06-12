@@ -21,6 +21,7 @@ var publishLevels = constants.publishLevels;
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     var game;
+    
     stager.setDefaultStepRule(stepRules.SOLO_STEP);
     stager.setOnInit(function() {
 
@@ -50,150 +51,69 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
-       
-        this.backButton = document.createElement('input');
-        this.backButton.setAttribute('type', 'button');
-        this.backButton.setAttribute('id', 'backbutton');
-        this.backButton.setAttribute('class', 'btn btn-lg btn-secondary');
-        this.backButton.setAttribute('value', 'Back');
-        this.backButton.onclick = function(){
-            var curStage = node.game.getCurrentGameStage();
-            var stepId = curStage.step;
-            if(stepId > 0){
-                curStage.step = curStage.step-1;
-                node.game.gotoStep(curStage);
-            }
-            
-        }
-        this.header.appendChild(this.backButton);
 
-        this.doneButton = node.widgets.append('DoneButton', this.header);
-        this.doneButton._setText('Done');
+        /**
+         * Shuffles array in place.
+         * @param {Array} a items An array containing the items.
+         */
+        this.shuffle = function (a) {
+            var j, x, i;
+            for (i=0; i<a.length; i++) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        };
+
+        this.neighbors = [];
+
+        this.createButton = function(id, div, x, y, symbol) {
+            console.log('Creating button ' + symbol);
+            if(!this.neighbors[id]){
+                this.neighbors[id] = document.createElement('button');
+                this.neighbors[id].setAttribute('type', 'button');
+                this.neighbors[id].setAttribute('class', 'circle-badge btn');
+                this.neighbors[id].innerHTML = symbol;
+                this.neighbors[id].style.position = 'absolute';
+                this.neighbors[id].style.left = x + 'px';
+                this.neighbors[id].style.top = y + 'px';
+                this.neighbors[id].setAttribute('data-toggle', 'modal');
+                this.neighbors[id].setAttribute('data-target', '#visit');
+                div.appendChild(this.neighbors[id]);
+            }
+        };
+
+        this.symbols = ['3', '4', '1', '2', '6', '5'];
+        this.shuffle(this.symbols);
+        //this.doneButton = node.widgets.append('DoneButton', this.header);
+        //this.doneButton._setText('Done');
         
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
     });
 
-    stager.extendStep('welcome', {
-        frame: 'welcome.htm',
-        cb: function(){
-           // this.doneButton.button.style.visibility = "hidden"; 
-           // this.nextButton.style.visibility = "visible";
-        }
-    });
-
-    stager.extendStep('instructions', {
-        frame: 'instructions.htm',
-        cb: function(){
-            //this.doneButton.button.style.visibility = "hidden"; 
-            //this.nextButton.style.visibility = "visible";
-        }
-    });
-
-    stager.extendStep('survey', 
-    {
-        frame: 'survey.htm',
-        cb: function(){
-            var root = document.body;
-            var widgetsDiv = W.gid('widgets');
-            var w = node.widgets;
-           // this.nextButton.style.visibility = "hidden"; 
-           // this.doneButton.button.style.visibility = "visible";
-            this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
-                id: 'survey',
-                title: false,
-                forms: [
-                    w.get('ChoiceTable', {
-                        id: 'age',
-                        mainText: 'What is your age group?',
-                        choices: [
-                            '18-20', '21-30', '31-40', '41-50',
-                            '51-60', '61-70', '71+', 'Do not want to say'
-                        ],
-                        title: false,
-                        requiredChoice: true
-                    }),
-                    w.get('ChoiceTable', {
-                        id: 'gender',
-                        mainText: 'What is your gender?',
-                        choices: [
-                            'Male', 'Female', 'Other', 'Do not want to say'
-                        ],
-                        title: false,
-                        requiredChoice: true
-                    }),
-                    w.get('ChoiceTable', {
-                        id: 'education',
-                        mainText: 'What is your highest level of education?',
-                        choices: [
-                            'No high school', 'High school/GED', 'Some college', 'College graduate', 'Higher'
-                        ],
-                        title: false,
-                        requiredChoice: true
-                    }),
-                    w.get('ChoiceTable', {
-                        id: 'location',
-                        mainText: 'What is your location?',
-                        choices: [
-                            'US', 'India', 'Other', 'Do not want to say'
-                        ],
-                        title: false,
-                        requiredChoice: true
-                    })
-                ]
-            });        
-        },
-        done: function() {
-            var answers;
-            answers = this.survey.getValues({
-                markAttempt: true,
-                highlight: true
-            });
-            if (!answers.isCorrect) return false;
-            return answers;
-        }
-    });
-
-    stager.extendStep('practice', {
+    stager.extendStep('game', {
         donebutton: false,
-        frame: 'practice.htm',
+        frame: 'game.htm',
         cb: function(){
-            var symbols = ['3', '4', '1', '2', '6', '5'];
             var neighborsDiv = W.gid('players');
             var ybtn = W.gid('ybtn');
-            var angle = 150 / symbols.length;
+            var angle = 150 / this.symbols.length;
             var offset = 180;
-            this.neighbors = [];
-            for(var i=0; i<symbols.length; i++){
-                this.neighbors[i] = document.createElement('button');
-                this.neighbors[i].setAttribute('type', 'button');
-                this.neighbors[i].setAttribute('class', 'circle-badge btn');
-                this.neighbors[i].innerHTML = symbols[i];
-                this.neighbors[i].style.position = 'absolute';
+            console.log('Creating ' + node.game.pl.size() + ' buttons');
+            for(var i=0; i<node.game.pl.size(); i++){
+                var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i+1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 200;
-                var y = Math.sin(rads) * 200;
-                this.neighbors[i].style.left = (x + 500) + 'px';
-                this.neighbors[i].style.top = (y + 500) + 'px';
-                neighborsDiv.appendChild(this.neighbors[i]);
+                var x = Math.cos(rads) * 200 + 500;
+                var y = Math.sin(rads) * 200 + 500;
+                this.createButton(player.id, neighborsDiv, x, y, this.symbols[i]);
             }
-            this.neighbors[2].setAttribute('data-toggle', 'modal');
-            this.neighbors[2].setAttribute('data-target', '#visit');
             ybtn.onclick = function(){
                 node.done();
             };
-        }
-    });
-
-    stager.extendStep('practice_respond', {
-        donebutton: false,
-        frame: 'practice_respond.htm',
-        cb: function(){
-           var zbtn = W.gid('zbtn');
-           zbtn.onclick = function(){
-                node.done();
-           };
         }
     });
 

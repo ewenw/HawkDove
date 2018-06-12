@@ -28,7 +28,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
 
     });
-    stager.setDefaultStepRule(stepRules.WAIT);
+
+    stager.extendStep('game', {
+        cb: function() {
+            console.log('Players: ' + node.game.pl.size());
+        }
+    });
+
+    // stager.setDefaultStepRule(stepRules.WAIT);
 
 
     /*
