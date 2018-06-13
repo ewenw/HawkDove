@@ -101,14 +101,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         cb: function(){
             var neighborsDiv = W.gid('players');
             var ybtn = W.gid('ybtn');
-            var angle = 150 / this.symbols.length;
+            var angle = 180 / (node.game.pl.size()+1);
             var offset = 180;
-            console.log('Creating ' + node.game.pl.size() + ' buttons');
             for(var i=0; i<node.game.pl.size(); i++){
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i+1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 200 + 500;
-                var y = Math.sin(rads) * 200 + 500;
+                var x = Math.cos(rads) * 300 + 500;
+                var y = Math.sin(rads) * 300 + 500;
                 this.createButton(player.id, neighborsDiv, x, y, this.symbols[i]);
             }
             ybtn.onclick = function(){
