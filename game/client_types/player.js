@@ -28,8 +28,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         var frame;
 
-        
-
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function(n) {
             return node.JSUS.isInt(n, -1, 101);

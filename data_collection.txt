@@ -1,0 +1,13 @@
+visitor:
+person you visit, order, my strategy, their strategy, (made a decision?), track payoffs for now
+
+randomize order of receiving visits. record order of player ids. 
+don't get to see whos visiting
+
+
+no information while waiting for others to finish responding
+
+variables for timing
+2 phases for training and playing
+
+3 rounds kick out? random decisions based on history average
