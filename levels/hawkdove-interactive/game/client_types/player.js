@@ -57,7 +57,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
          * Shuffles array in place.
          * @param {Array} a items An array containing the items.
          */
-        this.shuffle = function (a) {
+        node.game.shuffle = function (a) {
             var j, x, i;
             for (i = 0; i < a.length; i++) {
                 j = Math.floor(Math.random() * (i + 1));
@@ -72,33 +72,30 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.createButton = function (obj, id, div, x, y, symbol) {
             var btn;
-            if (!this.neighbors[id]) {
-                this.neighbors[id] = document.createElement('button');
-                btn = this.neighbors[id];
-                btn.setAttribute('type', 'button');
-                btn.setAttribute('class', 'circle-badge btn');
-                btn.innerHTML = symbol;
-                btn.style.position = 'absolute';
-                btn.style.left = x + 'px';
-                btn.style.top = y + 'px';
-                btn.setAttribute('data-toggle', 'modal');
-                btn.setAttribute('data-target', '#visit');
-                div.appendChild(btn);
-                btn.onclick = function () {
-                    obj.visitId = id;
-                    console.log(obj.visitId);
-                };
-                div.appendChild(btn);
-
-            }
+            this.neighbors[id] = document.createElement('button');
+            btn = this.neighbors[id];
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('class', 'circle-badge btn');
+            btn.innerHTML = symbol;
+            btn.style.position = 'absolute';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            btn.setAttribute('data-toggle', 'modal');
+            btn.setAttribute('data-target', '#visit');
+            div.appendChild(btn);
+            btn.onclick = function () {
+                obj.visitId = id;
+                console.log(obj.visitId);
+            };
+            div.appendChild(btn);
         };
 
         this.symbols = ['@', '#', '$', '%', '^', '&'];
-        this.shuffle(this.symbols);
+        node.game.shuffle(this.symbols);
 
-        node.on.data('addVisit', function(msg) {
+        node.on.data('addVisit', function (msg) {
             console.log('You were visited by ' + msg.data.visitor + ' with action ' + msg.data.strategy);
-            node.game.visitsQueue.push({visitor: msg.data.visitor, strategy: msg.data.strategy});
+            node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
         });
         //this.doneButton = node.widgets.append('DoneButton', this.header);
         //this.doneButton._setText('Done');
@@ -127,10 +124,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
             xbtn.onclick = function () {
-                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: 'x' });
+                respond('x');
             };
             ybtn.onclick = function () {
-                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: 'y' });
+                respond('y');
+            };
+            var respond = function (strategy) {
+                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: strategy });
             };
         }
     });
@@ -139,10 +139,38 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'respond.htm',
         cb: function () {
+            var xbtn = W.gid('xbtn');
+            var ybtn = W.gid('ybtn');
+            var result = W.gid('result');
+            var respondDiv = W.gid('respond');
+            var visit;
+            result.style.display = 'none';
             if (node.game.visitsQueue.length == 0) {
-                W.gid('respond').innerHTML = 'No visitors.';
+                respondDiv.innerHTML = 'No visitors.';
                 node.done();
             }
+
+            // shuffle visits
+            node.game.shuffle(node.game.visitsQueue);
+
+            xbtn.onclick = function () { respond('x'); };
+            ybtn.onclick = function () { respond('y'); };
+
+            var respond = function (strategy) {
+                visit = node.game.visitsQueue.pop();
+                respondDiv.style.display = 'none';
+                result.style.display = 'block';
+                result.innerHTML = 'The results will show here';
+                node.say('response', 'SERVER', { visitor: visit.visitor, visitee: node.player.id, visitStrategy: visit.strategy, responseStrat: strategy });
+                setTimeout(function () {
+                    if (node.game.visitsQueue.length == 0) {
+                        node.done();
+                        respondDiv.innerHTML = 'Waiting for other players...';
+                    }
+                    respondDiv.style.display = 'block';
+                    result.style.display = 'none';
+                }, 1000);
+            };
         }
     });
     /*
