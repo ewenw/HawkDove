@@ -69,11 +69,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         this.neighbors = [];
 
-        this.createButton = function(id, div, x, y, symbol) {
+        this.createButton = function(obj, id, div, x, y, symbol) {
             console.log('Creating button ' + symbol);
             var btn;
             if(!this.neighbors[id]){
                 this.neighbors[id] = document.createElement('button');
+<<<<<<< HEAD
                 btn = this.neighbors[id];
                 btn.setAttribute('type', 'button');
                 btn.setAttribute('class', 'circle-badge btn');
@@ -87,6 +88,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 btn.onclick = function(){
 
                 };
+=======
+                this.neighbors[id].setAttribute('type', 'button');
+                this.neighbors[id].setAttribute('class', 'circle-badge btn');
+                this.neighbors[id].innerHTML = symbol;
+                this.neighbors[id].style.position = 'absolute';
+                this.neighbors[id].style.left = x + 'px';
+                this.neighbors[id].style.top = y + 'px';
+                this.neighbors[id].setAttribute('data-toggle', 'modal');
+                this.neighbors[id].setAttribute('data-target', '#visit');
+                this.neighbors[id].onclick = function(){
+                    obj.visitId = id;
+                    console.log(obj.visitId);
+                };
+                div.appendChild(this.neighbors[id]);
+>>>>>>> d4818df01742eb20bbe361ed9910be6989c8a71b
             }
         };
 
@@ -105,17 +121,25 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'game.htm',
         cb: function(){
             var neighborsDiv = W.gid('players');
+            var xbtn = W.gid('xbtn');
             var ybtn = W.gid('ybtn');
             var angle = 180 / (node.game.pl.size()+1);
             var offset = 180;
+            var that = this;
+            this.visitId = null;
             for(var i=0; i<node.game.pl.size(); i++){
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i+1)) * Math.PI / 180;
                 var x = Math.cos(rads) * 300 + 500;
                 var y = Math.sin(rads) * 300 + 500;
-                this.createButton(player.id, neighborsDiv, x, y, this.symbols[i]);
+                that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
+            xbtn.onclick = function(){
+                console.log('Playing against player ' + that.visitId + ' with strategy x');
+                node.done();
+            };
             ybtn.onclick = function(){
+                console.log('Playing against player ' + that.visitId + ' with strategy y');
                 node.done();
             };
         }

@@ -19,7 +19,7 @@ module.exports = function(stager, settings) {
         //.stage('game')
         .step('practice')
         .step('practice_respond')
-        .stage('end')
+        //.stage('end')
         .step('practice_end')
         .gameover();
         //.repeat('game', settings.REPEAT)
@@ -27,7 +27,7 @@ module.exports = function(stager, settings) {
         //.gameover();
 
     // Modify the stager to skip one stage.
- stager.skip('tutorial');
-    //stager.skip('game');
+ //stager.skip('tutorial');
+   // stager.skip('game');
     return stager.getState();
 };
