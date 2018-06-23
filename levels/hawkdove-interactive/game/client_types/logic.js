@@ -29,23 +29,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
-    stager.extendStep('game', {
+    stager.extendStep('visit', {
         cb: function() {
-            console.log('Players: ' + node.game.pl.size());
+            node.on.data('done', function(msg) {
+                var visitor = msg.from;
+                var visitee = msg.data.visitId;
+                var strategy = msg.data.strategy;
+
+            })
+        }
+    });
+
+    stager.extendStep('respond', {
+        cb: function() {
+           
         }
     });
 
     // stager.setDefaultStepRule(stepRules.WAIT);
 
 
-    /*
 
     stager.extendStep('end', {
         cb: function() {
             node.game.memory.save(channel.getGameDir() + 'data/data_' +
                                   node.nodename + '.json');
         }
-    });*/
+    });
 
     stager.setOnGameOver(function() {
 

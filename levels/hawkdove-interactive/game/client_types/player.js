@@ -70,11 +70,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.neighbors = [];
 
         this.createButton = function(obj, id, div, x, y, symbol) {
-            console.log('Creating button ' + symbol);
             var btn;
             if(!this.neighbors[id]){
                 this.neighbors[id] = document.createElement('button');
-<<<<<<< HEAD
                 btn = this.neighbors[id];
                 btn.setAttribute('type', 'button');
                 btn.setAttribute('class', 'circle-badge btn');
@@ -86,23 +84,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 btn.setAttribute('data-target', '#visit');
                 div.appendChild(btn);
                 btn.onclick = function(){
-
-                };
-=======
-                this.neighbors[id].setAttribute('type', 'button');
-                this.neighbors[id].setAttribute('class', 'circle-badge btn');
-                this.neighbors[id].innerHTML = symbol;
-                this.neighbors[id].style.position = 'absolute';
-                this.neighbors[id].style.left = x + 'px';
-                this.neighbors[id].style.top = y + 'px';
-                this.neighbors[id].setAttribute('data-toggle', 'modal');
-                this.neighbors[id].setAttribute('data-target', '#visit');
-                this.neighbors[id].onclick = function(){
                     obj.visitId = id;
                     console.log(obj.visitId);
                 };
-                div.appendChild(this.neighbors[id]);
->>>>>>> d4818df01742eb20bbe361ed9910be6989c8a71b
+                div.appendChild(btn);
+            
             }
         };
 
@@ -116,9 +102,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // this.debugInfo = node.widgets.append('DebugInfo', header)
     });
 
-    stager.extendStep('game', {
+    stager.extendStep('visit', {
         donebutton: false,
-        frame: 'game.htm',
+        frame: 'visit.htm',
         cb: function(){
             var neighborsDiv = W.gid('players');
             var xbtn = W.gid('xbtn');
@@ -135,76 +121,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
             xbtn.onclick = function(){
-                console.log('Playing against player ' + that.visitId + ' with strategy x');
-                node.done();
+                node.done({visitor: node.player.id, visitee: that.visitId, strategy: 'x'});
             };
             ybtn.onclick = function(){
-                console.log('Playing against player ' + that.visitId + ' with strategy y');
-                node.done();
+                node.done({visitor: node.player.id, visitee: that.visitId, strategy: 'y'});
             };
         }
     });
-
-    /*stager.extendStep('game', {
-        donebutton: false,
-        frame: 'game.htm',
-        roles: {
-            DICTATOR: {
-                timer: settings.bidTime,
-                cb: function() {
-                    var button, offer, div;
-
-                    // Make the dictator display visible.
-                    div = W.getElementById('dictator').style.display = '';
-                    button = W.getElementById('submitOffer');
-                    offer =  W.getElementById('offer');
-
-                    // Listen on click event.
-                    button.onclick = function() {
-                        var decision;
-
-                        // Validate offer.
-                        decision = node.game.isValidBid(offer.value);
-                        if ('number' !== typeof decision) {
-                            W.writeln('Please enter a number between ' +
-                                      '0 and 100.');
-                            return;
-                        }
-                        button.disabled = true;
-
-                        // Mark the end of the round, and
-                        // store the decision in the server.
-                        node.done({ offer: decision });
-                    };
-                },
-                timeup: function() {
-                    node.game.randomOffer(W.getElementById('offer'),
-                                          W.getElementById('submitOffer'));
-                }
-            },
-            OBSERVER: {
-                cb: function() {
-                    var span, div, dotsObj;
-
-                    // Make the observer display visible.
-                    div = W.getElementById('observer').style.display = '';
-                    span = W.getElementById('dots');
-                    dotsObj = W.addLoadingDots(span);
-
-                    node.on.data('decision', function(msg) {
-                        dotsObj.stop();
-                        W.setInnerHTML('waitingFor', 'Decision arrived: ');
-                        W.setInnerHTML('decision',
-                                       'The dictator offered: ' +
-                                       msg.data + ' ECU.');
-
-                        node.timer.randomDone();
-                    });
-                }
-            }
-        }
-    });
-
+/*
     stager.extendStep('end', {
         donebutton: false,
         frame: 'end.htm',

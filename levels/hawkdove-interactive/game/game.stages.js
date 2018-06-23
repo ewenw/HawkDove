@@ -12,12 +12,18 @@
 module.exports = function(stager, settings) {
 
      stager
-        .stage('game')
         .repeat('game', settings.REPEAT)
+        .next('end')
         .gameover();
         //.repeat('game', settings.REPEAT)
         //.next('end')
         //.gameover();
+    stager.extendStage('game', {
+        steps: [
+            'visit',
+            'respond'
+        ]
+    });
 
     return stager.getState();
 };
