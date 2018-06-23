@@ -71,21 +71,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         this.createButton = function(id, div, x, y, symbol) {
             console.log('Creating button ' + symbol);
+            var btn;
             if(!this.neighbors[id]){
                 this.neighbors[id] = document.createElement('button');
-                this.neighbors[id].setAttribute('type', 'button');
-                this.neighbors[id].setAttribute('class', 'circle-badge btn');
-                this.neighbors[id].innerHTML = symbol;
-                this.neighbors[id].style.position = 'absolute';
-                this.neighbors[id].style.left = x + 'px';
-                this.neighbors[id].style.top = y + 'px';
-                this.neighbors[id].setAttribute('data-toggle', 'modal');
-                this.neighbors[id].setAttribute('data-target', '#visit');
-                div.appendChild(this.neighbors[id]);
+                btn = this.neighbors[id];
+                btn.setAttribute('type', 'button');
+                btn.setAttribute('class', 'circle-badge btn');
+                btn.innerHTML = symbol;
+                btn.style.position = 'absolute';
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+                btn.setAttribute('data-toggle', 'modal');
+                btn.setAttribute('data-target', '#visit');
+                div.appendChild(btn);
+                btn.onclick = function(){
+
+                };
             }
         };
 
-        this.symbols = ['3', '4', '1', '2', '6', '5'];
+        this.symbols = ['@', '#', '$', '%', '^', '&'];
         this.shuffle(this.symbols);
         //this.doneButton = node.widgets.append('DoneButton', this.header);
         //this.doneButton._setText('Done');
