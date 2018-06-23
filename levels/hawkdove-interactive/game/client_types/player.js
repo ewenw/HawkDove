@@ -18,27 +18,28 @@ var stepRules = ngc.stepRules;
 var constants = ngc.constants;
 var publishLevels = constants.publishLevels;
 
-module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
+module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     var game;
-    
-    stager.setDefaultStepRule(stepRules.SOLO_STEP);
-    stager.setOnInit(function() {
+
+    stager.setDefaultStepRule(stepRules.WAIT);
+    stager.setOnInit(function () {
 
         // Initialize the client.
 
         var frame;
 
-        
+        // A queue of visits to be responded to
+        node.game.visitsQueue = [];
 
         // Bid is valid if it is a number between 0 and 100.
-        this.isValidBid = function(n) {
+        this.isValidBid = function (n) {
             return node.JSUS.isInt(n, -1, 101);
         };
 
-        this.randomOffer = function(offer, submitOffer) {
+        this.randomOffer = function (offer, submitOffer) {
             var n;
-            n = JSUS.randomInt(-1,100);
+            n = JSUS.randomInt(-1, 100);
             offer.value = n;
             submitOffer.click();
         };
@@ -47,7 +48,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.header = W.generateHeader();
         frame = W.generateFrame();
 
-        
+
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
@@ -58,7 +59,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
          */
         this.shuffle = function (a) {
             var j, x, i;
-            for (i=0; i<a.length; i++) {
+            for (i = 0; i < a.length; i++) {
                 j = Math.floor(Math.random() * (i + 1));
                 x = a[i];
                 a[i] = a[j];
@@ -69,9 +70,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         this.neighbors = [];
 
-        this.createButton = function(obj, id, div, x, y, symbol) {
+        this.createButton = function (obj, id, div, x, y, symbol) {
             var btn;
-            if(!this.neighbors[id]){
+            if (!this.neighbors[id]) {
                 this.neighbors[id] = document.createElement('button');
                 btn = this.neighbors[id];
                 btn.setAttribute('type', 'button');
@@ -83,20 +84,25 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 btn.setAttribute('data-toggle', 'modal');
                 btn.setAttribute('data-target', '#visit');
                 div.appendChild(btn);
-                btn.onclick = function(){
+                btn.onclick = function () {
                     obj.visitId = id;
                     console.log(obj.visitId);
                 };
                 div.appendChild(btn);
-            
+
             }
         };
 
         this.symbols = ['@', '#', '$', '%', '^', '&'];
         this.shuffle(this.symbols);
+
+        node.on.data('addVisit', function(msg) {
+            console.log('You were visited by ' + msg.data.visitor + ' with action ' + msg.data.strategy);
+            node.game.visitsQueue.push({visitor: msg.data.visitor, strategy: msg.data.strategy});
+        });
         //this.doneButton = node.widgets.append('DoneButton', this.header);
         //this.doneButton._setText('Done');
-        
+
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
@@ -105,38 +111,49 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('visit', {
         donebutton: false,
         frame: 'visit.htm',
-        cb: function(){
+        cb: function () {
             var neighborsDiv = W.gid('players');
             var xbtn = W.gid('xbtn');
             var ybtn = W.gid('ybtn');
-            var angle = 180 / (node.game.pl.size()+1);
+            var angle = 180 / (node.game.pl.size() + 1);
             var offset = 180;
             var that = this;
             this.visitId = null;
-            for(var i=0; i<node.game.pl.size(); i++){
+            for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
-                var rads = (offset + angle * (i+1)) * Math.PI / 180;
+                var rads = (offset + angle * (i + 1)) * Math.PI / 180;
                 var x = Math.cos(rads) * 300 + 500;
                 var y = Math.sin(rads) * 300 + 500;
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
-            xbtn.onclick = function(){
-                node.done({visitor: node.player.id, visitee: that.visitId, strategy: 'x'});
+            xbtn.onclick = function () {
+                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: 'x' });
             };
-            ybtn.onclick = function(){
-                node.done({visitor: node.player.id, visitee: that.visitId, strategy: 'y'});
+            ybtn.onclick = function () {
+                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: 'y' });
             };
         }
     });
-/*
-    stager.extendStep('end', {
+
+    stager.extendStep('respond', {
         donebutton: false,
-        frame: 'end.htm',
-        cb: function() {
-            node.game.visualTimer.setToZero();
+        frame: 'respond.htm',
+        cb: function () {
+            if (node.game.visitsQueue.length == 0) {
+                W.gid('respond').innerHTML = 'No visitors.';
+                node.done();
+            }
         }
     });
-*/
+    /*
+        stager.extendStep('end', {
+            donebutton: false,
+            frame: 'end.htm',
+            cb: function() {
+                node.game.visualTimer.setToZero();
+            }
+        });
+    */
     game = setup;
     game.plot = stager.getState();
     return game;
