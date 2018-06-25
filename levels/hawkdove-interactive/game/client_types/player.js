@@ -144,14 +144,22 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
             var visit;
+            var order = [];
             result.style.display = 'none';
+
+            // shuffle visits
+            node.game.shuffle(node.game.visitsQueue);
+
+            for(var visit in node.game.visitsQueue){
+                order.push(visit.visitor);
+            }
+            // send order of responses to server
+            node.say('order', 'SERVER', order);
+            
             if (node.game.visitsQueue.length == 0) {
                 respondDiv.innerHTML = 'No visitors.';
                 node.done();
             }
-
-            // shuffle visits
-            node.game.shuffle(node.game.visitsQueue);
 
             xbtn.onclick = function () { respond('x'); };
             ybtn.onclick = function () { respond('y'); };

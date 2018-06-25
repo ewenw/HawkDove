@@ -25,17 +25,49 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     // Increment counter.
     counter = counter ? ++counter : settings.SESSION_ID || 1;
     
+    /* Data format:
+        "12345": {
+            visits: [
+                {
+                    visitee: "2",
+                    visitStrategy: "x",
+                    responseStrategy: "y",
+                    round: "1"
+                }, 
+                {}, ...
+            ],
+            orders: [
+                [2, 3, 4],
+                [5, 1, 2],
+                []
+            ],
+        }
+    */
     node.game.visitsQueue = {};
 
     stager.setOnInit(function () {
+        // initialize data container (props) in object for given player
+        var initDataContainer = function(pid) {
+            if(!node.game.visitsQueue[pid]){
+                node.game.visitsQueue[pid] = {};
+                node.game.visitsQueue[pid].visits = [];
+                node.game.visitsQueue[pid].orders = [];
+            }
+        };
+
         node.on.data('response', function (msg) {
-            if(!node.game.visitsQueue[msg.data.visitor])
-                node.game.visitsQueue[msg.data.visitor] = [];
-            node.game.visitsQueue[msg.data.visitor].push({ 
+            initDataContainer(msg.data.visitor);
+            console.log(msg.data);
+            node.game.visitsQueue[msg.data.visitor].visits.push({ 
                 visitee: msg.data.visitee, 
                 visitStrategy: msg.data.visitStrategy, 
                 responseStrategy: msg.data.responseStrategy,
                 round: msg.data.round});
+        });
+        node.on.data('order', function (msg) {
+            initDataContainer(msg.from);
+            console.log(msg.data);
+            node.game.visitsQueue[msg.from].orders.push(msg.data);
         });
     });
     stager.extendStep('visit', {
@@ -44,9 +76,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var visitor = msg.from;
                 var visitee = msg.data.visitee;
                 var strategy = msg.data.strategy;
-                if (!node.game.visitsQueue[visitee]) {
-                    node.game.visitsQueue[visitee] = [];
-                }
                 node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
             })
         }

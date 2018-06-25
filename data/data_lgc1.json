@@ -1,51 +1,51 @@
 [{
-    "time": 2147,
+    "time": 2345,
     "timeup": false,
-    "visitor": "77752004841607",
-    "visitee": "147970240265176",
-    "strategy": "y",
-    "done": true,
-    "player": "77752004841607",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 1
-    },
-    "timestamp": 1529963902132
-}, {
-    "time": 4424,
-    "timeup": false,
-    "visitor": "147970240265176",
-    "visitee": "77752004841607",
+    "visitor": "387713882341645",
+    "visitee": "783446994465472",
     "strategy": "x",
     "done": true,
-    "player": "147970240265176",
+    "player": "387713882341645",
     "stage": {
         "stage": 1,
         "step": 1,
         "round": 1
     },
-    "timestamp": 1529963904600
+    "timestamp": 1529968127028
 }, {
-    "time": 2127,
+    "time": 4416,
+    "timeup": false,
+    "visitor": "783446994465472",
+    "visitee": "387713882341645",
+    "strategy": "y",
+    "done": true,
+    "player": "783446994465472",
+    "stage": {
+        "stage": 1,
+        "step": 1,
+        "round": 1
+    },
+    "timestamp": 1529968129137
+}, {
+    "time": 1815,
     "timeup": false,
     "done": true,
-    "player": "147970240265176",
+    "player": "783446994465472",
     "stage": {
         "stage": 1,
         "step": 2,
         "round": 1
     },
-    "timestamp": 1529963907015
+    "timestamp": 1529968131214
 }, {
-    "time": 3819,
+    "time": 2778,
     "timeup": false,
     "done": true,
-    "player": "77752004841607",
+    "player": "387713882341645",
     "stage": {
         "stage": 1,
         "step": 2,
         "round": 1
     },
-    "timestamp": 1529963908735
+    "timestamp": 1529968132267
 }]
