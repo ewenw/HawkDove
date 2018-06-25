@@ -28,6 +28,15 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     node.game.visitsQueue = {};
 
     stager.setOnInit(function () {
+        node.on.data('response', function (msg) {
+            if(!node.game.visitsQueue[msg.data.visitor])
+                node.game.visitsQueue[msg.data.visitor] = [];
+            node.game.visitsQueue[msg.data.visitor].push({ 
+                visitee: msg.data.visitee, 
+                visitStrategy: msg.data.visitStrategy, 
+                responseStrategy: msg.data.responseStrategy,
+                round: msg.data.round});
+        });
     });
     stager.extendStep('visit', {
         cb: function () {
@@ -38,7 +47,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 if (!node.game.visitsQueue[visitee]) {
                     node.game.visitsQueue[visitee] = [];
                 }
-                node.game.visitsQueue[visitee].push({ visitor: visitor, strategy: strategy });
                 node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
             })
         }
@@ -60,6 +68,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('end', {
         cb: function () {
+            console.log(node.game.visitsQueue);
             node.game.memory.save(channel.getGameDir() + 'data/data_' +
                 node.nodename + '.json');
         }

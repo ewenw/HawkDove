@@ -15,8 +15,7 @@ module.exports = function(stager, settings) {
         .repeatStage('game', settings.REPEAT)
         .step('visit')
         .step('respond')
-        .stage('end')
-        .step('end')
+        .next('end')
         .gameover();
         //.repeat('game', settings.REPEAT)
         //.next('end')

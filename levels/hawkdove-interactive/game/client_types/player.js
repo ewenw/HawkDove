@@ -119,8 +119,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 300 + 500;
-                var y = Math.sin(rads) * 300 + 500;
+                var x = Math.cos(rads) * 300 + 800;
+                var y = Math.sin(rads) * 300 + 600;
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
             xbtn.onclick = function () {
@@ -161,7 +161,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
                 result.innerHTML = 'The results will show here';
-                node.say('response', 'SERVER', { visitor: visit.visitor, visitee: node.player.id, visitStrategy: visit.strategy, responseStrat: strategy });
+                node.say('response', 'SERVER', { 
+                    visitor: visit.visitor, 
+                    visitee: node.player.id, 
+                    visitStrategy: visit.strategy, 
+                    responseStrategy: strategy, 
+                    round: node.game.getRound()});
                 setTimeout(function () {
                     if (node.game.visitsQueue.length == 0) {
                         node.done();
@@ -173,15 +178,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             };
         }
     });
-    /*
-        stager.extendStep('end', {
-            donebutton: false,
-            frame: 'end.htm',
-            cb: function() {
-                node.game.visualTimer.setToZero();
-            }
-        });
-    */
+    
+    stager.extendStep('end', {
+        donebutton: false,
+        frame: 'postgame.htm',
+        cb: function() {
+            node.game.visualTimer.setToZero();
+
+        }
+    });
+    
     game = setup;
     game.plot = stager.getState();
     return game;
