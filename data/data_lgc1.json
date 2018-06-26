@@ -1,51 +1,129 @@
-[{
-    "time": 2449,
-    "timeup": false,
-    "visitor": "520939640099270",
-    "visitee": "516653376872760",
-    "strategy": "y",
-    "done": true,
-    "player": "520939640099270",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 1
+{
+    "275047120160191": {
+        "visits": [
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [],
+            [],
+            []
+        ]
     },
-    "timestamp": 1529968834010
-}, {
-    "time": 4675,
-    "timeup": false,
-    "visitor": "516653376872760",
-    "visitee": "520939640099270",
-    "strategy": "x",
-    "done": true,
-    "player": "516653376872760",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 1
+    "131345331507354": {
+        "visits": [
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "y",
+                "responseStrategy": "y",
+                "round": 1
+            },
+            {
+                "visitee": "226555784685913",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "275047120160191"
+            ],
+            [
+                "110910759327033",
+                "226555784685913",
+                "275047120160191"
+            ],
+            [
+                "110910759327033"
+            ]
+        ]
     },
-    "timestamp": 1529968836197
-}, {
-    "time": 1675,
-    "timeup": false,
-    "done": true,
-    "player": "516653376872760",
-    "stage": {
-        "stage": 1,
-        "step": 2,
-        "round": 1
+    "226555784685913": {
+        "visits": [
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "110910759327033"
+            ],
+            [
+                "131345331507354"
+            ],
+            []
+        ]
     },
-    "timestamp": 1529968838249
-}, {
-    "time": 2632,
-    "timeup": false,
-    "done": true,
-    "player": "520939640099270",
-    "stage": {
-        "stage": 1,
-        "step": 2,
-        "round": 1
-    },
-    "timestamp": 1529968839355
-}]
+    "110910759327033": {
+        "visits": [
+            {
+                "visitee": "226555784685913",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "131345331507354",
+                "226555784685913"
+            ],
+            [],
+            [
+                "226555784685913",
+                "131345331507354",
+                "275047120160191"
+            ]
+        ]
+    }
+}

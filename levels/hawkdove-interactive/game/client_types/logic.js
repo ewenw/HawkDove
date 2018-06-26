@@ -10,6 +10,7 @@
 "use strict";
 
 var ngc = require('nodegame-client');
+var fs = require('fs');
 var stepRules = ngc.stepRules;
 var constants = ngc.constants;
 var J = ngc.JSUS;
@@ -95,9 +96,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('end', {
         cb: function () {
-            console.log("Final game data: " + JSON.stringify(node.game.visitsQueue));
-            node.game.memory.save(channel.getGameDir() + 'data/data_' +
-                node.nodename + '.json');
+            var path = channel.getGameDir() + 'data/data_' + node.nodename + '.json';
+            console.log("Saving game data to " + path);
+            fs.writeFile(path, JSON.stringify(node.game.visitsQueue, null, 2), function(err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
         }
     });
 
