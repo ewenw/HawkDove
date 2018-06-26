@@ -150,12 +150,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // shuffle visits
             node.game.shuffle(node.game.visitsQueue);
 
-            for(var visit in node.game.visitsQueue){
+            for(var visit of node.game.visitsQueue){
                 order.push(visit.visitor);
             }
+
             // send order of responses to server
             node.say('order', 'SERVER', order);
-            
+
             if (node.game.visitsQueue.length == 0) {
                 respondDiv.innerHTML = 'No visitors.';
                 node.done();

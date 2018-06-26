@@ -57,7 +57,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.data('response', function (msg) {
             initDataContainer(msg.data.visitor);
-            console.log(msg.data);
             node.game.visitsQueue[msg.data.visitor].visits.push({ 
                 visitee: msg.data.visitee, 
                 visitStrategy: msg.data.visitStrategy, 
@@ -66,7 +65,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
         node.on.data('order', function (msg) {
             initDataContainer(msg.from);
-            console.log(msg.data);
             node.game.visitsQueue[msg.from].orders.push(msg.data);
         });
     });
@@ -97,7 +95,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('end', {
         cb: function () {
-            console.log(node.game.visitsQueue);
+            console.log("Final game data: " + JSON.stringify(node.game.visitsQueue));
             node.game.memory.save(channel.getGameDir() + 'data/data_' +
                 node.nodename + '.json');
         }
