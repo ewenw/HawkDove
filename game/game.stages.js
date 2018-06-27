@@ -10,8 +10,19 @@
  */
 
 module.exports = function(stager, settings) {
-
-     stager
+    if (settings.TUTORIAL){
+        stager
+        .stage('tutorial')
+        .step('welcome')
+        .step('instructions')
+        .step('survey')
+        .step('practice')
+        .step('practice_respond')
+        .step('practice_end')
+        .gameover();
+    }
+    else {
+        stager
         .stage('tutorial')
         .step('welcome')
         .step('instructions')
@@ -22,12 +33,8 @@ module.exports = function(stager, settings) {
         .stage('end')
         .step('practice_end')
         .gameover();
-        //.repeat('game', settings.REPEAT)
-        //.next('end')
-        //.gameover();
-
-    // Modify the stager to skip one stage.
-stager.skip('tutorial');
-stager.skip('game');
+        stager.skip('tutorial');
+        stager.skip('game');
+    }
     return stager.getState();
 };
