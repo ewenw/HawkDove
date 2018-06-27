@@ -69,6 +69,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.visitsQueue[msg.from].orders.push(msg.data);
         });
     });
+
     stager.extendStep('visit', {
         cb: function () {
             node.on.data('done', function (msg) {
@@ -82,9 +83,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('respond', {
         cb: function () {
-            node.on.data('response', function (msg) {
-
-            });
+            broadcastPayoffs(settings.PAYOFFS);
         }
     });
 
@@ -107,6 +106,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         console.log("Moving player to waiting room");
 
     });
+
+    var broadcastPayoffs = function(payoffs){
+        for(var player of node.game.pl.db){
+            node.say('updatePayoffs', player.id, payoffs);
+        }
+    };
 
     // Here we group together the definition of the game logic.
     return {

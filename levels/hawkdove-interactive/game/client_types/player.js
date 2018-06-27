@@ -101,7 +101,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
         });
 
-        node.on.updatePayoffs('updatePayoff', function (msg) {
+        node.on.data('updatePayoffs', function (msg) {
             console.log('Payoffs updated');
             node.game.payoffs = msg.data;
         });
@@ -177,7 +177,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 visit = node.game.visitsQueue.pop();
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = 'You earned $' + node.game.payoffs[strat1 + strat2];
+                result.innerHTML = 'You earned $' + node.game.payoffs[strategy + visit.strategy];
                 node.say('response', 'SERVER', { 
                     visitor: visit.visitor, 
                     visitee: node.player.id, 

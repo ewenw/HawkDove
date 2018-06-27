@@ -1,129 +1,50 @@
 {
-    "275047120160191": {
-        "visits": [
-            {
-                "visitee": "131345331507354",
-                "visitStrategy": "y",
-                "responseStrategy": "x",
-                "round": 1
-            },
-            {
-                "visitee": "131345331507354",
-                "visitStrategy": "y",
-                "responseStrategy": "x",
-                "round": 2
-            },
-            {
-                "visitee": "110910759327033",
-                "visitStrategy": "y",
-                "responseStrategy": "x",
-                "round": 3
-            }
-        ],
-        "orders": [
-            [],
-            [],
-            []
-        ]
-    },
-    "131345331507354": {
-        "visits": [
-            {
-                "visitee": "110910759327033",
-                "visitStrategy": "y",
-                "responseStrategy": "y",
-                "round": 1
-            },
-            {
-                "visitee": "226555784685913",
-                "visitStrategy": "x",
-                "responseStrategy": "x",
-                "round": 2
-            },
-            {
-                "visitee": "110910759327033",
-                "visitStrategy": "x",
-                "responseStrategy": "y",
-                "round": 3
-            }
-        ],
-        "orders": [
-            [
-                "275047120160191"
-            ],
-            [
-                "110910759327033",
-                "226555784685913",
-                "275047120160191"
-            ],
-            [
-                "110910759327033"
-            ]
-        ]
-    },
-    "226555784685913": {
-        "visits": [
-            {
-                "visitee": "110910759327033",
-                "visitStrategy": "x",
-                "responseStrategy": "y",
-                "round": 1
-            },
-            {
-                "visitee": "131345331507354",
-                "visitStrategy": "x",
-                "responseStrategy": "x",
-                "round": 2
-            },
-            {
-                "visitee": "110910759327033",
-                "visitStrategy": "x",
-                "responseStrategy": "y",
-                "round": 3
-            }
-        ],
-        "orders": [
-            [
-                "110910759327033"
-            ],
-            [
-                "131345331507354"
-            ],
-            []
-        ]
-    },
-    "110910759327033": {
-        "visits": [
-            {
-                "visitee": "226555784685913",
-                "visitStrategy": "y",
-                "responseStrategy": "x",
-                "round": 1
-            },
-            {
-                "visitee": "131345331507354",
-                "visitStrategy": "x",
-                "responseStrategy": "x",
-                "round": 2
-            },
-            {
-                "visitee": "131345331507354",
-                "visitStrategy": "x",
-                "responseStrategy": "y",
-                "round": 3
-            }
-        ],
-        "orders": [
-            [
-                "131345331507354",
-                "226555784685913"
-            ],
-            [],
-            [
-                "226555784685913",
-                "131345331507354",
-                "275047120160191"
-            ]
-        ]
-    }
+  "222920270833752": {
+    "visits": [
+      {
+        "visitee": "828507356948873",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "round": 1
+      },
+      {
+        "visitee": "828507356948873",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "round": 2
+      }
+    ],
+    "orders": [
+      [
+        "828507356948873"
+      ],
+      [
+        "828507356948873"
+      ]
+    ]
+  },
+  "828507356948873": {
+    "visits": [
+      {
+        "visitee": "222920270833752",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "round": 1
+      },
+      {
+        "visitee": "222920270833752",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "round": 2
+      }
+    ],
+    "orders": [
+      [
+        "222920270833752"
+      ],
+      [
+        "222920270833752"
+      ]
+    ]
+  }
 }
