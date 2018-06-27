@@ -31,7 +31,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         // A queue of visits to be responded to
         node.game.visitsQueue = [];
-        
+
         // Payoff table
         node.game.payoffs = {};
 
@@ -147,9 +147,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 earnings.style.display = 'block';
                 lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
                 totalEarnings.innerHTML = node.game.earnings.total;
-                
+
             });
-            
+
             xbtn.onclick = function () {
                 respond('H');
             };
@@ -177,7 +177,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // shuffle visits
             node.game.shuffle(node.game.visitsQueue);
 
-            for(var visit of node.game.visitsQueue){
+            for (var visit of node.game.visitsQueue) {
                 order.push(visit.visitor);
             }
 
@@ -197,12 +197,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
                 result.innerHTML = 'You earned $' + node.game.payoffs[strategy + visit.strategy];
-                node.say('response', 'SERVER', { 
-                    visitor: visit.visitor, 
-                    visitee: node.player.id, 
-                    visitStrategy: visit.strategy, 
-                    responseStrategy: strategy, 
-                    round: node.game.getRound()});
+                node.say('response', 'SERVER', {
+                    visitor: visit.visitor,
+                    visitee: node.player.id,
+                    visitStrategy: visit.strategy,
+                    responseStrategy: strategy,
+                    round: node.game.getRound()
+                });
                 setTimeout(function () {
                     if (node.game.visitsQueue.length == 0) {
                         node.done();
@@ -213,16 +214,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }, 1000);
             };
         }
-    }); 
+    });
     stager.extendStep('end', {
         donebutton: false,
         frame: 'postgame.htm',
-        cb: function() {
+        cb: function () {
             node.game.visualTimer.setToZero();
 
         }
     });
-    
+
     game = setup;
     game.plot = stager.getState();
     return game;

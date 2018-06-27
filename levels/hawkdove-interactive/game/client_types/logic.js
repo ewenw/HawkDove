@@ -25,7 +25,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     // Increment counter.
     counter = counter ? ++counter : settings.SESSION_ID || 1;
-    
+
     /* Data format:
         "12345": {
             visits: [
@@ -49,8 +49,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function () {
         // initialize data container (props) in object for given player
-        var initDataContainer = function(pid) {
-            if(!node.game.visitsQueue[pid]){
+        var initDataContainer = function (pid) {
+            if (!node.game.visitsQueue[pid]) {
                 node.game.visitsQueue[pid] = {};
                 node.game.visitsQueue[pid].visits = [];
                 node.game.visitsQueue[pid].orders = [];
@@ -62,9 +62,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             initDataContainer(msg.data.visitor);
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
             var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
-            node.game.visitsQueue[msg.data.visitor].visits.push({ 
-                visitee: msg.data.visitee, 
-                visitStrategy: msg.data.visitStrategy, 
+            node.game.visitsQueue[msg.data.visitor].visits.push({
+                visitee: msg.data.visitee,
+                visitStrategy: msg.data.visitStrategy,
                 responseStrategy: msg.data.responseStrategy,
                 round: msg.data.round,
                 visitorEarning: visitorEarning,
@@ -72,9 +72,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             });
 
             // update visitor earnings
-            node.game.visitsQueue[msg.data.visitor].totalEarnings = node.game.visitsQueue[msg.data.visitor].totalEarnings + visitorEarning; 
+            node.game.visitsQueue[msg.data.visitor].totalEarnings = node.game.visitsQueue[msg.data.visitor].totalEarnings + visitorEarning;
             // update visitee earnings
-            node.game.visitsQueue[msg.data.visitee].totalEarnings = node.game.visitsQueue[msg.data.visitee].totalEarnings + visiteeEarning; 
+            node.game.visitsQueue[msg.data.visitee].totalEarnings = node.game.visitsQueue[msg.data.visitee].totalEarnings + visiteeEarning;
         });
         node.on.data('order', function (msg) {
             initDataContainer(msg.from);
@@ -84,7 +84,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('visit', {
         cb: function () {
-            if(node.game.getRound() > 1){
+            if (node.game.getRound() > 1) {
                 broadcastPlayerEarnings();
             }
             node.on.data('done', function (msg) {
@@ -108,7 +108,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         cb: function () {
             var path = channel.getGameDir() + 'data/data_' + node.nodename + '.json';
             console.log("Saving game data to " + path);
-            fs.writeFile(path, JSON.stringify(node.game.visitsQueue, null, 2), function(err) {
+            fs.writeFile(path, JSON.stringify(node.game.visitsQueue, null, 2), function (err) {
                 if (err) {
                     console.log(err);
                 }
@@ -122,19 +122,19 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
-    var broadcastPlayerEarnings = function(){
+    var broadcastPlayerEarnings = function () {
         var data = node.game.visitsQueue;
-        for(var player in data){
+        for (var player in data) {
             var visits = data[player].visits;
             node.say('updateEarnings', player, {
-                lastRound: visits[visits.length-1].visitorEarning,
+                lastRound: visits[visits.length - 1].visitorEarning,
                 total: data[player].totalEarnings
             });
         }
     };
 
-    var broadcastPayoffs = function(payoffs){
-        for(var player of node.game.pl.db){
+    var broadcastPayoffs = function (payoffs) {
+        for (var player of node.game.pl.db) {
             node.say('updatePayoffs', player.id, payoffs);
         }
     };
