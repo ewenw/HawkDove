@@ -35,6 +35,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         // Payoff table
         node.game.payoffs = {};
 
+        // Player earnings
+        node.game.earnings = {};
+
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
             return node.JSUS.isInt(n, -1, 101);
@@ -105,6 +108,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             console.log('Payoffs updated');
             node.game.payoffs = msg.data;
         });
+
         //this.doneButton = node.widgets.append('DoneButton', this.header);
         //this.doneButton._setText('Done');
 
@@ -121,6 +125,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var neighborsDiv = W.gid('players');
             var xbtn = W.gid('xbtn');
             var ybtn = W.gid('ybtn');
+            var earnings = W.gid('earnings');
+            var lastRoundEarnings = W.gid('lastRoundEarnings');
+            var totalEarnings = W.gid('totalEarnings');
             var angle = 180 / (node.game.pl.size() + 1);
             var offset = 180;
             this.visitId = null;
@@ -131,6 +138,18 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var y = Math.sin(rads) * 300 + 600;
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
+
+            earnings.style.display = 'none';
+
+            node.on.data('updateEarnings', function (msg) {
+                console.log('Earnings updated');
+                node.game.earnings = msg.data;
+                earnings.style.display = 'block';
+                lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
+                totalEarnings.innerHTML = node.game.earnings.total;
+                
+            });
+            
             xbtn.onclick = function () {
                 respond('H');
             };

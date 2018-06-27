@@ -45,6 +45,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     */
     node.game.visitsQueue = {};
+    node.game.payoffs = settings.PAYOFFS;
 
     stager.setOnInit(function () {
         // initialize data container (props) in object for given player
@@ -53,16 +54,27 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.game.visitsQueue[pid] = {};
                 node.game.visitsQueue[pid].visits = [];
                 node.game.visitsQueue[pid].orders = [];
+                node.game.visitsQueue[pid].totalEarnings = 0;
             }
         };
 
         node.on.data('response', function (msg) {
             initDataContainer(msg.data.visitor);
+            var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
+            var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
             node.game.visitsQueue[msg.data.visitor].visits.push({ 
                 visitee: msg.data.visitee, 
                 visitStrategy: msg.data.visitStrategy, 
                 responseStrategy: msg.data.responseStrategy,
-                round: msg.data.round});
+                round: msg.data.round,
+                visitorEarning: visitorEarning,
+                visiteeEarning: visiteeEarning
+            });
+
+            // update visitor earnings
+            node.game.visitsQueue[msg.data.visitor].totalEarnings = node.game.visitsQueue[msg.data.visitor].totalEarnings + visitorEarning; 
+            // update visitee earnings
+            node.game.visitsQueue[msg.data.visitee].totalEarnings = node.game.visitsQueue[msg.data.visitee].totalEarnings + visiteeEarning; 
         });
         node.on.data('order', function (msg) {
             initDataContainer(msg.from);
@@ -72,6 +84,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('visit', {
         cb: function () {
+            if(node.game.getRound() > 1){
+                broadcastPlayerEarnings();
+            }
             node.on.data('done', function (msg) {
                 var visitor = msg.from;
                 var visitee = msg.data.visitee;
@@ -83,7 +98,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('respond', {
         cb: function () {
-            broadcastPayoffs(settings.PAYOFFS);
+            broadcastPayoffs(node.game.payoffs);
         }
     });
 
@@ -106,6 +121,17 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         console.log("Moving player to waiting room");
 
     });
+
+    var broadcastPlayerEarnings = function(){
+        var data = node.game.visitsQueue;
+        for(var player in data){
+            var visits = data[player].visits;
+            node.say('updateEarnings', player, {
+                lastRound: visits[visits.length-1].visitorEarning,
+                total: data[player].totalEarnings
+            });
+        }
+    };
 
     var broadcastPayoffs = function(payoffs){
         for(var player of node.game.pl.db){

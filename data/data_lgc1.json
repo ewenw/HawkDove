@@ -1,50 +1,60 @@
 {
-  "222920270833752": {
+  "250623034180649": {
     "visits": [
       {
-        "visitee": "828507356948873",
+        "visitee": "211150617374048",
         "visitStrategy": "H",
         "responseStrategy": "D",
-        "round": 1
+        "round": 1,
+        "visitorEarning": 100,
+        "visiteeEarning": 20
       },
       {
-        "visitee": "828507356948873",
-        "visitStrategy": "H",
+        "visitee": "211150617374048",
+        "visitStrategy": "D",
         "responseStrategy": "D",
-        "round": 2
+        "round": 2,
+        "visitorEarning": 60,
+        "visiteeEarning": 60
       }
     ],
     "orders": [
       [
-        "828507356948873"
+        "211150617374048"
       ],
       [
-        "828507356948873"
+        "211150617374048"
       ]
-    ]
+    ],
+    "totalEarnings": 260
   },
-  "828507356948873": {
+  "211150617374048": {
     "visits": [
       {
-        "visitee": "222920270833752",
+        "visitee": "250623034180649",
         "visitStrategy": "D",
         "responseStrategy": "H",
-        "round": 1
+        "round": 1,
+        "visitorEarning": 20,
+        "visiteeEarning": 100
       },
       {
-        "visitee": "222920270833752",
+        "visitee": "250623034180649",
         "visitStrategy": "H",
         "responseStrategy": "H",
-        "round": 2
+        "round": 2,
+        "visitorEarning": 0,
+        "visiteeEarning": 0
       }
     ],
     "orders": [
       [
-        "222920270833752"
+        "250623034180649"
       ],
       [
-        "222920270833752"
+        "250623034180649"
       ]
-    ]
+    ],
+    "totalEarnings": 100
   }
 }
