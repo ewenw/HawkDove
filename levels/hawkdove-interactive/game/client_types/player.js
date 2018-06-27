@@ -31,6 +31,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         // A queue of visits to be responded to
         node.game.visitsQueue = [];
+        
+        // Payoff table
+        node.game.payoffs = {};
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
@@ -97,6 +100,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             console.log('You were visited by ' + msg.data.visitor + ' with action ' + msg.data.strategy);
             node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
         });
+
+        node.on.updatePayoffs('updatePayoff', function (msg) {
+            console.log('Payoffs updated');
+            node.game.payoffs = msg.data;
+        });
         //this.doneButton = node.widgets.append('DoneButton', this.header);
         //this.doneButton._setText('Done');
 
@@ -109,12 +117,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'visit.htm',
         cb: function () {
+            var that = this;
             var neighborsDiv = W.gid('players');
             var xbtn = W.gid('xbtn');
             var ybtn = W.gid('ybtn');
             var angle = 180 / (node.game.pl.size() + 1);
             var offset = 180;
-            var that = this;
             this.visitId = null;
             for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
@@ -124,10 +132,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
             xbtn.onclick = function () {
-                respond('x');
+                respond('H');
             };
             ybtn.onclick = function () {
-                respond('y');
+                respond('D');
             };
             var respond = function (strategy) {
                 node.done({ visitor: node.player.id, visitee: that.visitId, strategy: strategy });
@@ -162,14 +170,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.done();
             }
 
-            xbtn.onclick = function () { respond('x'); };
-            ybtn.onclick = function () { respond('y'); };
+            xbtn.onclick = function () { respond('H'); };
+            ybtn.onclick = function () { respond('D'); };
 
             var respond = function (strategy) {
                 visit = node.game.visitsQueue.pop();
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = 'The results will show here';
+                result.innerHTML = 'You earned $' + node.game.payoffs[strat1 + strat2];
                 node.say('response', 'SERVER', { 
                     visitor: visit.visitor, 
                     visitee: node.player.id, 
@@ -186,8 +194,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }, 1000);
             };
         }
-    });
-    
+    }); 
     stager.extendStep('end', {
         donebutton: false,
         frame: 'postgame.htm',

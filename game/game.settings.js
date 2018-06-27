@@ -47,8 +47,16 @@ module.exports = {
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 3,
+    REPEAT: 2,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: true
+    TUTORIAL: false,
+
+    // payoff table
+    PAYOFFS: {
+        HH: 0,
+        HD: 100,
+        DH: 20,
+        DD: 60
+    }
 };
