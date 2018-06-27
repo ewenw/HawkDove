@@ -35,10 +35,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var visitor = msg.from;
                 var visitee = msg.data.visitee;
                 var strategy = msg.data.strategy;
-                if (!node.game.visitsQueue[visitee]) {
-                    node.game.visitsQueue[visitee] = [];
-                }
-                node.game.visitsQueue[visitee].push({ visitor: visitor, strategy: strategy });
                 node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
             })
         }
@@ -46,17 +42,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('respond', {
         cb: function () {
-           /* console.log('SIZE OF DB IS ' + node.game.memory.size());
-            console.log('the visit queue has ' + node.game.visitsQueue);
-            for (var player in node.game.visitsQueue) {
-                console.log(player);
-            }*/
+            node.on.data('response', function (msg) {
+
+            });
         }
     });
 
     // stager.setDefaultStepRule(stepRules.WAIT);
-
-
 
     stager.extendStep('end', {
         cb: function () {
