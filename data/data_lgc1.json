@@ -1,85 +1,129 @@
-[{
-    "time": 2274,
-    "timeup": false,
-    "visitor": "774410273375177",
-    "visitee": "848125686812896",
-    "strategy": "x",
-    "done": true,
-    "player": "774410273375177",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 1
+{
+    "275047120160191": {
+        "visits": [
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [],
+            [],
+            []
+        ]
     },
-    "timestamp": 1529772157928
-}, {
-    "time": 1739,
-    "timeup": false,
-    "visitor": "774410273375177",
-    "visitee": "!?_null",
-    "strategy": "x",
-    "done": true,
-    "player": "774410273375177",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 2
+    "131345331507354": {
+        "visits": [
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "y",
+                "responseStrategy": "y",
+                "round": 1
+            },
+            {
+                "visitee": "226555784685913",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "275047120160191"
+            ],
+            [
+                "110910759327033",
+                "226555784685913",
+                "275047120160191"
+            ],
+            [
+                "110910759327033"
+            ]
+        ]
     },
-    "timestamp": 1529772159672
-}, {
-    "time": 6635,
-    "timeup": false,
-    "visitor": "848125686812896",
-    "visitee": "774410273375177",
-    "strategy": "y",
-    "done": true,
-    "player": "848125686812896",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 1
+    "226555784685913": {
+        "visits": [
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "110910759327033",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "110910759327033"
+            ],
+            [
+                "131345331507354"
+            ],
+            []
+        ]
     },
-    "timestamp": 1529772162392
-}, {
-    "time": 6730,
-    "timeup": false,
-    "visitor": "848125686812896",
-    "visitee": "!?_null",
-    "strategy": "y",
-    "done": true,
-    "player": "848125686812896",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 2
-    },
-    "timestamp": 1529772169127
-}, {
-    "time": 559,
-    "timeup": false,
-    "visitor": "848125686812896",
-    "visitee": "!?_null",
-    "strategy": "y",
-    "done": true,
-    "player": "848125686812896",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 2
-    },
-    "timestamp": 1529772169695
-}, {
-    "time": 4653,
-    "timeup": false,
-    "visitor": "774410273375177",
-    "visitee": "!?_null",
-    "strategy": "x",
-    "done": true,
-    "player": "774410273375177",
-    "stage": {
-        "stage": 1,
-        "step": 1,
-        "round": 2
-    },
-    "timestamp": 1529772173792
-}]
+    "110910759327033": {
+        "visits": [
+            {
+                "visitee": "226555784685913",
+                "visitStrategy": "y",
+                "responseStrategy": "x",
+                "round": 1
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "x",
+                "round": 2
+            },
+            {
+                "visitee": "131345331507354",
+                "visitStrategy": "x",
+                "responseStrategy": "y",
+                "round": 3
+            }
+        ],
+        "orders": [
+            [
+                "131345331507354",
+                "226555784685913"
+            ],
+            [],
+            [
+                "226555784685913",
+                "131345331507354",
+                "275047120160191"
+            ]
+        ]
+    }
+}
