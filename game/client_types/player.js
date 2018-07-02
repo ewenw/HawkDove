@@ -168,12 +168,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 this.neighbors[i].setAttribute('type', 'button');
                 this.neighbors[i].setAttribute('class', 'circle-badge btn');
                 this.neighbors[i].innerHTML = symbols[i];
-                this.neighbors[i].style.position = 'absolute';
+                this.neighbors[i].style.position = 'relative';
                 var rads = (offset + angle * (i+1)) * Math.PI / 180;
                 var x = Math.cos(rads) * 300;
                 var y = Math.sin(rads) * 300;
-                this.neighbors[i].style.left = (x + 800) + 'px';
-                this.neighbors[i].style.top = (y + 600) + 'px';
+                this.neighbors[i].style.left = (x + 20) + 'px';
+                this.neighbors[i].style.top = (y + 450) + 'px';
                 neighborsDiv.appendChild(this.neighbors[i]);
             }
             this.neighbors[2].setAttribute('data-toggle', 'modal');

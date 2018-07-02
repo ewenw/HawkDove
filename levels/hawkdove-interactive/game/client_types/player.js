@@ -83,7 +83,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn.setAttribute('type', 'button');
             btn.setAttribute('class', 'circle-badge btn');
             btn.innerHTML = symbol;
-            btn.style.position = 'absolute';
+            btn.style.position = 'relative';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
             btn.setAttribute('data-toggle', 'modal');
@@ -96,7 +96,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             div.appendChild(btn);
         };
 
-        this.symbols = ['@', '#', '$', '%', '^', '&'];
+        this.symbols = ['@', '#', '$', '%', '^', '&', '<', '>', '/', '~'];
         node.game.shuffle(this.symbols);
 
         node.on.data('addVisit', function (msg) {
@@ -134,8 +134,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 300 + 800;
-                var y = Math.sin(rads) * 300 + 600;
+                var x = Math.cos(rads) * 300 + 20;
+                var y = Math.sin(rads) * 300 + 450;
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
 
@@ -207,7 +207,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 setTimeout(function () {
                     if (node.game.visitsQueue.length == 0) {
                         node.done();
-                        respondDiv.innerHTML = 'Waiting for other players...';
+                        respondDiv.innerHTML = '';
                     }
                     respondDiv.style.display = 'block';
                     result.style.display = 'none';
