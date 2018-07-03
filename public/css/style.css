@@ -61,3 +61,8 @@ div.choicetable textarea {
     display: table-cell; 
     vertical-align: middle;
   }
+
+.modal {
+    position: absolute;
+    top: 50px;
+}

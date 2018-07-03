@@ -120,6 +120,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('visit', {
         donebutton: false,
         frame: 'visit.htm',
+        timeup: function() {
+            // TODO:
+            // penalty and auto decision
+        },
         cb: function () {
             var that = this;
             var neighborsDiv = W.gid('players');
@@ -209,8 +213,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                         node.done();
                         respondDiv.innerHTML = '';
                     }
+                    else {
                     respondDiv.style.display = 'block';
                     result.style.display = 'none';
+                    node.game.visualTimer.restart();
+                    }
                 }, 1000);
             };
         }

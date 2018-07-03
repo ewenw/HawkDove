@@ -11,3 +11,9 @@ variables for timing
 2 phases for training and playing
 
 3 rounds kick out? random decisions based on history average
+
+
+*****
+times of visit and response
+grey out players who dropped
+reinforcement bot if there is history
