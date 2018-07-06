@@ -1,1 +1,48 @@
-{}
+{
+  "659770176010009": {
+    "visits": [
+      "DROPOUT"
+    ],
+    "orders": [],
+    "totalEarnings": 0
+  },
+  "750391563146113": {
+    "visits": [
+      {
+        "visitee": "668554581576543",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "round": 1,
+        "visitorEarning": 100,
+        "visiteeEarning": 20
+      },
+      "DROPOUT"
+    ],
+    "orders": [
+      [
+        "668554581576543"
+      ]
+    ],
+    "totalEarnings": 200
+  },
+  "668554581576543": {
+    "visits": [
+      {
+        "visitee": "750391563146113",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "round": 1,
+        "visitorEarning": 20,
+        "visiteeEarning": 100
+      },
+      "DROPOUT"
+    ],
+    "orders": [
+      [
+        "659770176010009",
+        "750391563146113"
+      ]
+    ],
+    "totalEarnings": 40
+  }
+}

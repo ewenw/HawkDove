@@ -62,7 +62,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             player.allowReconnect = false;
             initDataContainer(player.id);
             node.game.visitsQueue[player.id].visits.push('DROPOUT');
-            broadcastDropOut(player.id);
             channel.connectBot({
                 room: gameRoom,
                 clientType: 'bot',

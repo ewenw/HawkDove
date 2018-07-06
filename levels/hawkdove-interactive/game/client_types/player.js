@@ -38,8 +38,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         // Player earnings
         node.game.earnings = {};
 
-        // Ids of players that have dropped out 
-        node.game.dropOuts = {};
+        // Keep track of original players to distinguish possible bots from players
+        node.game.originalIds = node.game.pl.id.getAllKeyElements();
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
@@ -89,7 +89,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn.style.position = 'relative';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
-            if(!node.game.dropOuts[id]){
+            if (node.game.originalIds.hasOwnProperty(id)) {
                 btn.setAttribute('data-toggle', 'modal');
                 btn.setAttribute('data-target', '#visit');
                 btn.onclick = function () {
@@ -99,8 +99,43 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             }
             else {
                 btn.disabled = true;
+                console.log('Disabling button');
             }
             div.appendChild(btn);
+        };
+
+        this.visit = function (strategy, visitId) {
+            node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy });
+        };
+        this.respond = function (strategy, timeup) {
+            var visit = node.game.visitsQueue.pop();
+            var xbtn = W.gid('xbtn');
+            var ybtn = W.gid('ybtn');
+            var result = W.gid('result');
+            var respondDiv = W.gid('respond');
+            if(!timeup){
+                respondDiv.style.display = 'none';
+                result.style.display = 'block';
+                result.innerHTML = 'You earned $' + node.game.payoffs[strategy + visit.strategy];
+            }
+            node.say('response', 'SERVER', {
+                visitor: visit.visitor,
+                visitee: node.player.id,
+                visitStrategy: visit.strategy,
+                responseStrategy: strategy,
+                round: node.game.getRound()
+            });
+            setTimeout(function () {
+                if (node.game.visitsQueue.length == 0) {
+                    node.done();
+                    respondDiv.innerHTML = '';
+                }
+                else {
+                respondDiv.style.display = 'block';
+                result.style.display = 'none';
+                node.game.visualTimer.restart();
+                }
+            }, 1000);
         };
 
         this.symbols = ['@', '#', '$', '%', '^', '&', '<', '>', '/', '~'];
@@ -113,18 +148,21 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('updatePayoffs', function (msg) {
             node.game.payoffs = msg.data;
         });
-
-        node.on.data('dropOut', function(msg) {
-            node.game.dropOuts[msg.data] = true;
-        });
     });
 
     stager.extendStep('visit', {
         donebutton: false,
         frame: 'visit.htm',
         timeup: function() {
+            var that = this;
             // TODO:
             // penalty and auto decision
+            var container = W.gid('container');
+            container.innerHTML = '<br/><h2>You ran out of time and have been penalized.</h2>';
+            setTimeout(function () {
+                var playerList = node.game.pl.db;
+                that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[Math.floor(Math.random()*playerList.length)].id);
+            }, 1000);
         },
         cb: function () {
             var that = this;
@@ -157,13 +195,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             });
 
             xbtn.onclick = function () {
-                respond('H');
+                that.visit('H', that.visitId);
             };
+
             ybtn.onclick = function () {
-                respond('D');
-            };
-            var respond = function (strategy) {
-                node.done({ visitor: node.player.id, visitee: that.visitId, strategy: strategy });
+                that.visit('D', that.visitId);
             };
         }
     });
@@ -171,12 +207,20 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('respond', {
         donebutton: false,
         frame: 'respond.htm',
+        timeup: function () {
+            var that = this;
+            var respondDiv = W.gid('respond');
+            respondDiv.innerHTML = '<br/><br/><h2>You ran out of time and have been penalized.</h2>';
+            setTimeout(function () {
+                that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
+            }, 1000);
+        },
         cb: function () {
+            var that = this;
             var xbtn = W.gid('xbtn');
             var ybtn = W.gid('ybtn');
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
-            var visit;
             var order = [];
             result.style.display = 'none';
 
@@ -191,37 +235,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.say('order', 'SERVER', order);
 
             if (node.game.visitsQueue.length == 0) {
-                respondDiv.innerHTML = 'No visitors.';
+                respondDiv.innerHTML = '<br/><br/><h3>No visitors this round.</h3>';
                 node.done();
             }
 
-            xbtn.onclick = function () { respond('H'); };
-            ybtn.onclick = function () { respond('D'); };
-
-            var respond = function (strategy) {
-                visit = node.game.visitsQueue.pop();
-                respondDiv.style.display = 'none';
-                result.style.display = 'block';
-                result.innerHTML = 'You earned $' + node.game.payoffs[strategy + visit.strategy];
-                node.say('response', 'SERVER', {
-                    visitor: visit.visitor,
-                    visitee: node.player.id,
-                    visitStrategy: visit.strategy,
-                    responseStrategy: strategy,
-                    round: node.game.getRound()
-                });
-                setTimeout(function () {
-                    if (node.game.visitsQueue.length == 0) {
-                        node.done();
-                        respondDiv.innerHTML = '';
-                    }
-                    else {
-                    respondDiv.style.display = 'block';
-                    result.style.display = 'none';
-                    node.game.visualTimer.restart();
-                    }
-                }, 1000);
-            };
+            xbtn.onclick = function () { that.respond('H', false); };
+            ybtn.onclick = function () { that.respond('D', false); };
         }
     });
     stager.extendStep('end', {
