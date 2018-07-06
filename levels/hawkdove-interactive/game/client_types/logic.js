@@ -60,6 +60,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.pdisconnect(function(player) {
             player.allowReconnect = false;
+            node.game.visitsQueue[player.id].visits.push('DROPOUT');
             channel.connectBot({
                 room: gameRoom,
                 clientType: 'bot',
@@ -71,7 +72,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 replaceId: player.id,
                 gotoStep: node.player.stage
             });
-            node.game.visitsQueue[player.id].visits.push("DROP");
         });
 
         node.on.data('response', function (msg) {

@@ -38,6 +38,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         // Player earnings
         node.game.earnings = {};
 
+        // Ids of players that have dropped out 
+        node.game.dropOuts = {};
+
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
             return node.JSUS.isInt(n, -1, 101);
@@ -100,21 +103,17 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.game.shuffle(this.symbols);
 
         node.on.data('addVisit', function (msg) {
-            console.log('You were visited by ' + msg.data.visitor + ' with action ' + msg.data.strategy);
             node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
         });
 
         node.on.data('updatePayoffs', function (msg) {
-            console.log('Payoffs updated');
             node.game.payoffs = msg.data;
         });
 
-        //this.doneButton = node.widgets.append('DoneButton', this.header);
-        //this.doneButton._setText('Done');
-
-
-        // Additional debug information while developing the game.
-        // this.debugInfo = node.widgets.append('DebugInfo', header)
+        node.on.data('dropOut', function(pid) {
+            dropOuts[pid] = true;
+            updateUI();
+        });
     });
 
     stager.extendStep('visit', {

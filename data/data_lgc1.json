@@ -1,10 +1,39 @@
 {
-  "567971814031198": {
+  "948049183677724": {
     "visits": [],
+    "orders": [
+      [
+        "812088050967891"
+      ],
+      [
+        "812088050967891"
+      ]
+    ],
+    "totalEarnings": 160
+  },
+  "812088050967891": {
+    "visits": [
+      {
+        "visitee": "948049183677724",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "round": 1,
+        "visitorEarning": 60,
+        "visiteeEarning": 60
+      },
+      {
+        "visitee": "948049183677724",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "round": 2,
+        "visitorEarning": 20,
+        "visiteeEarning": 100
+      }
+    ],
     "orders": [
       [],
       []
     ],
-    "totalEarnings": 0
+    "totalEarnings": 80
   }
 }
