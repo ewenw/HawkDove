@@ -1,48 +1,10 @@
 {
-  "297663719766972": {
+  "567971814031198": {
     "visits": [],
-    "orders": [
-      [
-        "389393965669139",
-        "315443873560007"
-      ],
-      []
-    ],
-    "totalEarnings": 60
-  },
-  "315443873560007": {
-    "visits": [
-      {
-        "visitee": "297663719766972",
-        "visitStrategy": "H",
-        "responseStrategy": "H",
-        "round": 1,
-        "visitorEarning": 0,
-        "visiteeEarning": 0
-      }
-    ],
     "orders": [
       [],
       []
     ],
     "totalEarnings": 0
-  },
-  "389393965669139": {
-    "visits": [
-      {
-        "visitee": "297663719766972",
-        "visitStrategy": "D",
-        "responseStrategy": "D",
-        "round": 1,
-        "visitorEarning": 60,
-        "visiteeEarning": 60
-      }
-    ],
-    "orders": [
-      [
-        "297663719766972"
-      ]
-    ],
-    "totalEarnings": 60
   }
 }

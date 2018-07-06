@@ -58,6 +58,22 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             }
         };
 
+        node.on.pdisconnect(function(player) {
+            player.allowReconnect = false;
+            channel.connectBot({
+                room: gameRoom,
+                clientType: 'bot',
+                setup: {
+                    settings: {
+                        BOT_STRATEGY: "NAIVE"
+                    }
+                },
+                replaceId: player.id,
+                gotoStep: node.player.stage
+            });
+            node.game.visitsQueue[player.id].visits.push("DROP");
+        });
+
         node.on.data('response', function (msg) {
             initDataContainer(msg.data.visitor);
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
@@ -126,10 +142,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         var data = node.game.visitsQueue;
         for (var player in data) {
             var visits = data[player].visits;
-            node.say('updateEarnings', player, {
-                lastRound: visits[visits.length - 1].visitorEarning,
-                total: data[player].totalEarnings
-            });
+            if(visits[visits.length - 1]){
+                node.say('updateEarnings', player, {
+                    lastRound: visits[visits.length - 1].visitorEarning,
+                    total: data[player].totalEarnings
+                });
+            }
         }
     };
 
