@@ -89,13 +89,17 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn.style.position = 'relative';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
-            btn.setAttribute('data-toggle', 'modal');
-            btn.setAttribute('data-target', '#visit');
-            div.appendChild(btn);
-            btn.onclick = function () {
-                obj.visitId = id;
-                console.log(obj.visitId);
-            };
+            if(!node.game.dropOuts[id]){
+                btn.setAttribute('data-toggle', 'modal');
+                btn.setAttribute('data-target', '#visit');
+                btn.onclick = function () {
+                    obj.visitId = id;
+                    console.log(obj.visitId);
+                };
+            }
+            else {
+                btn.disabled = true;
+            }
             div.appendChild(btn);
         };
 
@@ -110,9 +114,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.payoffs = msg.data;
         });
 
-        node.on.data('dropOut', function(pid) {
-            dropOuts[pid] = true;
-            updateUI();
+        node.on.data('dropOut', function(msg) {
+            node.game.dropOuts[msg.data] = true;
         });
     });
 

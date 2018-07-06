@@ -60,7 +60,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.pdisconnect(function(player) {
             player.allowReconnect = false;
+            initDataContainer(player.id);
             node.game.visitsQueue[player.id].visits.push('DROPOUT');
+            broadcastDropOut(player.id);
             channel.connectBot({
                 room: gameRoom,
                 clientType: 'bot',
@@ -154,6 +156,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var broadcastPayoffs = function (payoffs) {
         for (var player of node.game.pl.db) {
             node.say('updatePayoffs', player.id, payoffs);
+        }
+    };
+
+    var broadcastDropOut = function (id) {
+        for (var player of node.game.pl.db) {
+            node.say('dropOut', player.id, id);
         }
     };
 
