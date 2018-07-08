@@ -21,13 +21,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var logic = gameRoom.node;
 
     // A queue of visits to be responded to
-    node.game.visitsQueue = [];
+    var visitsQueue = [];
 
     // Payoff table
-    node.game.payoffs = {};
+    var payoffs = {};
 
     // Determines likelihood of visiting each host
-    node.game.hostWeights = {};
+    var hostWeights = {};
 
     if (settings.BOT_TYPE == 'REINFORCEMENT') {
         var visitWeights = settings.BOT_WEIGHTS.visit;
@@ -58,9 +58,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         stager.extendStep('visit',
             {
                 cb: function () {
-                    node.game.pl.db.foreach(function (pl) {
-                        // node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy });
+                    var weights = [];
+                    node.game.pl.db.foreach(function (host) {
+                        if(!hostWeights[host.id]){
+                            hostWeights[host.id] = settings.BOT_WEIGHTS.hostWeight;
+                        }
+                        weights.push(hostWeights[host.id]);
                     });
+                    var hostToVisit = node.game.pl.db[pickWeightedIndex(weights)].id;
+                    var strategy = pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D';
+                    // node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy 
                 }
             });
 
@@ -69,14 +76,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
     }
 
-    // Picks an index out of array by corresponding probabilities
-    var pickWeightedIndex = function (probs) {
-        for (var i = 1; i < probs.length; i++) {
-            probs[i] += probs[i - 1];
+    // Picks an index out of array by corresponding weights
+    var pickWeightedIndex = function (weights) {
+        for (var i = 1; i < weights.length; i++) {
+            weights[i] += weights[i - 1];
         }
-        var rand = Math.random() * probs[probs.length - 1];
-        for (var i = 0; i < probs.length; i++) {
-            if (rand > probs[i])
+        var rand = Math.random() * weights[weights.length - 1];
+        for (var i = 0; i < weights.length; i++) {
+            if (rand > weights[i])
                 continue;
             else return i;
         }

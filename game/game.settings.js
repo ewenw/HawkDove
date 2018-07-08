@@ -76,6 +76,6 @@ module.exports = {
             H: 200,
             D: 200
         },
-        eachHost: 200
+        hostWeight: 200
     }
 };
