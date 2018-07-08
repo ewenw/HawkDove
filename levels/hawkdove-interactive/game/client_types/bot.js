@@ -19,14 +19,18 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     var channel = gameRoom.channel;
     var logic = gameRoom.node;
-    var node = gameRoom.node;
-    var channel = gameRoom.channel;
-    var visitWeights = settings.BOT_WEIGHTS.visit;
-    var respondWeights = settings.BOT_WEIGHTS.respond;
+
+    var visitWeights, respondWeights;
+
+    var node;
 
     stager.setDefaultStepRule(stepRules.WAIT);
-    if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
+    //if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
+            var lastStrategy;
+            node = this.node;
+            visitWeights = settings.BOT_WEIGHTS.visit;
+            respondWeights = settings.BOT_WEIGHTS.respond;
             // A queue of visits to be responded to
             node.game.visitsQueue = [];
 
@@ -46,13 +50,19 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.on.data('updateEarnings', function (msg) {
                 console.log('Earnings updated');
                 node.game.earnings = msg.data;
-                // node.game.earnings.lastRound;
+                visitWeights[lastStrategy] += node.game.earnings.lastRound;
                 // node.game.earnings.total;
             });
+
+            this.visit = function (strategy, visitId) {
+                lastStrategy = strategy;
+                node.done({ visitee: visitId, strategy: strategy });
+            };
         });
         stager.extendStep('visit',
             {
                 cb: function () {
+                    var that = this;
                     var weights = [];
                     var hostWeights = node.game.hostWeights;
                     node.game.pl.db.forEach(function (host) {
@@ -61,14 +71,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                         }
                         weights.push(hostWeights[host.id]);
                     });
-                    var that = this;
-                    this.hostToVisitId = node.game.pl.db[pickWeightedIndex(weights)].id;
-                    this.strategy = pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D';
-
-                    node.done({ 
-                        visitee: that.hostToVisitId, 
-                        strategy: that.strategy 
-                    });
+                    that.visit(pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D', node.game.pl.db[pickWeightedIndex(weights)].id);
                 }
             });
 
@@ -76,7 +79,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             cb: function () {
                 var that = this;
                 var order = [];
-                var respondWeights = node.game.respondWeights;
                 // shuffle visits
                 shuffle(node.game.visitsQueue);
 
@@ -92,7 +94,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
                 else {
                     node.game.visitsQueue.forEach(function (visit) {
-                        var visit = node.game.visitsQueue.pop();
                         var strategy = pickWeightedIndex([respondWeights.H, respondWeights.D]) == 0 ? 'H' : 'D';
                         node.say('response', 'SERVER', {
                             visitor: visit.visitor,
@@ -103,11 +104,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                         });
                         respondWeights[strategy] += node.game.payoffs[strategy + visit.strategy];
                     });
+                    node.game.visitsQueue = [];
                     node.done();
                 }
             }
         });
-    }
+    //}
     /**
      * Shuffles array in place.
      * @param {Array} a items An array containing the items.

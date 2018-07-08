@@ -56,7 +56,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.game.visitsQueue[pid].orders = [];
                 node.game.visitsQueue[pid].totalEarnings = 0;
             }
-            
         };
 
         node.on.pdisconnect(function(player) {
@@ -75,14 +74,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 gotoStep: node.player.stage
             });
         });
-        node.on.data('done', function (msg) {
-            var visitor = msg.from;
-            var visitee = msg.data.visitee;
-            var strategy = msg.data.strategy;
-            console.log('Visit from/to ' + visitor + ' visiting ' + visitee + ' strat' + strategy);
-            console.log('FULL DATA -------------- ' + JSON.stringify(msg.data));
-            node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
-        })
+
         node.on.data('response', function (msg) {
             initDataContainer(msg.data.visitor);
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
@@ -112,7 +104,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if (node.game.getRound() > 1) {
                 broadcastPlayerEarnings();
             }
-            
+            node.on.data('done', function (msg) {
+                var visitor = msg.from;
+                var visitee = msg.data.visitee;
+                var strategy = msg.data.strategy;
+                node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
+            })
         }
     });
 

@@ -236,8 +236,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             if (node.game.visitsQueue.length == 0) {
                 respondDiv.innerHTML = '<br/><br/><h3>No visitors this round.</h3>';
+                console.log('NO VISITORS ----------');
                 node.done();
             }
+            console.log('HAS VISITORS ' + node.game.visitsQueue.length);
 
             xbtn.onclick = function () { that.respond('H', false); };
             ybtn.onclick = function () { that.respond('D', false); };

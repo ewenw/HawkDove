@@ -42,7 +42,7 @@ module.exports = {
      */
     TIMER: {
         visit: 8000,
-        respond: 5000
+        respond: 10000
     },
 
     // # Game specific properties
