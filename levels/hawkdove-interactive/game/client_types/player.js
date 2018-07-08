@@ -105,7 +105,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         };
 
         this.visit = function (strategy, visitId) {
-            node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy });
+            node.done({ visitee: visitId, strategy: strategy });
         };
         this.respond = function (strategy, timeup) {
             var visit = node.game.visitsQueue.pop();

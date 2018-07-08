@@ -108,6 +108,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var visitor = msg.from;
                 var visitee = msg.data.visitee;
                 var strategy = msg.data.strategy;
+                console.log('Visit from/to ' + visitor + ' visiting ' + visitee + ' strat ' + strategy);
                 node.say('addVisit', visitee, { visitor: visitor, strategy: strategy });
             })
         }

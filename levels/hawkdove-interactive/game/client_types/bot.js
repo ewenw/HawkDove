@@ -19,27 +19,21 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     var channel = gameRoom.channel;
     var logic = gameRoom.node;
+    var node = gameRoom.node;
+    var channel = gameRoom.channel;
+    var visitWeights = settings.BOT_WEIGHTS.visit;
+    var respondWeights = settings.BOT_WEIGHTS.respond;
 
-    // A queue of visits to be responded to
-    var visitsQueue = [];
-
-    // Payoff table
-    var payoffs = {};
-
-    // Determines likelihood of visiting each host
-    var hostWeights = {};
-
-    if (settings.BOT_TYPE == 'REINFORCEMENT') {
-        var visitWeights = settings.BOT_WEIGHTS.visit;
-        var respondWeights = settings.BOT_WEIGHTS.respond;
+    if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
-            var that, node;
+            // A queue of visits to be responded to
+            node.game.visitsQueue = [];
 
-            that = this;
-            node = this.node;
+            // Payoff table
+            node.game.payoffs = {};
 
-            this.other = null;
-
+            // Determines likelihood of visiting each host
+            node.game.hostWeights = {};
             node.on.data('addVisit', function (msg) {
                 node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
             });
@@ -51,30 +45,78 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.on.data('updateEarnings', function (msg) {
                 console.log('Earnings updated');
                 node.game.earnings = msg.data;
-                lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
-                totalEarnings.innerHTML = node.game.earnings.total;
+                // node.game.earnings.lastRound;
+                // node.game.earnings.total;
             });
         });
         stager.extendStep('visit',
             {
                 cb: function () {
                     var weights = [];
-                    node.game.pl.db.foreach(function (host) {
-                        if(!hostWeights[host.id]){
+                    var hostWeights = node.game.hostWeights;
+                    node.game.pl.db.forEach(function (host) {
+                        if (!hostWeights[host.id]) {
                             hostWeights[host.id] = settings.BOT_WEIGHTS.hostWeight;
                         }
                         weights.push(hostWeights[host.id]);
                     });
-                    var hostToVisit = node.game.pl.db[pickWeightedIndex(weights)].id;
+                    var hostToVisitId = node.game.pl.db[pickWeightedIndex(weights)].id;
                     var strategy = pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D';
-                    // node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy 
+                    console.log('VISITEE: ' + hostToVisitId + '  STRAT: ' + strategy);
+                    node.done({ visitee: hostToVisitId, strategy: strategy });
                 }
             });
 
         stager.extendStep('respond', {
+            cb: function () {
+                var that = this;
+                var order = [];
+                var respondWeights = node.game.respondWeights;
+                // shuffle visits
+                shuffle(node.game.visitsQueue);
 
+                for (var visit of node.game.visitsQueue) {
+                    order.push(visit.visitor);
+                }
+
+                // send order of responses to server
+                node.say('order', 'SERVER', order);
+
+                if (node.game.visitsQueue.length == 0) {
+                    node.done();
+                }
+                else {
+                    node.game.visitsQueue.forEach(function (visit) {
+                        var visit = node.game.visitsQueue.pop();
+                        var strategy = pickWeightedIndex([respondWeights.H, respondWeights.D]) == 0 ? 'H' : 'D';
+                        node.say('response', 'SERVER', {
+                            visitor: visit.visitor,
+                            visitee: node.player.id,
+                            visitStrategy: visit.strategy,
+                            responseStrategy: strategy,
+                            round: node.game.getRound()
+                        });
+                        respondWeights[strategy] += node.game.payoffs[strategy + visit.strategy];
+                    });
+                    node.done();
+                }
+            }
         });
     }
+    /**
+     * Shuffles array in place.
+     * @param {Array} a items An array containing the items.
+    */
+    var shuffle = function (a) {
+        var j, x, i;
+        for (i = 0; i < a.length; i++) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    };
 
     // Picks an index out of array by corresponding weights
     var pickWeightedIndex = function (weights) {
@@ -89,17 +131,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     };
 
-    if (settings.BOT_TYPE == 'NAIVE') {
-        stager.setOnInit(function () {
-            var that, node;
-
-            that = this;
-            node = this.node;
-
-            this.other = null;
-        });
+    if (settings.BOT_STRATEGY === 'NAIVE') {
+        stager.setDefaultStepRule(stepRules.WAIT);
         stager.setDefaultCallback(function () {
-            this.node.done();
+            console.log('DONE');
+            node.done();
         });
 
         stager.extendStep('visit', {
@@ -111,8 +147,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
     }
 
-    // Set the default step rule for all the stages.
-    stager.setDefaultStepRule(stepRules.WAIT);
+
 
 
 
@@ -123,6 +158,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     // We serialize the game sequence before sending it.
     game.plot = stager.getState();
+
     game.nodename = 'bot';
 
     return game;
