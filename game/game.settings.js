@@ -60,8 +60,22 @@ module.exports = {
         DH: 20,
         DD: 60
     },
+    
     // Bot strategies: 
     // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
     // "REINFORCEMENT" - learns from actions and previous round's results
-    BOT_STRATEGY: "NAIVE"
+    BOT_STRATEGY: "REINFORCEMENT",
+
+    // Reinforcement bot's initial weights
+    BOT_WEIGHTS: {
+        visit: {
+            H: 200,
+            D: 200
+        },
+        respond: {
+            H: 200,
+            D: 200
+        },
+        eachHost: 200
+    }
 };

@@ -20,31 +20,55 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     var channel = gameRoom.channel;
     var logic = gameRoom.node;
 
-    stager.setOnInit(function() {
-        var that, node;
-        
-        that = this;
-        node = this.node;
+    if(settings.BOT_TYPE == 'NAIVE'){
+        stager.setOnInit(function() {
+            var that, node;
+            
+            that = this;
+            node = this.node;
+    
+            this.other = null;
+        });
+        stager.setDefaultCallback(function() {
+            this.node.done();  
+        });
+    
+        stager.extendStep('visit', {
+           
+        });
+    
+        stager.extendStep('respond', {
+          
+        });
+    } 
 
-        this.other = null;
-    });
+    if(settings.BOT_TYPE == 'REINFORCEMENT'){
+        var visitWeights = settings.BOT_WEIGHTS.visit;
+        var respondWeights = settings.BOT_WEIGHTS.respond;
+        stager.setOnInit(function() {
+            var that, node;
+            
+            that = this;
+            node = this.node;
+    
+            this.other = null;
+        });
+        stager.extendStep('visit', 
+        {
+            cb: function() {
+                // node.done({ visitor: node.player.id, visitee: visitId, strategy: strategy });
+            }
+        });
+    
+        stager.extendStep('respond', {
+            
+        });
+    } 
 
     // Set the default step rule for all the stages.
     stager.setDefaultStepRule(stepRules.WAIT);
 
-    stager.setDefaultCallback(function() {
-        if(settings.BOT_TYPE == 'NAIVE'){
-            this.node.done();  
-        } 
-    });
-
-    stager.extendStep('visit', {
-       
-    });
-
-    stager.extendStep('respond', {
-      
-    });
+    
 
     // Prepare the game object to return.
     /////////////////////////////////////
