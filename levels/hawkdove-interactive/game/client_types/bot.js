@@ -24,6 +24,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var visitWeights = settings.BOT_WEIGHTS.visit;
     var respondWeights = settings.BOT_WEIGHTS.respond;
 
+    stager.setDefaultStepRule(stepRules.WAIT);
     if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
             // A queue of visits to be responded to
@@ -60,10 +61,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                         }
                         weights.push(hostWeights[host.id]);
                     });
-                    var hostToVisitId = node.game.pl.db[pickWeightedIndex(weights)].id;
-                    var strategy = pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D';
-                    console.log('VISITEE: ' + hostToVisitId + '  STRAT: ' + strategy);
-                    node.done({ visitee: hostToVisitId, strategy: strategy });
+                    var that = this;
+                    this.hostToVisitId = node.game.pl.db[pickWeightedIndex(weights)].id;
+                    this.strategy = pickWeightedIndex([visitWeights.H, visitWeights.D]) == 0 ? 'H' : 'D';
+
+                    node.done({ 
+                        visitee: that.hostToVisitId, 
+                        strategy: that.strategy 
+                    });
                 }
             });
 
@@ -131,10 +136,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     };
 
-    if (settings.BOT_STRATEGY === 'NAIVE') {
+    /*if (settings.BOT_STRATEGY === 'NAIVE') {
         stager.setDefaultStepRule(stepRules.WAIT);
         stager.setDefaultCallback(function () {
-            console.log('DONE');
             node.done();
         });
 
@@ -147,7 +151,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
     }
 
-
+*/
 
 
 
