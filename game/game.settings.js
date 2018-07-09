@@ -53,6 +53,9 @@ module.exports = {
     // use tutorial and survey staging; disable for testing
     TUTORIAL: false,
 
+    // fill server with all bots to simulate rounds
+    SIMULATION: true,
+
     // payoff table
     PAYOFFS: {
         HH: 0,
