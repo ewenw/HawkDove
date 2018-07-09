@@ -58,7 +58,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var plFiltered = node.game.pl.db.filter(function(x){
                     return x.id === pid;
                 });
-                node.game.gameData[pid].clientType = plFiltered[0].clientType;
+                if(plFiltered.length === 0){
+                    node.game.gameData[pid].clientType = 'bot'
+                }
+                else{
+                    node.game.gameData[pid].clientType = plFiltered[0].clientType;
+                }
             }
         };
 

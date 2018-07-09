@@ -25,7 +25,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var node;
 
     stager.setDefaultStepRule(stepRules.WAIT);
-    //if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
+    if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
             var lastStrategy;
             node = this.node;
@@ -111,7 +111,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             }
         });
-    //}
+    }
     /**
      * Shuffles array in place.
      * @param {Array} a items An array containing the items.
@@ -140,7 +140,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     };
 
-    /*if (settings.BOT_STRATEGY === 'NAIVE') {
+    if (settings.BOT_STRATEGY === 'NAIVE') {
         stager.setDefaultStepRule(stepRules.WAIT);
         stager.setDefaultCallback(function () {
             node.done();
@@ -155,7 +155,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
     }
 
-*/
+
 
 
 

@@ -1,36 +1,21 @@
 {
-  "977889657313583": {
-    "visits": [
-      "DROPOUT"
-    ],
+  "661996373776503": {
+    "visits": [],
     "orders": [],
     "totalEarnings": 0
   },
-  "995018228340508": {
-    "visits": [
-      {
-        "visitee": "898636000043304",
-        "visitStrategy": "H",
-        "responseStrategy": "D",
-        "round": 2,
-        "visitorEarning": 100,
-        "visiteeEarning": 20
-      }
-    ],
+  "944128953665166": {
+    "visits": [],
+    "orders": [],
+    "totalEarnings": 0
+  },
+  "533965543822869": {
+    "visits": [],
     "orders": [
       [],
       []
     ],
-    "totalEarnings": 100
-  },
-  "898636000043304": {
-    "visits": [],
-    "orders": [
-      [],
-      [
-        "995018228340508"
-      ]
-    ],
-    "totalEarnings": 20
+    "totalEarnings": 0,
+    "clientType": "player"
   }
 }
