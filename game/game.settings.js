@@ -42,7 +42,7 @@ module.exports = {
      */
     TIMER: {
         visit: 8000,
-        respond: 5000
+        respond: 10000
     },
 
     // # Game specific properties
@@ -62,5 +62,23 @@ module.exports = {
         HD: 100,
         DH: 20,
         DD: 60
+    },
+    
+    // Bot strategies: 
+    // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
+    // "REINFORCEMENT" - learns from actions and previous round's results
+    BOT_STRATEGY: "REINFORCEMENT",
+
+    // Reinforcement bot's initial weights
+    BOT_WEIGHTS: {
+        visit: {
+            H: 20,
+            D: 20
+        },
+        respond: {
+            H: 20,
+            D: 20
+        },
+        hostWeight: 20
     }
 };

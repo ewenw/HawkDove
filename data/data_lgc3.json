@@ -1,1 +1,102 @@
-{}
+{
+  "293768728472814": {
+    "visits": [
+      {
+        "visitee": "208985107413995",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 1
+      },
+      {
+        "visitee": "208985107413995",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 4000,
+        "respondTime": 0,
+        "round": 2
+      }
+    ],
+    "orders": [
+      [],
+      [
+        "208985107413995"
+      ]
+    ],
+    "totalEarnings": 80,
+    "clientType": "player"
+  },
+  "208985107413995": {
+    "visits": [
+      {
+        "visitee": "293768728472814",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 2000,
+        "respondTime": 0,
+        "round": 2
+      }
+    ],
+    "orders": [
+      [
+        "293768728472814",
+        "539411904092561"
+      ],
+      [
+        "293768728472814",
+        "203011517980504"
+      ]
+    ],
+    "totalEarnings": 200,
+    "clientType": "player"
+  },
+  "539411904092561": {
+    "visits": [
+      "DROPOUT",
+      {
+        "visitee": "208985107413995",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 0,
+        "respondTime": 2000,
+        "round": 1
+      }
+    ],
+    "orders": [
+      [
+        "208985107413995"
+      ]
+    ],
+    "totalEarnings": 100,
+    "clientType": "player"
+  },
+  "203011517980504": {
+    "visits": [
+      {
+        "visitee": "208985107413995",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 0,
+        "respondTime": 1000,
+        "round": 2
+      }
+    ],
+    "orders": [
+      [],
+      []
+    ],
+    "totalEarnings": 100,
+    "clientType": "bot"
+  }
+}
