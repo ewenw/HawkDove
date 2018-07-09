@@ -40,7 +40,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // Determines likelihood of visiting each host
             node.game.hostWeights = {};
             node.on.data('addVisit', function (msg) {
-                node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
+                node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy, visitTime: msg.data.visitTime });
             });
 
             node.on.data('updatePayoffs', function (msg) {
@@ -56,7 +56,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             this.visit = function (strategy, visitId) {
                 lastStrategy = strategy;
-                node.done({ visitee: visitId, strategy: strategy });
+                node.done({ visitee: visitId, strategy: strategy, decisionTime: 0});
             };
         });
         stager.extendStep('visit',
@@ -100,6 +100,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                             visitee: node.player.id,
                             visitStrategy: visit.strategy,
                             responseStrategy: strategy,
+                            visitTime: visit.visitTime,
+                            respondTime: 0,
                             round: node.game.getRound()
                         });
                         respondWeights[strategy] += node.game.payoffs[strategy + visit.strategy];

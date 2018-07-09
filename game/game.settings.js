@@ -69,13 +69,13 @@ module.exports = {
     // Reinforcement bot's initial weights
     BOT_WEIGHTS: {
         visit: {
-            H: 200,
-            D: 200
+            H: 20,
+            D: 20
         },
         respond: {
-            H: 200,
-            D: 200
+            H: 20,
+            D: 20
         },
-        hostWeight: 200
+        hostWeight: 20
     }
 };

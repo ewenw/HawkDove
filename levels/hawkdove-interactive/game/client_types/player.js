@@ -105,8 +105,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         };
 
         this.visit = function (strategy, visitId) {
-            node.done({ visitee: visitId, strategy: strategy });
+            node.done({ visitee: visitId, strategy: strategy, decisionTime: node.game.visualTimer.gameTimer.timePassed});
         };
+
         this.respond = function (strategy, timeup) {
             var visit = node.game.visitsQueue.pop();
             var xbtn = W.gid('xbtn');
@@ -123,6 +124,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 visitee: node.player.id,
                 visitStrategy: visit.strategy,
                 responseStrategy: strategy,
+                visitTime: visit.visitTime,
+                respondTime: node.game.visualTimer.gameTimer.timePassed,
                 round: node.game.getRound()
             });
             setTimeout(function () {
@@ -142,7 +145,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.game.shuffle(this.symbols);
 
         node.on.data('addVisit', function (msg) {
-            node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy });
+            node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy, visitTime: msg.data.visitTime });
         });
 
         node.on.data('updatePayoffs', function (msg) {
