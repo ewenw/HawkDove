@@ -192,7 +192,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 300 + 20;
+                var x = Math.cos(rads) * 300 + 105;
                 var y = Math.sin(rads) * 300 + 450;
                 that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
             }
