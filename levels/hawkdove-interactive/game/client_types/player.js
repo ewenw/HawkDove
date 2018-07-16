@@ -117,7 +117,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if(!timeup){
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = 'You earned $' + node.game.payoffs[strategy + visit.strategy];
+                result.innerHTML = '<br/><br/>You earned $' + node.game.payoffs[strategy + visit.strategy];
             }
             node.say('response', 'SERVER', {
                 visitor: visit.visitor,
