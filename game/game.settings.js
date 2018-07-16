@@ -48,7 +48,7 @@ module.exports = {
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 2,
+    REPEAT: 40,
 
     // use tutorial and survey staging; disable for testing
     TUTORIAL: false,
@@ -72,13 +72,13 @@ module.exports = {
     // Reinforcement bot's initial weights
     BOT_WEIGHTS: {
         visit: {
-            H: 20,
-            D: 20
+            H: 80,
+            D: 80
         },
         respond: {
-            H: 20,
-            D: 20
+            H: 80,
+            D: 80
         },
-        hostWeight: 20
+        hostWeight: 80
     }
 };
