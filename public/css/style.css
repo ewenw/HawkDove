@@ -53,11 +53,11 @@ div.choicetable textarea {
 }
 
 .circle-badge {
-    height: 50px;
-    width: 50px;
+    height: 80px;
+    width: 80px;
     text-align: center;
     border-radius: 50px;
-    background: #1ACAC0;
+    background: rgb(199, 231, 236);
     display: table-cell; 
     vertical-align: middle;
   }

@@ -41,6 +41,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         // Keep track of original players to distinguish possible bots from players
         node.game.originalIds = node.game.pl.id.getAllKeyElements();
 
+        // Keep track of penalties
+        node.game.penalties = 0;
+
+        // last round response earnings
+        node.game.lastResponseEarnings = 0;
+
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
             return node.JSUS.isInt(n, -1, 101);
@@ -85,7 +91,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn = this.neighbors[id];
             btn.setAttribute('type', 'button');
             btn.setAttribute('class', 'circle-badge btn');
-            btn.innerHTML = symbol;
+            btn.innerHTML = '<h3>'+symbol+'</h3>';
             btn.style.position = 'relative';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
@@ -117,8 +123,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if(!timeup){
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = '<br/><br/>You earned $' + node.game.payoffs[strategy + visit.strategy];
+                result.innerHTML = '<br/><br/><center>You earned $' + node.game.payoffs[strategy + visit.strategy]+'</center>';
             }
+            node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             node.say('response', 'SERVER', {
                 visitor: visit.visitor,
                 visitee: node.player.id,
@@ -142,7 +149,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         };
 
         this.symbols = ['@', '#', '$', '%', '^', '&', '<', '>', '/', '~'];
+        this.choices = ['@', '#'];
         node.game.shuffle(this.symbols);
+        node.game.shuffle(this.choices);
 
         node.on.data('addVisit', function (msg) {
             node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy, visitTime: msg.data.visitTime });
@@ -158,10 +167,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         frame: 'visit.htm',
         timeup: function() {
             var that = this;
-            // TODO:
-            // penalty and auto decision
             var container = W.gid('container');
             container.innerHTML = '<br/><center><h2>You ran out of time and have been penalized.</h2></center>';
+            node.game.penalties++;
             setTimeout(function () {
                 var playerList = node.game.pl.db;
                 that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[Math.floor(Math.random()*playerList.length)].id);
@@ -174,10 +182,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var ybtn = W.gid('ybtn');
             var earnings = W.gid('earnings');
             var lastRoundEarnings = W.gid('lastRoundEarnings');
+            var responseEarnings = W.gid('responseEarnings');
             var totalEarnings = W.gid('totalEarnings');
             var angle = 180 / (node.game.pl.size() + 1);
             var offset = 180;
             this.visitId = null;
+            xbtn.innerHTML = this.choices[0];
+            ybtn.innerHTML = this.choices[1];
             for (var i = 0; i < node.game.pl.size(); i++) {
                 var player = node.game.pl.db[i];
                 var rads = (offset + angle * (i + 1)) * Math.PI / 180;
@@ -193,8 +204,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.game.earnings = msg.data;
                 earnings.style.display = 'block';
                 lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
+                responseEarnings.innerHTML = node.game.lastResponseEarnings;
                 totalEarnings.innerHTML = node.game.earnings.total;
-
             });
 
             xbtn.onclick = function () {
@@ -214,6 +225,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var that = this;
             var respondDiv = W.gid('respond');
             respondDiv.innerHTML = '<br/><br/><center><h2>You ran out of time and have been penalized.</h2></center>';
+            node.game.penalties++;
             setTimeout(function () {
                 that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
             }, 1000);
@@ -225,8 +237,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
             var order = [];
+            node.game.lastResponseEarnings = 0;
             result.style.display = 'none';
-
+            xbtn.innerHTML = this.choices[0];
+            ybtn.innerHTML = this.choices[1];
             // shuffle visits
             node.game.shuffle(node.game.visitsQueue);
 
@@ -252,7 +266,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         frame: 'postgame.htm',
         cb: function () {
             node.game.visualTimer.setToZero();
-
         }
     });
 

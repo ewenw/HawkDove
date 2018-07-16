@@ -17,3 +17,10 @@ variables for timing
 times of visit and response
 grey out players who dropped
 reinforcement bot if there is history
+
+record randomization sequence for buttons
+bigger buttons
+easier to click quickly
+colors
+last round screen
+heroku

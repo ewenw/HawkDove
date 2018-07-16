@@ -67,6 +67,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             }
         };
 
+        // handle dropouts
         node.on.pdisconnect(function (player) {
             player.allowReconnect = false;
             initDataContainer(player.id);

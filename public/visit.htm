@@ -1,7 +1,7 @@
 <!doctype html>
 <title>Game</title>
 <link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
-<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="css/style.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
@@ -9,43 +9,54 @@
   <div id="container">
     <br/>
     <br/>
+    <h2>
+      <center>Choose a player to interact with</center>
+    </h2>
+    <div id="players" class="center-div"></div>
     <br/>
-    <div id="earnings">
-      <p style="font-size: 22px;">
-        You earned $
-        <b id="lastRoundEarnings"></b> in your last visit.
-      </p>
-      <p style="font-size: 19px;">
-        Total: $
-        <b id="totalEarnings"></b>.
-      </p>
-    </div>
     <br/>
-    <h2>Choose a player to interact with</h2>
     <br/>
     <br/>
     <div class="modal fade" id="visit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Pick a strategy</h5>
+            <h3 class="modal-title" id="exampleModalLabel">Pick a strategy</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <button type="button" class="btn btn-secondary" id="ybtn">Y</button>
-            <button type="button" class="btn btn-secondary" id="xbtn">X</button>
+            <button type="button" class="btn btn-secondary btn-lg" id="xbtn"></button>
+            <button type="button" class="btn btn-secondary btn-lg" id="ybtn"></button>
           </div>
           <div class="modal-footer">
 
           </div>
         </div>
       </div>
+
     </div>
-
-    <div id="players" class="center-div"></div>
-
-
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <center>
+      <div id="earnings">
+        <p style="font-size: 22px;">
+          You earned $
+          <b id="lastRoundEarnings"></b> from your last visit.
+        </p>
+        <p style="font-size: 22px;">
+          You earned $
+          <b id="responseEarnings"></b> from your last reponses.
+        </p>
+        <p style="font-size: 19px;">
+          Running total: $
+          <b id="totalEarnings"></b>.
+        </p>
+      </div>
+    </center>
   </div>
+
 </body>

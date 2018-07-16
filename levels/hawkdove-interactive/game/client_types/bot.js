@@ -55,17 +55,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     };
     
     if (settings.BOT_STRATEGY === 'NAIVE') {
-        stager.setDefaultStepRule(stepRules.WAIT);
         stager.setDefaultCallback(function () {
             node.done();
-        });
-
-        stager.extendStep('visit', {
-
-        });
-
-        stager.extendStep('respond', {
-
         });
     }
     else if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
