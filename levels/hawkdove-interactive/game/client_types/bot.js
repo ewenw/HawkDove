@@ -25,7 +25,50 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var node;
 
     stager.setDefaultStepRule(stepRules.WAIT);
-    if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
+   
+    /**
+     * Shuffles array in place.
+     * @param {Array} a items An array containing the items.
+    */
+    var shuffle = function (a) {
+        var j, x, i;
+        for (i = 0; i < a.length; i++) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    };
+
+    // Picks an index out of array by corresponding weights
+    var pickWeightedIndex = function (weights) {
+        for (var i = 1; i < weights.length; i++) {
+            weights[i] += weights[i - 1];
+        }
+        var rand = Math.random() * weights[weights.length - 1];
+        for (var i = 0; i < weights.length; i++) {
+            if (rand > weights[i])
+                continue;
+            else return i;
+        }
+    };
+    
+    if (settings.BOT_STRATEGY === 'NAIVE') {
+        stager.setDefaultStepRule(stepRules.WAIT);
+        stager.setDefaultCallback(function () {
+            node.done();
+        });
+
+        stager.extendStep('visit', {
+
+        });
+
+        stager.extendStep('respond', {
+
+        });
+    }
+    else if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
             var lastStrategy;
             node = this.node;
@@ -110,48 +153,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     node.done();
                 }
             }
-        });
-    }
-    /**
-     * Shuffles array in place.
-     * @param {Array} a items An array containing the items.
-    */
-    var shuffle = function (a) {
-        var j, x, i;
-        for (i = 0; i < a.length; i++) {
-            j = Math.floor(Math.random() * (i + 1));
-            x = a[i];
-            a[i] = a[j];
-            a[j] = x;
-        }
-        return a;
-    };
-
-    // Picks an index out of array by corresponding weights
-    var pickWeightedIndex = function (weights) {
-        for (var i = 1; i < weights.length; i++) {
-            weights[i] += weights[i - 1];
-        }
-        var rand = Math.random() * weights[weights.length - 1];
-        for (var i = 0; i < weights.length; i++) {
-            if (rand > weights[i])
-                continue;
-            else return i;
-        }
-    };
-
-    if (settings.BOT_STRATEGY === 'NAIVE') {
-        stager.setDefaultStepRule(stepRules.WAIT);
-        stager.setDefaultCallback(function () {
-            node.done();
-        });
-
-        stager.extendStep('visit', {
-
-        });
-
-        stager.extendStep('respond', {
-
         });
     }
 

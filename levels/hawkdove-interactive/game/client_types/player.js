@@ -161,7 +161,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // TODO:
             // penalty and auto decision
             var container = W.gid('container');
-            container.innerHTML = '<br/><h2>You ran out of time and have been penalized.</h2>';
+            container.innerHTML = '<br/><center><h2>You ran out of time and have been penalized.</h2></center>';
             setTimeout(function () {
                 var playerList = node.game.pl.db;
                 that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[Math.floor(Math.random()*playerList.length)].id);
@@ -213,7 +213,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         timeup: function () {
             var that = this;
             var respondDiv = W.gid('respond');
-            respondDiv.innerHTML = '<br/><br/><h2>You ran out of time and have been penalized.</h2>';
+            respondDiv.innerHTML = '<br/><br/><center><h2>You ran out of time and have been penalized.</h2></center>';
             setTimeout(function () {
                 that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
             }, 1000);
@@ -238,8 +238,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.say('order', 'SERVER', order);
 
             if (node.game.visitsQueue.length == 0) {
-                respondDiv.innerHTML = '<br/><br/><h3>No visitors this round.</h3>';
-                console.log('NO VISITORS ----------');
+                respondDiv.innerHTML = '<br/><br/><h3><center>No visitors this round.</center></h3>';
                 node.done();
             }
             console.log('HAS VISITORS ' + node.game.visitsQueue.length);
