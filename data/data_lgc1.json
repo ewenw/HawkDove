@@ -1,48 +1,124 @@
 {
-  "574051362758208": {
+  "99747355585767": {
     "visits": [
       {
-        "visitee": "324230732051389",
-        "visitStrategy": "H",
-        "responseStrategy": "H",
-        "visitorEarning": 0,
-        "visiteeEarning": 0,
-        "visitTime": 0,
-        "respondTime": 0,
-        "round": 1
-      },
-      {
-        "visitee": "740965497932891",
+        "visitee": "761612163547",
         "visitStrategy": "H",
         "responseStrategy": "D",
         "visitorEarning": 100,
         "visiteeEarning": 20,
         "visitTime": 0,
         "respondTime": 0,
+        "round": 1
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
         "round": 2
+      },
+      {
+        "visitee": "4390719090475",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "4390719090475",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
       }
     ],
     "orders": [
       [
-        "230039194055441"
+        "472975760056790"
       ],
       [
-        "324230732051389",
-        "740965497932891"
+        "683539247303728"
       ],
+      [
+        "472975760056790",
+        "4390719090475"
+      ],
+      [
+        "951028367666888",
+        "761612163547",
+        "683539247303728"
+      ],
+      [
+        "851037821624768",
+        "951028367666888"
+      ],
+      [
+        "4390719090475"
+      ],
+      [],
       [],
       [],
       [],
       [],
       []
     ],
-    "totalEarnings": 260,
+    "totalEarnings": 880,
     "clientType": "bot"
   },
-  "230039194055441": {
+  "472975760056790": {
     "visits": [
       {
-        "visitee": "574051362758208",
+        "visitee": "99747355585767",
         "visitStrategy": "D",
         "responseStrategy": "D",
         "visitorEarning": 60,
@@ -52,37 +128,126 @@
         "round": 1
       },
       {
-        "visitee": "740965497932891",
+        "visitee": "683539247303728",
         "visitStrategy": "H",
-        "responseStrategy": "D",
-        "visitorEarning": 100,
-        "visiteeEarning": 20,
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
         "visitTime": 0,
         "respondTime": 0,
         "round": 2
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "951028367666888",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "4390719090475",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
+      },
+      {
+        "visitee": "4390719090475",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
       }
     ],
     "orders": [
       [
-        "969404493004550"
+        "761612163547"
       ],
       [
-        "286743407564903",
-        "553499269128442"
+        "238019324248285"
       ],
       [],
-      [],
+      [
+        "851037821624768"
+      ],
+      [
+        "683539247303728",
+        "99747355585767"
+      ],
+      [
+        "851037821624768"
+      ],
+      [
+        "951028367666888"
+      ],
+      [
+        "851037821624768"
+      ],
+      [
+        "683539247303728",
+        "99747355585767",
+        "761612163547"
+      ],
       [],
       [],
       []
     ],
-    "totalEarnings": 260,
+    "totalEarnings": 600,
     "clientType": "bot"
   },
-  "740965497932891": {
+  "761612163547": {
     "visits": [
       {
-        "visitee": "645599927037911",
+        "visitee": "472975760056790",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
@@ -92,7 +257,135 @@
         "round": 1
       },
       {
-        "visitee": "574051362758208",
+        "visitee": "951028367666888",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 0,
+        "respondTime": 1000,
+        "round": 2
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "951028367666888",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "951028367666888",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
+      }
+    ],
+    "orders": [
+      [
+        "99747355585767"
+      ],
+      [
+        "99747355585767"
+      ],
+      [
+        "951028367666888"
+      ],
+      [
+        "472975760056790",
+        "99747355585767"
+      ],
+      [
+        "238019324248285",
+        "472975760056790"
+      ],
+      [],
+      [
+        "4390719090475",
+        "851037821624768",
+        "472975760056790"
+      ],
+      [],
+      [
+        "238019324248285"
+      ],
+      [],
+      [],
+      []
+    ],
+    "totalEarnings": 440,
+    "clientType": "bot"
+  },
+  "683539247303728": {
+    "visits": [
+      {
+        "visitee": "238019324248285",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 1
+      },
+      {
+        "visitee": "99747355585767",
         "visitStrategy": "D",
         "responseStrategy": "H",
         "visitorEarning": 20,
@@ -100,62 +393,237 @@
         "visitTime": 0,
         "respondTime": 0,
         "round": 2
-      }
-    ],
-    "orders": [
-      [],
-      [
-        "230039194055441",
-        "574051362758208",
-        "645599927037911"
-      ],
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
-    "totalEarnings": 120,
-    "clientType": "bot"
-  },
-  "969404493004550": {
-    "visits": [
+      },
       {
-        "visitee": "230039194055441",
+        "visitee": "4390719090475",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "472975760056790",
         "visitStrategy": "D",
         "responseStrategy": "H",
         "visitorEarning": 20,
         "visiteeEarning": 100,
-        "visitTime": 2000,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "238019324248285",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
+      }
+    ],
+    "orders": [
+      [
+        "951028367666888",
+        "851037821624768",
+        "4390719090475"
+      ],
+      [
+        "472975760056790"
+      ],
+      [
+        "851037821624768"
+      ],
+      [],
+      [
+        "4390719090475"
+      ],
+      [
+        "238019324248285",
+        "99747355585767"
+      ],
+      [],
+      [],
+      [
+        "851037821624768",
+        "4390719090475"
+      ],
+      [],
+      [],
+      []
+    ],
+    "totalEarnings": 560,
+    "clientType": "bot"
+  },
+  "951028367666888": {
+    "visits": [
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
         "respondTime": 0,
         "round": 1
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 2
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "851037821624768",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
       },
       "DROPOUT"
     ],
     "orders": [
+      [],
       [
-        "645599927037911",
-        "553499269128442",
-        "286743407564903"
+        "761612163547"
+      ],
+      [
+        "238019324248285"
+      ],
+      [
+        "238019324248285"
+      ],
+      [],
+      [
+        "472975760056790",
+        "761612163547"
+      ],
+      [
+        "761612163547"
+      ],
+      [
+        "99747355585767",
+        "4390719090475",
+        "238019324248285"
       ]
     ],
-    "totalEarnings": 120,
+    "totalEarnings": 620,
     "clientType": "player"
   },
-  "324230732051389": {
+  "851037821624768": {
     "visits": [
       {
-        "visitee": "645599927037911",
-        "visitStrategy": "D",
-        "responseStrategy": "D",
-        "visitorEarning": 60,
-        "visiteeEarning": 60,
+        "visitee": "683539247303728",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
         "visitTime": 0,
         "respondTime": 0,
         "round": 1
       },
       {
-        "visitee": "574051362758208",
+        "visitee": "238019324248285",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
@@ -163,26 +631,114 @@
         "visitTime": 0,
         "respondTime": 0,
         "round": 2
+      },
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "472975760056790",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
+      },
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
       }
     ],
     "orders": [
       [
-        "574051362758208"
+        "238019324248285"
+      ],
+      [
+        "951028367666888"
+      ],
+      [
+        "761612163547"
       ],
       [],
+      [
+        "761612163547"
+      ],
+      [
+        "951028367666888",
+        "683539247303728"
+      ],
       [],
+      [
+        "683539247303728",
+        "951028367666888",
+        "761612163547"
+      ],
       [],
       [],
       [],
       []
     ],
-    "totalEarnings": 60,
+    "totalEarnings": 520,
     "clientType": "bot"
   },
-  "286743407564903": {
+  "4390719090475": {
     "visits": [
       {
-        "visitee": "969404493004550",
+        "visitee": "683539247303728",
         "visitStrategy": "D",
         "responseStrategy": "H",
         "visitorEarning": 20,
@@ -192,32 +748,117 @@
         "round": 1
       },
       {
-        "visitee": "230039194055441",
+        "visitee": "238019324248285",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 2
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "238019324248285",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
         "visiteeEarning": 0,
         "visitTime": 0,
         "respondTime": 0,
-        "round": 2
+        "round": 4
+      },
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 5
+      },
+      {
+        "visitee": "99747355585767",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "951028367666888",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 8
+      },
+      {
+        "visitee": "683539247303728",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
       }
     ],
     "orders": [
       [],
       [],
+      [
+        "99747355585767",
+        "683539247303728"
+      ],
       [],
       [],
+      [],
+      [
+        "99747355585767",
+        "238019324248285"
+      ],
+      [
+        "472975760056790"
+      ],
+      [
+        "472975760056790"
+      ],
       [],
       [],
       []
     ],
-    "totalEarnings": 20,
+    "totalEarnings": 460,
     "clientType": "bot"
   },
-  "553499269128442": {
+  "238019324248285": {
     "visits": [
       {
-        "visitee": "969404493004550",
+        "visitee": "851037821624768",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
@@ -227,78 +868,110 @@
         "round": 1
       },
       {
-        "visitee": "230039194055441",
-        "visitStrategy": "H",
+        "visitee": "472975760056790",
+        "visitStrategy": "D",
         "responseStrategy": "H",
-        "visitorEarning": 0,
-        "visiteeEarning": 0,
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
         "visitTime": 0,
         "respondTime": 0,
         "round": 2
-      }
-    ],
-    "orders": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
-    "totalEarnings": 0,
-    "clientType": "bot"
-  },
-  "645599927037911": {
-    "visits": [
+      },
       {
-        "visitee": "969404493004550",
+        "visitee": "951028367666888",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 1000,
+        "round": 3
+      },
+      {
+        "visitee": "951028367666888",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 1000,
+        "round": 4
+      },
+      {
+        "visitee": "761612163547",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
         "visiteeEarning": 0,
         "visitTime": 0,
         "respondTime": 0,
-        "round": 1
+        "round": 5
       },
       {
-        "visitee": "740965497932891",
+        "visitee": "683539247303728",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 6
+      },
+      {
+        "visitee": "4390719090475",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 7
+      },
+      {
+        "visitee": "951028367666888",
         "visitStrategy": "D",
         "responseStrategy": "D",
         "visitorEarning": 60,
         "visiteeEarning": 60,
         "visitTime": 0,
         "respondTime": 0,
-        "round": 2
+        "round": 8
+      },
+      {
+        "visitee": "761612163547",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 9
       }
     ],
     "orders": [
       [
-        "324230732051389",
-        "740965497932891"
+        "683539247303728"
+      ],
+      [
+        "851037821624768",
+        "4390719090475"
+      ],
+      [],
+      [
+        "4390719090475"
+      ],
+      [],
+      [],
+      [
+        "683539247303728"
       ],
       [],
       [],
       [],
       [],
-      [],
       []
     ],
-    "totalEarnings": 120,
-    "clientType": "bot"
-  },
-  "413452077771210": {
-    "visits": [],
-    "orders": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
-    "totalEarnings": 0,
+    "totalEarnings": 360,
     "clientType": "bot"
   }
 }

@@ -15,6 +15,9 @@ var constants = ngc.constants;
 // Export the game-creating function.
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
+    
+    "use strict";
+
     var game;
 
     var channel = gameRoom.channel;
@@ -23,6 +26,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     var visitWeights, respondWeights;
 
     var node;
+    debugger
 
     stager.setDefaultStepRule(stepRules.WAIT);
    
@@ -53,7 +57,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             else return i;
         }
     };
-    
+    console.log(settings.BOT_STRATEGY);
     if (settings.BOT_STRATEGY === 'NAIVE') {
         stager.setDefaultCallback(function () {
             node.done();
@@ -65,6 +69,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node = this.node;
             visitWeights = settings.BOT_WEIGHTS.visit;
             respondWeights = settings.BOT_WEIGHTS.respond;
+            
             // A queue of visits to be responded to
             node.game.visitsQueue = [];
 

@@ -42,7 +42,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.game.originalIds = node.game.pl.id.getAllKeyElements();
 
         // Keep track of penalties
-        node.game.penalties = 0;
+        //node.game.penalties = 0;
 
         // last round response earnings
         node.game.lastResponseEarnings = 0;
@@ -120,6 +120,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var ybtn = W.gid('ybtn');
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
+            node.game.timer.restart();
             if(!timeup){
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
@@ -141,9 +142,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     respondDiv.innerHTML = '';
                 }
                 else {
-                respondDiv.style.display = 'block';
-                result.style.display = 'none';
-                node.game.visualTimer.restart();
+                    respondDiv.style.display = 'block';
+                    result.style.display = 'none';
+                    node.game.timer.restart();
+                    node.game.visualTimer.restart();
                 }
             }, 1000);
         };
@@ -169,7 +171,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var that = this;
             var container = W.gid('container');
             container.innerHTML = '<br/><center><h2>You ran out of time and have been penalized.</h2></center>';
-            node.game.penalties++;
+            //node.game.penalties++;
             setTimeout(function () {
                 var playerList = node.game.pl.db;
                 that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[Math.floor(Math.random()*playerList.length)].id);
@@ -223,9 +225,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         frame: 'respond.htm',
         timeup: function () {
             var that = this;
+            var resultDiv = W.gid('result');
             var respondDiv = W.gid('respond');
-            respondDiv.innerHTML = '<br/><br/><center><h2>You ran out of time and have been penalized.</h2></center>';
-            node.game.penalties++;
+            respondDiv.style.display = 'none';
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<br/><br/><center><h2>You ran out of time and have been penalized.</h2></center>';
+            //node.game.penalties++;
             setTimeout(function () {
                 that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
             }, 1000);
@@ -238,7 +243,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var respondDiv = W.gid('respond');
             var order = [];
             node.game.lastResponseEarnings = 0;
-            result.style.display = 'none';
+            result.style.display = 'none'; 
+            respondDiv.style.display = 'none';
             xbtn.innerHTML = this.choices[0];
             ybtn.innerHTML = this.choices[1];
             // shuffle visits
@@ -250,12 +256,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             // send order of responses to server
             node.say('order', 'SERVER', order);
-
+            
+            respondDiv.style.display = 'block';
             if (node.game.visitsQueue.length == 0) {
                 respondDiv.innerHTML = '<br/><br/><h3><center>No visitors this round.</center></h3>';
-                node.done();
+                setTimeout(function () {
+                    node.done();
+                }, 1000);
             }
-            console.log('HAS VISITORS ' + node.game.visitsQueue.length);
 
             xbtn.onclick = function () { that.respond('H', false); };
             ybtn.onclick = function () { that.respond('D', false); };
