@@ -57,7 +57,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.backButton.onclick = function(){
             var curStage = node.game.getCurrentGameStage();
             var stepId = curStage.step;
-            if(stepId > 0){
+            if(stepId > 1){
                 curStage.step = curStage.step-1;
                 node.game.gotoStep(curStage);
             }
@@ -149,6 +149,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 highlight: true
             });
             if (!answers.isCorrect) return false;
+            node.say('survey', 'SERVER', answers);
             return answers;
         }
     });
