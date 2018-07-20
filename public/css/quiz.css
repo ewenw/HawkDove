@@ -40,6 +40,11 @@ table#reject td, table#disconnect td {
 
 table.choicetable td {
     font-weight: normal;
+    width: 100%;
+}
+
+table.choicetable {
+    width: 100%;
 }
 
 table#quest {

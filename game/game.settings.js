@@ -41,8 +41,8 @@ module.exports = {
      * used to initialize the game timer for the step.
      */
     TIMER: {
-        visit: 2000,
-        respond: 2000
+        visit: 10000,
+        respond: 10000
     },
 
     // # Game specific properties
@@ -51,7 +51,7 @@ module.exports = {
     REPEAT: 25,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: false,
+    TUTORIAL: true,
 
     // fill server with all bots to simulate rounds
     SIMULATION: true,
