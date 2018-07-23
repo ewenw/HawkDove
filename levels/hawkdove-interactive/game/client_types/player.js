@@ -283,10 +283,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     });*/
     stager.extendStep('payoffs', {
-        init: function() {
-            W.infoPanel.destroy();
-            W.restoreOnleave();
-        },
         donebutton: false,
         frame: 'end.htm',
         widget: {

@@ -48,10 +48,10 @@ module.exports = {
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 4,
+    REPEAT: 2,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: true,
+    TUTORIAL: false,
 
     // fill server with all bots to simulate rounds
     SIMULATION: true,

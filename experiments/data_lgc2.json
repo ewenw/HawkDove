@@ -1,0 +1,76 @@
+{
+  "545547062373830": {
+    "visits": [
+      {
+        "visitee": "163283664410142",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 4000,
+        "respondTime": 3000,
+        "round": 1
+      }
+    ],
+    "orders": [
+      [
+        "163283664410142"
+      ]
+    ],
+    "totalEarnings": 60,
+    "clientType": "player",
+    "interface": {
+      "symbols": [
+        "&",
+        "|",
+        "-",
+        ")",
+        "^",
+        "%",
+        "~",
+        ">",
+        "<",
+        "("
+      ],
+      "hawk": "@",
+      "dove": "#"
+    }
+  },
+  "163283664410142": {
+    "visits": [
+      {
+        "visitee": "545547062373830",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 2000,
+        "respondTime": 0,
+        "round": 1
+      }
+    ],
+    "orders": [
+      [
+        "545547062373830"
+      ]
+    ],
+    "totalEarnings": 60,
+    "clientType": "player",
+    "interface": {
+      "symbols": [
+        "<",
+        "-",
+        "&",
+        ")",
+        "^",
+        "(",
+        "|",
+        "%",
+        "~",
+        ">"
+      ],
+      "hawk": "@",
+      "dove": "#"
+    }
+  }
+}
