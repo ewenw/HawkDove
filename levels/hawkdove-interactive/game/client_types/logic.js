@@ -140,14 +140,82 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     // stager.setDefaultStepRule(stepRules.WAIT);
 
-    stager.extendStep('end', {
+    stager.extendStep('endSurvey', {
         cb: function () {
             var path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
             console.log("Saving game data to " + path);
+            stager.setDefaultStepRule(stepRules.WAIT);
             fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
                 if (err) {
                     console.log(err);
                 }
+            });
+        },
+        done: function() {
+            
+        }
+    });
+
+    stager.extendStep('payoffs', {
+        cb: function() {
+    
+            // Send message to each player that will be caught
+            // by EndScren widget, formatted and  displayed.
+            gameRoom.computeBonus({
+    
+                // The names of the columns in the dump file.
+                // Default: [ 'id' 'access', 'exit', 'bonus' ]
+                header: [ 'id', 'type', 'workerid', 'hitid',
+                           'assignmentid', 'exit', 'bonus' ],
+    
+                // The name of the keys in the registry object from which
+                // the values for the dump file are taken. If a custom
+                // header is provided, then it is equal to header.
+                // Default: [ 'id' 'AccessCode', 'ExitCode', winProperty ] || header
+                headerKeys: [ 'id', 'clientType', 'WorkerId',
+                              'HITId', 'AssignmentId', 'ExitCode', 'win' ],
+    
+                // If different from 1, the bonus is multiplied by the exchange
+                // rate, and a new property named (winProperty+'Raw') is added.
+                // Default: (settings.EXCHANGE_RATE || 1)
+                exchangeRate: 1,
+                
+                // The name of the property holding the bonus.            
+                // Default: 'win'
+                winProperty: 'win',
+    
+                // The decimals included in the bonus (-1 = no rounding)
+                // Default: 2
+                winDecimals: 2,
+    
+                // If a property is missing, this value is used instead.
+                // Default: 'NA'
+                missing: 'NA',
+    
+                // If set, this callback can manipulate the bonus object
+                // before sending it.
+                // Default: undefined
+                cb: function(o) { o.win = o.win + 1 },
+                
+                // If TRUE, sends the computed bonus to each client
+                // Default: true
+                say: true,
+                
+                // If TRUE, writes a 'bonus.csv' file.
+                // Default: true
+                dump: true,
+    
+                // If TRUE, console.log each bonus object
+                // Default: false
+                print: true
+            });
+    
+            // Do something with eventual incoming data from EndScreen.
+            node.on.data('email', function(msg) {           
+               // Store msg to file.           
+            });
+            node.on.data('feedback', function(msg) {
+               // Store msg to file.
             });
         }
     });

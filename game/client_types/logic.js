@@ -20,7 +20,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     var node = gameRoom.node;
     var channel =  gameRoom.channel;
-    var path = channel.getGameDir() + 'experiments/survey' + '.json';
 
     // Must implement the stages here.
 
@@ -31,6 +30,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
             if(node.game.survey){
+                var path = channel.getGameDir() + 'experiments/survey/pregame/' + msg.from + '.json';
                 console.log("Saving survey data to " + path);
                 var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
                 fs.appendFile(path, dataString, function (err) {

@@ -62,8 +62,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         // Setup page: header + frame.
         this.header = W.generateHeader();
         frame = W.generateFrame();
-
-
+        W.waitScreen.defaultTexts.paused = 'Game paused.';
+        W.waitScreen.defaultTexts.stepping = '';
+        W.waitScreen.defaultTexts.waiting = '';
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
@@ -274,14 +275,38 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             ybtn.onclick = function () { that.respond('D', false); };
         }
     });
-    stager.extendStep('end', {
-        donebutton: false,
+    /*stager.extendStep('endSurvey', {
+        donebutton: true,
         frame: 'postgame.htm',
         cb: function () {
             node.game.visualTimer.setToZero();
         }
+    });*/
+    stager.extendStep('payoffs', {
+        init: function() {
+            W.infoPanel.destroy();
+            W.restoreOnleave();
+        },
+        donebutton: false,
+        frame: 'end.htm',
+        widget: {
+            name: 'EndScreen',
+            root: "body",
+            options: {
+                title: false, // Disable title for seamless Widget Step.
+                panel: false, // No border around.
+                showEmailForm: true,
+                showFeedbackForm: true,
+                email: {
+                    texts: {
+                        label: 'Enter your email (optional):',
+                        errString: 'Please enter a valid email and retry'
+                    }
+                },
+                feedback: { minLength: 50 }             
+            }
+        }
     });
-
     game = setup;
     game.plot = stager.getState();
     return game;
