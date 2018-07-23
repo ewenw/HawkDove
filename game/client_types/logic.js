@@ -20,34 +20,35 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     var node = gameRoom.node;
     var channel =  gameRoom.channel;
+    var path = channel.getGameDir() + 'experiments/survey' + '.json';
 
     // Must implement the stages here.
 
     // Increment counter.
     counter = counter ? ++counter : settings.SESSION_ID || 1;
 
-    var survey;
+    node.game.survey;
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
-
-            console.log('Moving player ' + msg.from + ' to waiting room.');
-            channel.moveClientToGameLevel(msg.from, 'hawkdove-interactive',
-                                              gameRoom.name);	
-            if(survey){
-                var path = channel.getGameDir() + 'experiments/survey_' + node.nodename + '.json';
+            if(node.game.survey){
                 console.log("Saving survey data to " + path);
-                fs.writeFile(path, JSON.stringify(survey, null, 2), function (err) {
+                var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
+                fs.appendFile(path, dataString, function (err) {
                     if (err) {
                         console.log(err);
                     }
                 });
+                // node.game.memory.save('memory_all.json');
             }
+            console.log('Moving player ' + msg.from + ' to waiting room.');
+            channel.moveClientToGameLevel(msg.from, 'hawkdove-interactive',
+                                              gameRoom.name);	
         });
         
         node.on.data('survey', function(msg){
-            if(!survey)
-                survey = {};
-            survey[msg.from] = msg.data;
+            if(!node.game.survey)
+            node.game.survey = {};
+            node.game.survey[msg.from] = msg.data;
         });
     });
     stager.setDefaultStepRule(stepRules.WAIT);

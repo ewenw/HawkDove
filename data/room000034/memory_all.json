@@ -1,0 +1,99 @@
+[{
+    "time": 11714,
+    "timeup": false,
+    "done": true,
+    "player": "372844491885639",
+    "stage": {
+        "stage": 1,
+        "step": 1,
+        "round": 1
+    },
+    "timestamp": 1532212691407
+}, {
+    "time": 678,
+    "timeup": false,
+    "done": true,
+    "player": "372844491885639",
+    "stage": {
+        "stage": 1,
+        "step": 2,
+        "round": 1
+    },
+    "timestamp": 1532212692237
+}, {
+    "time": 2721,
+    "timeup": false,
+    "id": "survey",
+    "order": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "forms": {
+        "age": {
+            "id": "age",
+            "choice": "2",
+            "time": 921,
+            "nClicks": 1,
+            "isCorrect": true,
+            "attempts": []
+        },
+        "gender": {
+            "id": "gender",
+            "choice": "0",
+            "time": 1233,
+            "nClicks": 1,
+            "isCorrect": true,
+            "attempts": []
+        },
+        "education": {
+            "id": "education",
+            "choice": "0",
+            "time": 1490,
+            "nClicks": 1,
+            "isCorrect": true,
+            "attempts": []
+        },
+        "location": {
+            "id": "location",
+            "choice": "0",
+            "time": 1929,
+            "nClicks": 1,
+            "isCorrect": true,
+            "attempts": []
+        }
+    },
+    "missValues": [],
+    "isCorrect": true,
+    "done": true,
+    "player": "372844491885639",
+    "stage": {
+        "stage": 1,
+        "step": 3,
+        "round": 1
+    },
+    "timestamp": 1532212695119
+}, {
+    "time": 1841,
+    "timeup": false,
+    "done": true,
+    "player": "372844491885639",
+    "stage": {
+        "stage": 1,
+        "step": 4,
+        "round": 1
+    },
+    "timestamp": 1532212697126
+}, {
+    "time": 981,
+    "timeup": false,
+    "done": true,
+    "player": "372844491885639",
+    "stage": {
+        "stage": 1,
+        "step": 5,
+        "round": 1
+    },
+    "timestamp": 1532212698270
+}]

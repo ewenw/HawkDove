@@ -150,10 +150,15 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             }, 1000);
         };
 
-        this.symbols = ['@', '#', '$', '%', '^', '&', '<', '>', '/', '~'];
+        this.symbols = ['(', ')', '|', '%', '^', '&', '<', '>', '-', '~'];
         this.choices = ['@', '#'];
         node.game.shuffle(this.symbols);
         node.game.shuffle(this.choices);
+        node.say('symbolOrders', 'SERVER', {
+            symbols: this.symbols,
+            hawk: this.choices[0],
+            dove: this.choices[1]
+        });
 
         node.on.data('addVisit', function (msg) {
             node.game.visitsQueue.push({ visitor: msg.data.visitor, strategy: msg.data.strategy, visitTime: msg.data.visitTime });

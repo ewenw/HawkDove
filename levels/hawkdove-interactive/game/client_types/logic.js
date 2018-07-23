@@ -105,9 +105,15 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // update visitee earnings
             node.game.gameData[msg.data.visitee].totalEarnings = node.game.gameData[msg.data.visitee].totalEarnings + visiteeEarning;
         });
+
         node.on.data('order', function (msg) {
             initDataContainer(msg.from);
             node.game.gameData[msg.from].orders.push(msg.data);
+        });
+
+        node.on.data('symbolOrders', function (msg) {
+            initDataContainer(msg.from);
+            node.game.gameData[msg.from].interface = msg.data;
         });
     });
 

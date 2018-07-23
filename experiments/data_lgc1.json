@@ -1,0 +1,122 @@
+{
+  "416974887798605": {
+    "visits": [
+      {
+        "visitee": "177824901653926",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 1
+      },
+      {
+        "visitee": "177824901653926",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 2
+      },
+      {
+        "visitee": "177824901653926",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "177824901653926",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 0,
+        "respondTime": 0,
+        "round": 4
+      }
+    ],
+    "orders": [
+      [
+        "177824901653926"
+      ],
+      [
+        "177824901653926"
+      ],
+      [
+        "177824901653926"
+      ],
+      [
+        "177824901653926"
+      ]
+    ],
+    "totalEarnings": 340,
+    "clientType": "bot"
+  },
+  "177824901653926": {
+    "visits": [
+      {
+        "visitee": "416974887798605",
+        "visitStrategy": "H",
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
+        "visitTime": 1000,
+        "respondTime": 0,
+        "round": 1
+      },
+      {
+        "visitee": "416974887798605",
+        "visitStrategy": "H",
+        "responseStrategy": "H",
+        "visitorEarning": 0,
+        "visiteeEarning": 0,
+        "visitTime": 1000,
+        "respondTime": 0,
+        "round": 2
+      },
+      {
+        "visitee": "416974887798605",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 1000,
+        "respondTime": 0,
+        "round": 3
+      },
+      {
+        "visitee": "416974887798605",
+        "visitStrategy": "D",
+        "responseStrategy": "H",
+        "visitorEarning": 20,
+        "visiteeEarning": 100,
+        "visitTime": 1000,
+        "respondTime": 0,
+        "round": 4
+      }
+    ],
+    "orders": [
+      [
+        "416974887798605"
+      ],
+      [
+        "416974887798605"
+      ],
+      [
+        "416974887798605"
+      ],
+      [
+        "416974887798605"
+      ]
+    ],
+    "totalEarnings": 260,
+    "clientType": "player"
+  }
+}

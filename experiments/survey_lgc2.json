@@ -1,5 +1,5 @@
 {
-  "532150631654540": {
+  "510789908857901": {
     "id": "survey",
     "order": [
       0,
@@ -10,8 +10,8 @@
     "forms": {
       "age": {
         "id": "age",
-        "choice": "4",
-        "time": 398,
+        "choice": "2",
+        "time": 2923,
         "nClicks": 1,
         "isCorrect": true,
         "attempts": []
@@ -19,7 +19,7 @@
       "gender": {
         "id": "gender",
         "choice": "1",
-        "time": 653,
+        "time": 3307,
         "nClicks": 1,
         "isCorrect": true,
         "attempts": []
@@ -27,7 +27,7 @@
       "education": {
         "id": "education",
         "choice": "1",
-        "time": 1045,
+        "time": 3619,
         "nClicks": 1,
         "isCorrect": true,
         "attempts": []
@@ -35,7 +35,7 @@
       "location": {
         "id": "location",
         "choice": "0",
-        "time": 1381,
+        "time": 3980,
         "nClicks": 1,
         "isCorrect": true,
         "attempts": []
