@@ -151,6 +151,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             }, 1000);
         };
 
+        this.submitEndSurvey = function () {
+            var textField1 = W.gid('textField1');
+            node.done({field1: textField1.value});
+        };
+
         this.symbols = ['(', ')', '|', '%', '^', '&', '<', '>', '-', '~'];
         this.choices = ['@', '#'];
         node.game.shuffle(this.symbols);
@@ -275,13 +280,21 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             ybtn.onclick = function () { that.respond('D', false); };
         }
     });
-    /*stager.extendStep('endSurvey', {
-        donebutton: true,
+    stager.extendStep('endSurvey', {
+        donebutton: false,
         frame: 'postgame.htm',
         cb: function () {
+            var that = this;
             node.game.visualTimer.setToZero();
+            var submit = W.gid('submit');
+            submit.onclick = function () {
+                that.submitEndSurvey();
+            }
+        },
+        timeup: function () {
+            this.submitEndSurvey();
         }
-    });*/
+    });
     stager.extendStep('payoffs', {
         donebutton: false,
         frame: 'end.htm',

@@ -143,33 +143,33 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     });
 
     // stager.setDefaultStepRule(stepRules.WAIT);
-    /*
+    
     stager.extendStep('endSurvey', {
         cb: function () {
             var path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
             console.log("Saving game data to " + path);
-            stager.setDefaultStepRule(stepRules.WAIT);
             fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
                 if (err) {
                     console.log(err);
                 }
             });
-        },
-        done: function() {
-            
+            node.on.data('done', function (msg) {
+                if(msg.data !== 'bot'){
+                    var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
+                    console.log("Saving survey data to " + path);
+                    var dataString = JSON.stringify(msg.data, null, 2);
+                    fs.appendFile(path, dataString, function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
         }
     });
-    */
+    
     stager.extendStep('payoffs', {
         cb: function() {
-            var path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
-            console.log("Saving game data to " + path);
-            stager.setDefaultStepRule(stepRules.WAIT);
-            fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
-                if (err) {
-                    console.log(err);
-                }
-            });
             // Send message to each player that will be caught
             // by EndScren widget, formatted and  displayed.
             gameRoom.computeBonus({

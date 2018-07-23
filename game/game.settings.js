@@ -41,8 +41,9 @@ module.exports = {
      * used to initialize the game timer for the step.
      */
     TIMER: {
-        visit: 10000,
-        respond: 10000
+        visit: 5000,
+        respond: 5000,
+        endSurvey: 20000
     },
 
     // # Game specific properties

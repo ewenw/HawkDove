@@ -150,6 +150,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             }
         });
+        stager.extendStep('endSurvey', {
+            cb: function () {
+                node.done('bot');
+            }
+        });
     }
 
 
