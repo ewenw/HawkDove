@@ -153,7 +153,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.submitEndSurvey = function () {
             var textField1 = W.gid('textField1');
-            node.done({field1: textField1.value});
+            node.done({
+                surveyData: 
+                    {
+                        field1: textField1.value
+                    }
+                });
         };
 
         this.symbols = ['(', ')', '|', '%', '^', '&', '<', '>', '-', '~'];
@@ -202,14 +207,17 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             this.visitId = null;
             xbtn.innerHTML = this.choices[0];
             ybtn.innerHTML = this.choices[1];
-            for (var i = 0; i < node.game.pl.size(); i++) {
-                var player = node.game.pl.db[i];
-                var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 300 + 105;
-                var y = Math.sin(rads) * 300 + 450;
-                that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
+            if(node.game.pl.size() == 1)
+                that.createButton(that, node.game.pl.db[0].id, neighborsDiv, 105, 450, that.symbols[0]);
+            else {
+                for (var i = 0; i < node.game.pl.size(); i++) {
+                    var player = node.game.pl.db[i];
+                    var rads = (offset + angle * (i + 1)) * Math.PI / 180;
+                    var x = Math.cos(rads) * 300 + 105;
+                    var y = Math.sin(rads) * 300 + 450;
+                    that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
+                }
             }
-
             earnings.style.display = 'none';
 
             node.on.data('updateEarnings', function (msg) {

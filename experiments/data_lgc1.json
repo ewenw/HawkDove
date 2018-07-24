@@ -1,68 +1,68 @@
 {
-  "710018996655688": {
+  "299120425298904": {
     "visits": [
       {
-        "visitee": "148044500776310",
-        "visitStrategy": "H",
-        "responseStrategy": "H",
-        "visitorEarning": 0,
-        "visiteeEarning": 0,
-        "visitTime": 2000,
+        "visitee": "987634204341886",
+        "visitStrategy": "D",
+        "responseStrategy": "D",
+        "visitorEarning": 60,
+        "visiteeEarning": 60,
+        "visitTime": 0,
         "respondTime": 0,
         "round": 1
       },
       {
-        "visitee": "148044500776310",
+        "visitee": "987634204341886",
         "visitStrategy": "D",
         "responseStrategy": "H",
         "visitorEarning": 20,
         "visiteeEarning": 100,
-        "visitTime": 1000,
+        "visitTime": 0,
         "respondTime": 0,
         "round": 2
       }
     ],
     "orders": [
       [
-        "148044500776310"
+        "987634204341886"
       ],
       [
-        "148044500776310"
+        "987634204341886"
       ]
     ],
-    "totalEarnings": 20,
+    "totalEarnings": 100,
     "clientType": "player",
     "interface": {
       "symbols": [
         "~",
-        "^",
-        ">",
-        "<",
-        "|",
         "%",
+        "|",
+        "^",
         "(",
         "-",
+        ">",
         "&",
+        "<",
         ")"
       ],
       "hawk": "@",
       "dove": "#"
     }
   },
-  "148044500776310": {
+  "987634204341886": {
     "visits": [
       {
-        "visitee": "710018996655688",
+        "visitee": "299120425298904",
         "visitStrategy": "H",
-        "responseStrategy": "H",
-        "visitorEarning": 0,
-        "visiteeEarning": 0,
+        "responseStrategy": "D",
+        "visitorEarning": 100,
+        "visiteeEarning": 20,
         "visitTime": 0,
-        "respondTime": 3000,
+        "respondTime": 0,
         "round": 1
       },
       {
-        "visitee": "710018996655688",
+        "visitee": "299120425298904",
         "visitStrategy": "H",
         "responseStrategy": "H",
         "visitorEarning": 0,
@@ -74,13 +74,13 @@
     ],
     "orders": [
       [
-        "710018996655688"
+        "299120425298904"
       ],
       [
-        "710018996655688"
+        "299120425298904"
       ]
     ],
-    "totalEarnings": 100,
+    "totalEarnings": 260,
     "clientType": "bot"
   }
 }

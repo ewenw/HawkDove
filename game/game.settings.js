@@ -52,7 +52,7 @@ module.exports = {
     REPEAT: 2,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: false,
+    TUTORIAL: true,
 
     // fill server with all bots to simulate rounds
     SIMULATION: true,

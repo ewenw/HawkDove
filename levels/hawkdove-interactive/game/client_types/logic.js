@@ -154,10 +154,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             });
             node.on.data('done', function (msg) {
-                if(msg.data !== 'bot'){
+                if(msg.data.surveyData){
                     var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
                     console.log("Saving survey data to " + path);
-                    var dataString = JSON.stringify(msg.data, null, 2);
+                    var dataString = JSON.stringify(msg.data.surveyData, null, 2);
                     fs.appendFile(path, dataString, function (err) {
                         if (err) {
                             console.log(err);
