@@ -36,7 +36,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.game.payoffs = {};
 
         // Player earnings
-        node.game.earnings = {};
+        node.game.earnings = {
+            total: 0
+        };
 
         // Keep track of original players to distinguish possible bots from players
         node.game.originalIds = node.game.pl.id.getAllKeyElements();
@@ -125,6 +127,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 result.innerHTML = '<br/><br/><center>You earned $' + node.game.payoffs[strategy + visit.strategy]+'</center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             }
+            else
+                node.game.lastResponseEarnings += node.game.earnings.total * -node.game.settings.PERCENT_PENALTY;
             node.say('response', 'SERVER', {
                 visitor: visit.visitor,
                 visitee: node.player.id,
