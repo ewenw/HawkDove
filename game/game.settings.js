@@ -41,18 +41,18 @@ module.exports = {
      * used to initialize the game timer for the step.
      */
     TIMER: {
-        visit: 5000,
-        respond: 5000,
+        visit: 8000,
+        respond: 8000,
         endSurvey: 20000
     },
 
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 2,
+    REPEAT: 20,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: true,
+    TUTORIAL: false,
 
     // fill server with all bots to simulate rounds
     SIMULATION: true,
@@ -81,5 +81,8 @@ module.exports = {
             D: 80
         },
         hostWeight: 80
-    }
+    },
+
+    // Percent to deduct from player's payoff when failed to respond in time.
+    PERCENT_PENALTY: 0.5
 };

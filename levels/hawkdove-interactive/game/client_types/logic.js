@@ -91,6 +91,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             initDataContainer(msg.data.visitor);
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
             var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
+            // penalized players if they ran out of time
+            if(msg.data.visitorTimeup)
+                visitorEarning = node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY;
+            if(msg.data.visiteeTimeup){
+                visiteeEarning = node.game.gameData[msg.data.visitee].totalEarnings * - settings.PERCENT_PENALTY;
+                console.log('Visitee PENALIZED! ' + visiteeEarning);
+            }
             node.game.gameData[msg.data.visitor].visits.push({
                 visitee: msg.data.visitee,
                 visitStrategy: msg.data.visitStrategy,
@@ -100,13 +107,15 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 visitTime: msg.data.visitTime,
                 respondTime: msg.data.respondTime,
                 round: msg.data.round,
+                visitorTimeup: msg.data.visitorTimeup,
+                visiteeTimeup: msg.data.visiteeTimeup
             });
 
             // update visitor earnings
-            node.game.gameData[msg.data.visitor].totalEarnings = node.game.gameData[msg.data.visitor].totalEarnings + visitorEarning;
+            node.game.gameData[msg.data.visitor].totalEarnings += visitorEarning;
             visitorClient.win = visitorClient.win? visitorClient.win + visitorEarning : visitorEarning;
             // update visitee earnings
-            node.game.gameData[msg.data.visitee].totalEarnings = node.game.gameData[msg.data.visitee].totalEarnings + visiteeEarning;
+            node.game.gameData[msg.data.visitee].totalEarnings += visiteeEarning;
             visiteeClient.win = visiteeClient.win? visiteeClient.win + visiteeEarning : visiteeEarning;
         });
 
@@ -131,7 +140,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var visitee = msg.data.visitee;
                 var strategy = msg.data.strategy;
                 var visitTime = msg.data.decisionTime;
-                node.say('addVisit', visitee, { visitor: visitor, strategy: strategy, visitTime: visitTime });
+                var timeup = msg.data.timeup;
+                node.say('addVisit', visitee, { visitor: visitor, strategy: strategy, visitTime: visitTime, visitorTimeup: timeup });
             })
         }
     });
