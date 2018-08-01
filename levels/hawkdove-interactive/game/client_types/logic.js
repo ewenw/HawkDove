@@ -93,9 +93,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
             // penalized players if they ran out of time
             if(msg.data.visitorTimeup)
-                visitorEarning = node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY;
+                visitorEarning = Math.floor(node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY);
             if(msg.data.visiteeTimeup)
-                visiteeEarning = node.game.gameData[msg.data.visitee].totalEarnings * - settings.PERCENT_PENALTY;
+                visiteeEarning = Math.floor(node.game.gameData[msg.data.visitee].totalEarnings * - settings.PERCENT_PENALTY);
             node.game.gameData[msg.data.visitor].visits.push({
                 visitee: msg.data.visitee,
                 visitStrategy: msg.data.visitStrategy,

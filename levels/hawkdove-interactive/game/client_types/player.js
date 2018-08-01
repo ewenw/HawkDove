@@ -213,12 +213,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var lastRoundEarnings = W.gid('lastRoundEarnings');
             var responseEarnings = W.gid('responseEarnings');
             var totalEarnings = W.gid('totalEarnings');
+            var visitEarnings = W.gid('visitEarnings');
+            var container = W.gid('container');
             var angle = 180 / (node.game.pl.size() + 1);
             var offset = 180;
             this.visitId = null;
             xbtn.innerHTML = this.choices[0];
             ybtn.innerHTML = this.choices[1];
             that.clearInterstageText();
+            if(node.game.getRound() == 1)
+                container.style.display = 'block';
             if(node.game.pl.size() == 1)
                 that.createButton(that, node.game.pl.db[0].id, neighborsDiv, 105, 450, that.symbols[0]);
             else {
@@ -234,11 +238,17 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             node.on.data('updateEarnings', function (msg) {
                 console.log('Earnings updated');
-                node.game.earnings = msg.data;
-                earnings.style.display = 'block';
-                lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
-                responseEarnings.innerHTML = node.game.lastResponseEarnings;
-                totalEarnings.innerHTML = node.game.earnings.total;
+                visitEarnings.innerHTML = 'Your last visit earned $' + msg.data.lastRound;
+                setTimeout(function () {
+                    node.game.earnings = msg.data;
+                    earnings.style.display = 'block';
+                    lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
+                    responseEarnings.innerHTML = node.game.lastResponseEarnings;
+                    totalEarnings.innerHTML = node.game.earnings.total;
+                    container.style.display = 'block';
+                    visitEarnings.innerHTML = '';
+                }, 1000);
+                
             });
 
             xbtn.onclick = function () {
