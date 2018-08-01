@@ -299,8 +299,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }, 1000);
             }
 
-            xbtn.onclick = function () { that.respond('H', false); };
-            ybtn.onclick = function () { that.respond('D', false); };
+            var xChoice = this.choices[0] === '@' ? 'H' : 'D';
+            var yChoice = xChoice === 'H' ? 'D' : 'H';
+            xbtn.onclick = function () { that.respond(xChoice, false); };
+            ybtn.onclick = function () { that.respond(yChoice, false); };
         }
     });
     stager.extendStep('endSurvey', {
