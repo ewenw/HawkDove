@@ -49,7 +49,7 @@ module.exports = {
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 20,
+    REPEAT: 2,
 
     // use tutorial and survey staging; disable for testing
     TUTORIAL: false,
@@ -64,7 +64,12 @@ module.exports = {
         DH: 20,
         DD: 60
     },
+
+    // base pay assuming player has positive earnings
+    BASEPAY: 500,
     
+    EXCHANGE_RATE: 0.001,
+
     // Bot strategies: 
     // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
     // "REINFORCEMENT" - learns from actions and previous round's results

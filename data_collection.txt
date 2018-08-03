@@ -24,3 +24,12 @@ easier to click quickly
 colors
 last round screen
 heroku
+*************
+
+base pay at least 75% or something of decisions
+
+popup message saying your last visit earning will be shown after the round
+
+reorder symbols and button actions
+
+new server with instructions

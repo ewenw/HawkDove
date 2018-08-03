@@ -230,7 +230,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     var player = node.game.pl.db[i];
                     var rads = (offset + angle * (i + 1)) * Math.PI / 180;
                     var x = Math.cos(rads) * 300 + 105;
-                    var y = Math.sin(rads) * 300 + 450;
+                    var y = Math.sin(rads) * 300 + 380;
                     that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
                 }
             }
@@ -238,7 +238,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             node.on.data('updateEarnings', function (msg) {
                 console.log('Earnings updated');
-                visitEarnings.innerHTML = 'Your last visit earned $' + msg.data.lastRound;
+                visitEarnings.innerHTML = 'Your visit this round earned ' + msg.data.lastRound + ' points';
                 setTimeout(function () {
                     node.game.earnings = msg.data;
                     earnings.style.display = 'block';
@@ -324,7 +324,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var submit = W.gid('submit');
             submit.onclick = function () {
                 that.submitEndSurvey();
-            }
+            };
         },
         timeup: function () {
             this.submitEndSurvey();

@@ -9,14 +9,33 @@
   <div id="container" style="display:none;">
     <br/>
     <br/>
-    <h2>
-      <center>Choose a player to interact with</center>
-    </h2>
-    <div id="players" class="center-div"></div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <center>
+      <div id="earnings">
+        <h2>Earnings</h2>
+
+        <table style="width:100%">
+          <tr>
+            <th>Recent visit</th>
+            <th>Recent responses</th>
+            <th>Game total</th>
+          </tr>
+          <tr>
+            <td>
+              <h3 id="lastRoundEarnings"></h3>
+            </td>
+            <td>
+              <h3 id="responseEarnings"></h3>
+            </td>
+            <td>
+              <h3 id="totalEarnings"></h3>
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+      </div>
+    </center>
+
     <div class="modal fade" id="visit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -39,27 +58,12 @@
       </div>
 
     </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <center>
-      <div id="earnings">
-        <p style="font-size: 22px;">
-          You earned $
-          <b id="lastRoundEarnings"></b> from your last visit.
-        </p>
-        <p style="font-size: 22px;">
-          You earned $
-          <b id="responseEarnings"></b> from your last reponses.
-        </p>
-        <p style="font-size: 19px;">
-          Running total: $
-          <b id="totalEarnings"></b>.
-        </p>
-      </div>
-    </center>
+    <h2>
+      <center>Choose a player to interact with</center>
+    </h2>
+    <div id="players" class="center-div"></div>
   </div>
+  <br/>
   <br/>
   <br/>
   <center>

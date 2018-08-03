@@ -55,6 +55,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.game.gameData[pid].visits = [];
                 node.game.gameData[pid].orders = [];
                 node.game.gameData[pid].totalEarnings = 0;
+                node.game.gameData[pid].timeups = 0;
                 var plFiltered = node.game.pl.db.filter(function(x){
                     return x.id === pid;
                 });
@@ -92,10 +93,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
             var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
             // penalized players if they ran out of time
-            if(msg.data.visitorTimeup)
+            if(msg.data.visitorTimeup){
                 visitorEarning = Math.floor(node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY);
-            if(msg.data.visiteeTimeup)
+                node.game.gameData[msg.data.visitor].timeups += 1;
+            }
+            if(msg.data.visiteeTimeup){
                 visiteeEarning = Math.floor(node.game.gameData[msg.data.visitee].totalEarnings * - settings.PERCENT_PENALTY);
+                node.game.gameData[msg.data.visiteeTimeup].timeups += 1;
+            }
             node.game.gameData[msg.data.visitor].visits.push({
                 visitee: msg.data.visitee,
                 visitStrategy: msg.data.visitStrategy,
@@ -178,8 +183,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     
     stager.extendStep('payoffs', {
         cb: function() {
+            addBasePay();
             // Send message to each player that will be caught
-            // by EndScren widget, formatted and  displayed.
+            // by EndScreen widget, formatted and  displayed.
             gameRoom.computeBonus({
                 say: true,
                 dump: true,
@@ -199,6 +205,18 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnGameOver(function () {
 
     });
+    
+    // Adds base pay to players who have completed enough rounds
+    var addBasePay = function () {
+        var data = node.game.payoffs;
+        data.foreach(function(pid) {
+            if(data[pid].timeups < settings.REPEAT / 2){
+                var client = channel.registry.getClient(pid);
+                if(client)
+                    client.win += settings.BASEPAY;
+            }
+        });
+    };
 
     var broadcastPlayerEarnings = function () {
         var data = node.game.gameData;
