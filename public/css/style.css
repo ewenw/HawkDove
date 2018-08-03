@@ -1,14 +1,25 @@
 body {
-    font-size: 1.8em;
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    max-width: 42em;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
 }
 
-div#container {
-    max-width: 650px;
-    margin: 0px auto;
+button {
+    font-weight: bold;
 }
 
-.margin-bottom {
-    margin-bottom: 40px;
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
+.form-control {
+    height: 2em;
+    padding: 0.5em 0.5em;
+    font-size: inherit;
 }
 
 .subtitle {
@@ -16,9 +27,18 @@ div#container {
     font-style: italic;
 }
 
+.container {
+    width: 100%;
+}
+
 .important {
     color: red;
     font-weight: bold;
+}
+
+.outline {
+    margin: auto;
+    border: 3px solid rgb(198, 212, 177);
 }
 
 .question {
@@ -29,24 +49,7 @@ input#offer, input#submitOffer {
     margin-bottom: 15px;
 }
 
-div#quiz .choicetable {
-    margin: 0 auto;
-    padding: 10px;
-}
-
 table#quest td {
-    width: 550px;
-    text-align: left;
-    padding: 5px 10px;
-}
-
-div.choicetable span.choicetable-maintext {
-    font-weight: bold;
-    margin-bottom: 20px;
-    font-size:  18px;
-}
-
-div.choicetable textarea {
     width: 550px;
     text-align: left;
     padding: 5px 10px;

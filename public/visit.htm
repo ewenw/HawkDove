@@ -11,25 +11,29 @@
     <br/>
     <center>
       <div id="earnings">
-        <h2>Earnings</h2>
+        <h1>Earnings</h1>
 
-        <table style="width:100%">
-          <tr>
-            <th>Recent visit</th>
-            <th>Recent responses</th>
-            <th>Game total</th>
-          </tr>
-          <tr>
-            <td>
-              <h3 id="lastRoundEarnings"></h3>
-            </td>
-            <td>
-              <h3 id="responseEarnings"></h3>
-            </td>
-            <td>
-              <h3 id="totalEarnings"></h3>
-            </td>
-          </tr>
+        <table class="table" style="width:100%">
+          <thead class="thead-dark">
+            <tr>
+              <th>Previous visit</th>
+              <th>Recent responses</th>
+              <th>Game total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <h3 id="lastRoundEarnings"></h3>
+              </td>
+              <td>
+                <h3 id="responseEarnings"></h3>
+              </td>
+              <td>
+                <h3 id="totalEarnings"></h3>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <br/>
         <br/>
@@ -40,7 +44,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Pick a strategy</h3>
+            <h3 class="modal-title" id="exampleModalLabel">Pick an action</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -58,9 +62,9 @@
       </div>
 
     </div>
-    <h2>
-      <center>Choose a player to interact with</center>
-    </h2>
+    <h1>
+      <center>Choose a player to visit</center>
+    </h1>
     <div id="players" class="center-div"></div>
   </div>
   <br/>

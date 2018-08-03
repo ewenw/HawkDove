@@ -124,7 +124,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if(!timeup){
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = '<br/><br/><center>You earned $' + node.game.payoffs[strategy + visit.strategy]+'</center>';
+                result.innerHTML = '<br/><br/><center>You earned ' + node.game.payoffs[strategy + visit.strategy]+' points</center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             }
             else
@@ -174,12 +174,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.symbols = ['(', ')', '|', '%', '^', '&', '<', '>', '-', '~'];
         this.choices = ['@', '#'];
+        this.strategies = ['H', 'D'];
         node.game.shuffle(this.symbols);
         node.game.shuffle(this.choices);
+        node.game.shuffle(this.strategies);
         node.say('symbolOrders', 'SERVER', {
             symbols: this.symbols,
-            hawk: this.choices[0],
-            dove: this.choices[1]
+            buttonOrder: this.choices,
+            strategyOrder: this.strategies
         });
 
         node.on.data('addVisit', function (msg) {
@@ -229,8 +231,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 for (var i = 0; i < node.game.pl.size(); i++) {
                     var player = node.game.pl.db[i];
                     var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                    var x = Math.cos(rads) * 300 + 105;
-                    var y = Math.sin(rads) * 300 + 380;
+                    var x = Math.cos(rads) * 300 + 185;
+                    var y = Math.sin(rads) * 300 + 340;
                     that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
                 }
             }
@@ -247,16 +249,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     totalEarnings.innerHTML = node.game.earnings.total;
                     container.style.display = 'block';
                     visitEarnings.innerHTML = '';
-                }, 1000);
+                }, 1300);
                 
             });
 
             xbtn.onclick = function () {
-                that.visit('H', that.visitId, false);
+                that.visit(that.strategies[0], that.visitId, false);
             };
 
             ybtn.onclick = function () {
-                that.visit('D', that.visitId, false);
+                that.visit(that.strategies[1], that.visitId, false);
             };
         }
     });
@@ -303,16 +305,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if (node.game.visitsQueue.length == 0) {
                 var waitScreenDiv = W.gid('ng_waitScreen');
                 waitScreenDiv.style.opacity = 0;
-                respondDiv.innerHTML = '<br/><br/><h3><center>No visitors this round.</center></h3>';
+                respondDiv.innerHTML = '<br/><br/><h2><center>No visitors this round.</center></h2>';
                 setTimeout(function () {
                     node.done();
                 }, 1000);
             }
-
-            var xChoice = this.choices[0] === '@' ? 'H' : 'D';
-            var yChoice = xChoice === 'H' ? 'D' : 'H';
-            xbtn.onclick = function () { that.respond(xChoice, false); };
-            ybtn.onclick = function () { that.respond(yChoice, false); };
+            xbtn.onclick = function () { that.respond(that.strategies[0], false); };
+            ybtn.onclick = function () { that.respond(that.strategies[1], false); };
         }
     });
     stager.extendStep('endSurvey', {
@@ -338,16 +337,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             root: "body",
             options: {
                 title: false, // Disable title for seamless Widget Step.
-                panel: false, // No border around.
-                showEmailForm: true,
-                showFeedbackForm: true,
-                email: {
-                    texts: {
-                        label: 'Enter your email (optional):',
-                        errString: 'Please enter a valid email and retry'
-                    }
-                },
-                feedback: { minLength: 50 }             
+                panel: true, // No border around.
+                showEmailForm: false,
+                showFeedbackForm: false
             }
         }
     });

@@ -56,13 +56,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.game.gameData[pid].orders = [];
                 node.game.gameData[pid].totalEarnings = 0;
                 node.game.gameData[pid].timeups = 0;
-                var plFiltered = node.game.pl.db.filter(function(x){
+                var plFiltered = node.game.pl.db.filter(function (x) {
                     return x.id === pid;
                 });
-                if(plFiltered.length === 0){
+                if (plFiltered.length === 0) {
                     node.game.gameData[pid].clientType = 'bot'
                 }
-                else{
+                else {
                     node.game.gameData[pid].clientType = plFiltered[0].clientType;
                 }
             }
@@ -93,13 +93,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
             var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
             // penalized players if they ran out of time
-            if(msg.data.visitorTimeup){
+            if (msg.data.visitorTimeup) {
                 visitorEarning = Math.floor(node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY);
                 node.game.gameData[msg.data.visitor].timeups += 1;
             }
-            if(msg.data.visiteeTimeup){
+            if (msg.data.visiteeTimeup) {
                 visiteeEarning = Math.floor(node.game.gameData[msg.data.visitee].totalEarnings * - settings.PERCENT_PENALTY);
-                node.game.gameData[msg.data.visiteeTimeup].timeups += 1;
+                node.game.gameData[msg.data.visitee].timeups += 1;
             }
             node.game.gameData[msg.data.visitor].visits.push({
                 visitee: msg.data.visitee,
@@ -116,10 +116,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             // update visitor earnings
             node.game.gameData[msg.data.visitor].totalEarnings += visitorEarning;
-            visitorClient.win = visitorClient.win? visitorClient.win + visitorEarning : visitorEarning;
+            visitorClient.win = visitorClient.win ? visitorClient.win + visitorEarning : visitorEarning;
             // update visitee earnings
             node.game.gameData[msg.data.visitee].totalEarnings += visiteeEarning;
-            visiteeClient.win = visiteeClient.win? visiteeClient.win + visiteeEarning : visiteeEarning;
+            visiteeClient.win = visiteeClient.win ? visiteeClient.win + visiteeEarning : visiteeEarning;
         });
 
         node.on.data('order', function (msg) {
@@ -156,7 +156,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     });
 
     // stager.setDefaultStepRule(stepRules.WAIT);
-    
+
     stager.extendStep('endSurvey', {
         cb: function () {
             var path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
@@ -167,7 +167,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             });
             node.on.data('done', function (msg) {
-                if(msg.data.surveyData){
+                if (msg.data.surveyData) {
                     var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
                     console.log("Saving survey data to " + path);
                     var dataString = JSON.stringify(msg.data.surveyData, null, 2);
@@ -180,9 +180,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             });
         }
     });
-    
+
     stager.extendStep('payoffs', {
-        cb: function() {
+        cb: function () {
             addBasePay();
             // Send message to each player that will be caught
             // by EndScreen widget, formatted and  displayed.
@@ -191,13 +191,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 dump: true,
                 print: true
             });
-    
+
             // Do something with eventual incoming data from EndScreen.
-            node.on.data('email', function(msg) {           
-               // Store msg to file.           
+            node.on.data('email', function (msg) {
+                // Store msg to file.           
             });
-            node.on.data('feedback', function(msg) {
-               // Store msg to file.
+            node.on.data('feedback', function (msg) {
+                // Store msg to file.
             });
         }
     });
@@ -205,17 +205,19 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnGameOver(function () {
 
     });
-    
+
     // Adds base pay to players who have completed enough rounds
     var addBasePay = function () {
-        var data = node.game.payoffs;
-        data.foreach(function(pid) {
-            if(data[pid].timeups < settings.REPEAT / 2){
-                var client = channel.registry.getClient(pid);
-                if(client)
-                    client.win += settings.BASEPAY;
+        var data = node.game.gameData;
+        for (var pid in data) {
+            if (data.hasOwnProperty(pid)) {
+                if (data[pid].timeups < settings.REPEAT / 2) {
+                    var client = channel.registry.getClient(pid);
+                    if (client)
+                        client.win += settings.BASEPAY;
+                }
             }
-        });
+        }
     };
 
     var broadcastPlayerEarnings = function () {
