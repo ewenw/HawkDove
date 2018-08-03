@@ -38,7 +38,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .outline {
     margin: auto;
-    border: 3px solid rgb(198, 212, 177);
+    border: 2px solid rgb(103, 186, 255);
+    padding:18px;
 }
 
 .question {
@@ -60,12 +61,17 @@ table#quest td {
     width: 80px;
     text-align: center;
     border-radius: 50px;
-    background: rgb(199, 231, 236);
+    background: rgb(192, 227, 255);
     display: table-cell; 
     vertical-align: middle;
+    font-weight: bold;
   }
 
 .modal {
     position: absolute;
     top: 50px;
+}
+
+.panel {
+    border-radius: 10px;
 }
