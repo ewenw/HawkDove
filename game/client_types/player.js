@@ -171,10 +171,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 this.neighbors[i].innerHTML = symbols[i];
                 this.neighbors[i].style.position = 'relative';
                 var rads = (offset + angle * (i+1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 300;
-                var y = Math.sin(rads) * 300;
-                this.neighbors[i].style.left = (x + 80) + 'px';
-                this.neighbors[i].style.top = (y + 450) + 'px';
+                var x = Math.cos(rads) * 18 + 22;
+                var y = Math.sin(rads) * -80;
+                this.neighbors[i].style.left = x + '%';
+                this.neighbors[i].style.top = y + '%';
                 neighborsDiv.appendChild(this.neighbors[i]);
             }
             this.neighbors[2].setAttribute('data-toggle', 'modal');

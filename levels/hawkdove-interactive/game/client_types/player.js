@@ -93,8 +93,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn.setAttribute('class', 'circle-badge btn');
             btn.innerHTML = '<h3>'+symbol+'</h3>';
             btn.style.position = 'relative';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            btn.style.left = x + '%';
+            btn.style.top = y + '%';
             if (node.game.originalIds.hasOwnProperty(id)) {
                 btn.setAttribute('data-toggle', 'modal');
                 btn.setAttribute('data-target', '#visit');
@@ -231,8 +231,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 for (var i = 0; i < node.game.pl.size(); i++) {
                     var player = node.game.pl.db[i];
                     var rads = (offset + angle * (i + 1)) * Math.PI / 180;
-                    var x = Math.cos(rads) * 300 + 185;
-                    var y = Math.sin(rads) * 300 + 340;
+                    var x = Math.cos(rads) * 18 + 25;
+                    // var y = Math.sin(rads) * 80 + 100;
+                    var y = -Math.sin(rads) * 80 - 15;
                     that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
                 }
             }

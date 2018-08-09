@@ -42,7 +42,7 @@ module.exports = {
      */
     TIMER: {
         visit: 15000,
-        respond: 4000,
+        respond: 8000,
         endSurvey: 20000
     },
 
