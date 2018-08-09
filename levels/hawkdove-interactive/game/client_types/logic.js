@@ -26,24 +26,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     // Increment counter.
     counter = counter ? ++counter : settings.SESSION_ID || 1;
 
-    /* Data format:
-        "12345": {
-            visits: [
-                {
-                    visitee: "2",
-                    visitStrategy: "x",
-                    responseStrategy: "y",
-                    round: "1"
-                }, 
-                {}, ...
-            ],
-            orders: [
-                [2, 3, 4],
-                [5, 1, 2],
-                []
-            ],
-        }
-    */
     node.game.gameData = {};
     node.game.payoffs = settings.PAYOFFS;
 

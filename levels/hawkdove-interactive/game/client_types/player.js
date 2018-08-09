@@ -233,7 +233,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     var rads = (offset + angle * (i + 1)) * Math.PI / 180;
                     var x = Math.cos(rads) * 18 + 25;
                     // var y = Math.sin(rads) * 80 + 100;
-                    var y = -Math.sin(rads) * 80 - 15;
+                    var y = -Math.sin(rads) * 80 - 8;
                     that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
                 }
             }
