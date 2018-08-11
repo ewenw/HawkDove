@@ -16,6 +16,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
+p {
+    font-size: 1.08em;
+}
+
 .form-control {
     height: 2em;
     padding: 0.5em 0.5em;
@@ -29,6 +33,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {
     width: 100%;
+}
+
+span {
+    white-space:nowrap;
 }
 
 .important {
@@ -65,7 +73,33 @@ table#quest td {
     display: table-cell; 
     vertical-align: middle;
     font-weight: bold;
+    font-size: 4em;
   }
+
+.circle-badge-icon {
+    height: 65px;
+    width: 65px;
+    text-align: center;
+    border-radius: 50px;
+    background: rgb(192, 227, 255);
+    display: table-cell; 
+    vertical-align: middle;
+    font-size: 1em;
+}
+table { 
+    table-layout: fixed; 
+    text-align: center;
+}
+th{
+    text-align: center;
+}
+td { 
+    width: 33%; 
+}
+.btn {
+    font-weight: bold;
+    font-size: 1em;
+}
 
 .modal {
     position: absolute;

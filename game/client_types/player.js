@@ -192,10 +192,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
            var zbtn = W.gid('zbtn');
            var container = W.gid('container');
            zbtn.onclick = function(){
-               container.innerHTML = 'You responded to a player with action "Z", earning x number of points.';
+               container.innerHTML = '<br/><br/><p>You earned 100 points by responding to a player with action "Z".</p>' +
+               '<p class="outline">The points earned from responding to a visit will be shown here.</p>';
+               
                setTimeout(function (){
-                    node.done();
-               }, 2000);
+                    container.innerHTML = '<br/><br/><p>You earned 50 points by visiting player 1 with action "Y".</p>' +
+                    '<p class="outline">The points earned from your most recent visit to another player will be shown here.</p>';
+                    W.gid('donebutton').disabled = false;
+               }, 5000);
            };
         }
     });

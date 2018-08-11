@@ -48,7 +48,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         // last round response earnings
         node.game.lastResponseEarnings = 0;
-        
+
         // previous visit information
         node.game.lastVisit = {};
 
@@ -94,7 +94,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             btn = this.neighbors[id];
             btn.setAttribute('type', 'button');
             btn.setAttribute('class', 'circle-badge btn');
-            btn.innerHTML = '<h3>'+symbol+'</h3>';
+            btn.innerHTML = '<h2>' + symbol + '</h2>';
             btn.style.position = 'relative';
             btn.style.left = x + '%';
             btn.style.top = y + '%';
@@ -126,11 +126,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
             node.game.timer.restart();
-            if(!timeup){
+            if (!timeup) {
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
                 var strat = this.choices[this.strategies.indexOf(node.game.lastVisit.strategy)]
-                result.innerHTML = '<br/><br/><center>You earned ' + node.game.payoffs[strategy + visit.strategy] + ' points by selecting <b>' + strat + '.</b></center>';
+                result.innerHTML = '<br/><br/><center>You earned <u>' + node.game.payoffs[strategy + visit.strategy] +
+                    '</u> points by responding with action <button class="btn btn-secondary btn-s"><b>' + strat + '</b></button>.</center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             }
             else
@@ -163,11 +164,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         this.submitEndSurvey = function () {
             var textField1 = W.gid('textField1');
             node.done({
-                surveyData: 
+                surveyData:
                     {
                         field1: textField1.value
                     }
-                });
+            });
         };
 
         this.clearInterstageText = function () {
@@ -202,14 +203,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('visit', {
         donebutton: false,
         frame: 'visit.htm',
-        timeup: function() {
+        timeup: function () {
             var that = this;
             var container = W.gid('container');
             container.innerHTML = '<br/><center><h2>You ran out of time and have been penalized.</h2></center>';
             //node.game.penalties++;
             setTimeout(function () {
                 var playerList = node.game.pl.db;
-                var index = Math.floor(Math.random()*playerList.length);
+                var index = Math.floor(Math.random() * playerList.length);
                 that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[index].id, that.symbols[index], true);
             }, 1000);
         },
@@ -230,9 +231,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             xbtn.innerHTML = this.choices[0];
             ybtn.innerHTML = this.choices[1];
             that.clearInterstageText();
-            if(node.game.getRound() == 1)
+            if (node.game.getRound() == 1)
                 container.style.display = 'block';
-            if(node.game.pl.size() == 1)
+            if (node.game.pl.size() == 1)
                 that.createButton(that, node.game.pl.db[0].id, neighborsDiv, 105, 450, that.symbols[0]);
             else {
                 for (var i = 0; i < node.game.pl.size(); i++) {
@@ -240,7 +241,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     var rads = (offset + angle * (i + 1)) * Math.PI / 180;
                     var x = Math.cos(rads) * 18 + 25;
                     // var y = Math.sin(rads) * 80 + 100;
-                    var y = -Math.sin(rads) * 80 - 8;
+                    var y = -Math.sin(rads) * 80 - 35;
                     that.createButton(that, player.id, neighborsDiv, x, y, that.symbols[i]);
                 }
             }
@@ -250,7 +251,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 console.log('Earnings updated');
                 var symbol = node.game.lastVisit.symbol;
                 var strat = that.choices[that.strategies.indexOf(node.game.lastVisit.strategy)];
-                visitEarnings.innerHTML = 'Your visit to player <b>' + symbol + '</b> with action <b>' + strat + '</b> earned ' + msg.data.lastRound + ' points.';
+                visitEarnings.innerHTML = 'Your visit to  <button class="circle-badge-icon btn"><b>' + symbol +
+                    '</b></button> with action <button class="btn btn-secondary btn-s"><b>' + strat + '</b></button> earned <u>' + msg.data.lastRound + '</u> points.';
                 setTimeout(function () {
                     node.game.earnings = msg.data;
                     earnings.style.display = 'block';
@@ -260,7 +262,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     container.style.display = 'block';
                     visitEarnings.innerHTML = '';
                 }, 2500);
-                
+
             });
 
             xbtn.onclick = function () {
@@ -297,7 +299,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var order = [];
             that.clearInterstageText();
             node.game.lastResponseEarnings = 0;
-            result.style.display = 'none'; 
+            result.style.display = 'none';
             respondDiv.style.display = 'none';
             xbtn.innerHTML = this.choices[0];
             ybtn.innerHTML = this.choices[1];
@@ -310,7 +312,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             // send order of responses to server
             node.say('order', 'SERVER', order);
-            
+
             respondDiv.style.display = 'block';
             if (node.game.visitsQueue.length == 0) {
                 var waitScreenDiv = W.gid('ng_waitScreen');
