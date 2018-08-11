@@ -190,8 +190,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'practice_respond.htm',
         cb: function(){
            var zbtn = W.gid('zbtn');
+           var container = W.gid('container');
            zbtn.onclick = function(){
-                node.done();
+               container.innerHTML = 'You responded to a player with action "Z", earning x number of points.';
+               setTimeout(function (){
+                    node.done();
+               }, 2000);
            };
         }
     });
