@@ -48,6 +48,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         // last round response earnings
         node.game.lastResponseEarnings = 0;
+        
+        // previous visit information
+        node.game.lastVisit = {};
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function (n) {
@@ -100,6 +103,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 btn.setAttribute('data-target', '#visit');
                 btn.onclick = function () {
                     obj.visitId = id;
+                    obj.symbol = symbol;
                     console.log(obj.visitId);
                 };
             }
@@ -110,7 +114,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             div.appendChild(btn);
         };
 
-        this.visit = function (strategy, visitId, timeup) {
+        this.visit = function (strategy, visitId, symbol, timeup) {
+            node.game.lastVisit = { strategy: strategy, symbol: symbol };
             node.done({ visitee: visitId, strategy: strategy, decisionTime: node.game.visualTimer.gameTimer.timePassed, timeup: timeup });
         };
 
@@ -124,7 +129,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if(!timeup){
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                result.innerHTML = '<br/><br/><center>You earned ' + node.game.payoffs[strategy + visit.strategy]+' points</center>';
+                var strat = this.choices[this.strategies.indexOf(node.game.lastVisit.strategy)]
+                result.innerHTML = '<br/><br/><center>You earned ' + node.game.payoffs[strategy + visit.strategy] + ' points by selecting <b>' + strat + '.</b></center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             }
             else
@@ -151,7 +157,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     node.game.timer.restart();
                     node.game.visualTimer.restart();
                 }
-            }, 1000);
+            }, 2000);
         };
 
         this.submitEndSurvey = function () {
@@ -203,7 +209,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             //node.game.penalties++;
             setTimeout(function () {
                 var playerList = node.game.pl.db;
-                that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[Math.floor(Math.random()*playerList.length)].id, true);
+                var index = Math.floor(Math.random()*playerList.length);
+                that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[index].id, that.symbols[index], true);
             }, 1000);
         },
         cb: function () {
@@ -241,7 +248,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             node.on.data('updateEarnings', function (msg) {
                 console.log('Earnings updated');
-                visitEarnings.innerHTML = 'Your visit this round earned ' + msg.data.lastRound + ' points';
+                var symbol = node.game.lastVisit.symbol;
+                var strat = that.choices[that.strategies.indexOf(node.game.lastVisit.strategy)];
+                visitEarnings.innerHTML = 'Your visit to player <b>' + symbol + '</b> with action <b>' + strat + '</b> earned ' + msg.data.lastRound + ' points.';
                 setTimeout(function () {
                     node.game.earnings = msg.data;
                     earnings.style.display = 'block';
@@ -250,16 +259,16 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     totalEarnings.innerHTML = node.game.earnings.total;
                     container.style.display = 'block';
                     visitEarnings.innerHTML = '';
-                }, 1300);
+                }, 2500);
                 
             });
 
             xbtn.onclick = function () {
-                that.visit(that.strategies[0], that.visitId, false);
+                that.visit(that.strategies[0], that.visitId, that.symbol, false);
             };
 
             ybtn.onclick = function () {
-                that.visit(that.strategies[1], that.visitId, false);
+                that.visit(that.strategies[1], that.visitId, that.symbol, false);
             };
         }
     });
