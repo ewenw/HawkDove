@@ -68,8 +68,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         this.header = W.generateHeader();
         frame = W.generateFrame();
         // Add widgets.
-        this.visualRound = node.widgets.append('VisualRound', this.header);
+        this.visualRounds = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
+        this.visualRounds.setDisplayMode(['COUNT_UP_ROUNDS_TO_TOTAL']);
 
         /**
          * Shuffles array in place.
@@ -198,6 +199,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('updatePayoffs', function (msg) {
             node.game.payoffs = msg.data;
         });
+
     });
 
     stager.extendStep('visit', {
@@ -206,7 +208,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         timeup: function () {
             var that = this;
             var container = W.gid('container');
-            container.innerHTML = '<br/><center><h2>You ran out of time and have been penalized.</h2></center>';
+            container.innerHTML = '<br/><center><h2><b>You ran out of time and have been penalized.</b></h2></center>';
             //node.game.penalties++;
             setTimeout(function () {
                 var playerList = node.game.pl.db;
@@ -261,7 +263,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     totalEarnings.innerHTML = node.game.earnings.total;
                     container.style.display = 'block';
                     visitEarnings.innerHTML = '';
-                }, 2500);
+                }, 2800);
 
             });
 
@@ -284,11 +286,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var respondDiv = W.gid('respond');
             respondDiv.style.display = 'none';
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<br/><br/><center><h2>You ran out of time and have been penalized.</h2></center>';
+            resultDiv.innerHTML = '<br/><br/><center><h2><b>You ran out of time and have been penalized.</b></h2></center>';
             //node.game.penalties++;
             setTimeout(function () {
                 that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
-            }, 1000);
+            }, 1300);
         },
         cb: function () {
             var that = this;

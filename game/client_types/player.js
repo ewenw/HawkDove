@@ -205,10 +205,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('practice_end', {
-        donebutton: false,
-        cb: function(){
+        donebutton: true,
+        frame: 'practice_over.htm',
+        done: function(){
             node.say('practice-done');
-            node.done();
         }
     });
 

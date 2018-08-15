@@ -52,7 +52,7 @@ module.exports = {
     REPEAT: 20,
 
     // use tutorial and survey staging; disable for testing
-    TUTORIAL: true,
+    TUTORIAL: false,
 
     // payoff table
     PAYOFFS: {
