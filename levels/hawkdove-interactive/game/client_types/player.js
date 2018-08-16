@@ -130,7 +130,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             if (!timeup) {
                 respondDiv.style.display = 'none';
                 result.style.display = 'block';
-                var strat = this.choices[this.strategies.indexOf(node.game.lastVisit.strategy)]
+                var strat = this.choices[this.strategies.indexOf(strategy)];
                 result.innerHTML = '<br/><br/><center>You earned <u>' + node.game.payoffs[strategy + visit.strategy] +
                     '</u> points by responding with action <button class="btn btn-secondary btn-s"><b>' + strat + '</b></button>.</center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
