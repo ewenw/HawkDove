@@ -200,6 +200,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.payoffs = msg.data;
         });
 
+        // Enable scroll bar at all times
+        var scrollStyle = document.createElement('style');
+        scrollStyle.innerHTML = "body {overflow-y: scroll;}";
+        document.head.appendChild(scrollStyle);
     });
 
     stager.extendStep('visit', {
