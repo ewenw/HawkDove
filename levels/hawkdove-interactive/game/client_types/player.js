@@ -174,9 +174,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.clearInterstageText = function () {
             var waitScreenDiv = W.gid('ng_waitScreen');
-            waitScreenDiv.innerHTML = '</br></br>...';
             waitScreenDiv.style.background = 'white';
-            waitScreenDiv.style.color = 'white';
+            waitScreenDiv.style.color = 'black';
             waitScreenDiv.style.opacity = 1;
         }
 

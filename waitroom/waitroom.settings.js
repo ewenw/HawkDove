@@ -438,7 +438,7 @@ module.exports = {
      *
      * A button is added to the interface
      */
-    // ALLOW_PLAY_WITH_BOTS: true
+    ALLOW_PLAY_WITH_BOTS: false
 
 
 };
