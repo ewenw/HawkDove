@@ -13,7 +13,7 @@ module.exports = {
      *
      * If TRUE, authorization files will be imported and checked
      */
-    enabled: false, // [true, false] Default: TRUE.
+    enabled: true, // [true, false] Default: TRUE.
 
     /**
      * ## mode
@@ -34,7 +34,7 @@ module.exports = {
      *               as parameters.
      *
      */
-    mode: 'local',
+    mode: 'auto',
 
     /**
      * ## nCodes

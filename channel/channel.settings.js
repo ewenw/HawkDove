@@ -43,7 +43,7 @@ module.exports = {
      * to use the real channel name, so you might need to pass it explicitly:
      * `node.connect('/gameName').
      */
-    // alias: [],
+    alias: 'visitNetwork',
 
     /**
      * ## playerServer (object|string) Optional
@@ -122,7 +122,7 @@ module.exports = {
      *
      * Default: FALSE
      */
-    enableReconnections: true,
+    enableReconnections: false,
 
     /**
      * ### sameStepReconnectionOnly (boolean) Optional
@@ -176,7 +176,7 @@ module.exports = {
      *
      * Default: TRUE
      */
-    // sioQuery: false,
+    sioQuery: false,
 
     /**
      * ### defaultChannel (boolean) Optional
