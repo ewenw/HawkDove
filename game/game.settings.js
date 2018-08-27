@@ -70,7 +70,7 @@ module.exports = {
     // Bot strategies: 
     // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
     // "REINFORCEMENT" - learns from actions and previous round's results
-    BOT_STRATEGY: "NAIVE",
+    BOT_STRATEGY: "REINFORCEMENT",
 
     // Reinforcement bot's initial weights
     BOT_WEIGHTS: {
