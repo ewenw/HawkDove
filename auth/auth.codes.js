@@ -31,7 +31,7 @@
  * http://www.nodegame.org
  * ---
  */
-
+/*
 var path = require('path');
 var fs = require('fs');
 var J = require('JSUS').JSUS;
@@ -222,3 +222,4 @@ module.exports = function(settings, done) {
         return nCodes || 100;
     }
 };
+*/
