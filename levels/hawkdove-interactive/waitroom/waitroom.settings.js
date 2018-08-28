@@ -33,7 +33,7 @@ module.exports = {
      *
      * The size of each group dispatched by the waiting room
      */
-    GROUP_SIZE: 4,
+    GROUP_SIZE: 6,
 
     /**
      * ## POOL_SIZE (number) Optional
@@ -44,7 +44,7 @@ module.exports = {
      *
      * Default: GROUP_SIZE
      */
-    POOL_SIZE: 4,
+    POOL_SIZE: 6,
 
     /**
      * ## N_GAMES (number) Optional
@@ -438,7 +438,7 @@ module.exports = {
      *
      * A button is added to the interface
      */
-    ALLOW_PLAY_WITH_BOTS: true
+    ALLOW_PLAY_WITH_BOTS: false
 
 
 };
