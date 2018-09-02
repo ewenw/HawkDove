@@ -114,7 +114,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.gameData[msg.from].interface = msg.data;
         });
     });
-    
+
     stager.extendStep('visit', {
         cb: function () {
             if (node.game.getRound() > 1) {
@@ -149,7 +149,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             });
             node.on.data('done', function (msg) {
+                var code = channel.registry.getClient(msg.from);
                 if (msg.data.surveyData) {
+                    code['Approve'] = 'x';
+                    code['Reject'] = '';
                     var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
                     console.log("Saving survey data to " + path);
                     var dataString = JSON.stringify(msg.data.surveyData, null, 2);
@@ -158,6 +161,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                             console.log(err);
                         }
                     });
+                }
+                else{
+                    code['Approve'] = '';
+                    code['Reject'] = 'x';
                 }
             });
         }
@@ -168,14 +175,15 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             addBasePay();
             // Send message to each player that will be caught
             // by EndScreen widget, formatted and  displayed.
+
             gameRoom.computeBonus({
-                header: [ 'id', 'type', 'workerid', 'hitid',
-                'assignmentid', 'exit', 'bonus' ],
+                header: [ 'id', 'type', 'WorkerId', 'HITId',
+                'AssignmentId', 'exit', 'bonus', 'Approve', 'Reject'],
                 headerKeys: [ 'id', 'clientType', 'WorkerId',
-                    'HITId', 'AssignmentId', 'ExitCode', 'win' ],
+                    'HITId', 'AssignmentId', 'ExitCode', 'win', 'Approve', 'Reject' ],
                 say: true,   // default false
                 dump: true,  // default false
-                print: true  // default false               
+                print: true  // default false,         
             });
 
             // Do something with eventual incoming data from EndScreen.
