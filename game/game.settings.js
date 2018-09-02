@@ -49,7 +49,7 @@ module.exports = {
     // # Game specific properties
 
     // Number of game rounds repetitions.
-    REPEAT: 20,
+    REPEAT: 5,
 
     // use tutorial and survey staging; disable for testing
     TUTORIAL: true,
@@ -70,7 +70,7 @@ module.exports = {
     // Bot strategies: 
     // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
     // "REINFORCEMENT" - learns from actions and previous round's results
-    BOT_STRATEGY: "NAIVE",
+    BOT_STRATEGY: "REINFORCEMENT",
 
     // Reinforcement bot's initial weights
     BOT_WEIGHTS: {
