@@ -98,6 +98,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 node.done({ visitee: visitId, strategy: strategy, decisionTime: 0, timeup: false });
             };
         });
+        stager.extendStep('precache', {
+            cb: function() {node.done();}
+        });
         stager.extendStep('visit',
             {
                 cb: function () {

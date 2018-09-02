@@ -12,6 +12,7 @@
 module.exports = function(stager, settings) {
 
      stager
+        .next('precache')
         .repeatStage('game', settings.REPEAT)
         .step('visit')
         .step('respond')

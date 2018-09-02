@@ -114,7 +114,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.gameData[msg.from].interface = msg.data;
         });
     });
-
+    
     stager.extendStep('visit', {
         cb: function () {
             if (node.game.getRound() > 1) {
