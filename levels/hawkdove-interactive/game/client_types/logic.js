@@ -169,9 +169,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             // Send message to each player that will be caught
             // by EndScreen widget, formatted and  displayed.
             gameRoom.computeBonus({
-                say: true,
-                dump: true,
-                print: true
+                header: [ 'id', 'type', 'workerid', 'hitid',
+                'assignmentid', 'exit', 'bonus' ],
+                headerKeys: [ 'id', 'clientType', 'WorkerId',
+                    'HITId', 'AssignmentId', 'ExitCode', 'win' ],
+                say: true,   // default false
+                dump: true,  // default false
+                print: true  // default false               
             });
 
             // Do something with eventual incoming data from EndScreen.
