@@ -164,10 +164,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.submitEndSurvey = function () {
             var textField1 = W.gid('textField1');
+            var textField2 = W.gid('textField2');
             node.done({
                 surveyData:
                     {
-                        field1: textField1.value
+                        q1: textField1.value,
+                        q2: textField2.value
                     }
             });
         };

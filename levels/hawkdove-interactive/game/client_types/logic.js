@@ -149,10 +149,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
             });
             node.on.data('done', function (msg) {
-                var code = channel.registry.getClient(msg.from);
                 if (msg.data.surveyData) {
-                    code['Approve'] = 'x';
-                    code['Reject'] = '';
                     var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
                     console.log("Saving survey data to " + path);
                     var dataString = JSON.stringify(msg.data.surveyData, null, 2);
@@ -162,17 +159,13 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                         }
                     });
                 }
-                else{
-                    code['Approve'] = '';
-                    code['Reject'] = 'x';
-                }
             });
         }
     });
 
     stager.extendStep('payoffs', {
         cb: function () {
-            addBasePay();
+            penalizePlayers();
             // Send message to each player that will be caught
             // by EndScreen widget, formatted and  displayed.
 
@@ -185,14 +178,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 dump: true,  // default false
                 print: true  // default false,         
             });
-
-            // Do something with eventual incoming data from EndScreen.
-            node.on.data('email', function (msg) {
-                // Store msg to file.           
-            });
-            node.on.data('feedback', function (msg) {
-                // Store msg to file.
-            });
         }
     });
 
@@ -200,15 +185,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
-    // Adds base pay to players who have completed enough rounds
-    var addBasePay = function () {
+    // Penalizes players who have not completed enough rounds
+    var penalizePlayers = function () {
         var data = node.game.gameData;
         for (var pid in data) {
             if (data.hasOwnProperty(pid)) {
-                if (data[pid].timeups < settings.REPEAT / 2) {
+                if (data[pid].timeups > settings.REPEAT / 2) {
                     var client = channel.registry.getClient(pid);
-                    if (client)
-                        client.win += settings.BASEPAY;
+                    client.win = 0;
                 }
             }
         }
