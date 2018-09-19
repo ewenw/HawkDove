@@ -65,7 +65,7 @@ module.exports = {
      *
      * After the max waiting time expired clients are disconnected
      */
-    MAX_WAIT_TIME: 480000,
+    MAX_WAIT_TIME: 60000,
 
     /**
      * ## START_DATE (string|object) Optional
