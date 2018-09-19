@@ -177,8 +177,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         this.clearInterstageText = function () {
             var waitScreenDiv = W.gid('ng_waitScreen');
             waitScreenDiv.style.background = 'white';
-            waitScreenDiv.style.color = 'black';
-            waitScreenDiv.style.opacity = 1;
+            waitScreenDiv.style.color = 'white';
+            waitScreenDiv.style.opacity = 0;
         }
 
         this.symbols = ['(', ')', '|', '%', '^', '&', '<', '>', '-', '~'];
