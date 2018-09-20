@@ -141,7 +141,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('endSurvey', {
         cb: function () {
-            var path = channel.getGameDir() + 'experiments/data_' + channel.session + '.json';
+            var path = channel.getGameDir() + 'experiments/data_' + Date.now() + '.json';
             console.log("Saving game data to " + path);
             fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
                 if (err) {
