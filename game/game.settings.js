@@ -62,7 +62,7 @@ module.exports = {
         DD: 60
     },
     
-    EXCHANGE_RATE: 0.002,
+    EXCHANGE_RATE: 0.001,
 
     // Bot strategies: 
     // "NAIVE" - cannot be visited and will not visit other players; simply progresses the game
