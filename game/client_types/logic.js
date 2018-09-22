@@ -32,7 +32,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             if(node.game.survey){
                 var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
                 console.log("Saving survey data to " + path);
-                var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
+                var dataString = JSON.stringify(node.game.survey[msg.from], null, 2) + ',';
                 fs.appendFile(path, dataString, function (err) {
                     if (err) {
                         console.log(err);
