@@ -30,7 +30,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
             if(node.game.survey){
-                var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
+                var path = channel.getGameDir() + '/experiments/survey/' + msg.from + '.json';
                 console.log("Saving survey data to " + path);
                 var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
                 fs.appendFile(path, dataString, function (err) {
@@ -42,9 +42,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
             console.log('Moving player ' + msg.from + ' to waiting room.');
             channel.moveClientToGameLevel(msg.from, 'hawkdove-interactive',
-                                              gameRoom.name);	
+                                              gameRoom.name);
         });
-        
+
         node.on.data('survey', function(msg){
             if(!node.game.survey)
             node.game.survey = {};
