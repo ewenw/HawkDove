@@ -9,17 +9,17 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var fs = require('fs');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var J = ngc.JSUS;
-var counter = 0;
+const ngc = require('nodegame-client');
+const fs = require('fs');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const J = ngc.JSUS;
+let counter = 0;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    var node = gameRoom.node;
-    var channel =  gameRoom.channel;
+    let node = gameRoom.node;
+    let channel =  gameRoom.channel;
 
     // Must implement the stages here.
 
@@ -30,9 +30,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
             if(node.game.survey){
-                var path = channel.getGameDir() + '/experiments/survey/' + msg.from + '.json';
+                let path = channel.getGameDir() + '/experiments/survey/' + msg.from + '.json';
                 console.log("Saving survey data to " + path);
-                var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
+                let dataString = JSON.stringify(node.game.survey, null, 2) + ',';
                 fs.appendFile(path, dataString, function (err) {
                     if (err) {
                         console.log(err);
