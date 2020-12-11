@@ -63,11 +63,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
 
         }
-        this.header.appendChild(this.backButton);
-
-        this.doneButton = node.widgets.append('DoneButton', this.header);
-        //this.doneButton._setText('Done');
-
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
