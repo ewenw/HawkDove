@@ -13,20 +13,20 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var publishLevels = constants.publishLevels;
+const ngc = require('nodegame-client');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const publishLevels = constants.publishLevels;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    var game;
+    let game;
     stager.setDefaultStepRule(stepRules.SOLO_STEP);
     stager.setOnInit(function() {
 
         // Initialize the client.
 
-        var frame;
+        let frame;
 
         // Bid is valid if it is a number between 0 and 100.
         this.isValidBid = function(n) {
@@ -34,7 +34,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         };
 
         this.randomOffer = function(offer, submitOffer) {
-            var n;
+            let n;
             n = JSUS.randomInt(-1,100);
             offer.value = n;
             submitOffer.click();
@@ -55,8 +55,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.backButton.setAttribute('class', 'btn btn-lg btn-secondary');
         this.backButton.setAttribute('value', 'Back');
         this.backButton.onclick = function(){
-            var curStage = node.game.getCurrentGameStage();
-            var stepId = curStage.step;
+            let curStage = node.game.getCurrentGameStage();
+            let stepId = curStage.step;
             if(stepId > 1){
                 curStage.step = curStage.step-1;
                 node.game.gotoStep(curStage);
@@ -91,9 +91,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     {
         frame: 'survey.htm',
         cb: function(){
-            var root = document.body;
-            var widgetsDiv = W.gid('widgets');
-            var w = node.widgets;
+            let root = document.body;
+            let widgetsDiv = W.gid('widgets');
+            let w = node.widgets;
            // this.nextButton.style.visibility = "hidden";
            // this.doneButton.button.style.visibility = "visible";
             this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
@@ -141,7 +141,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             });
         },
         done: function() {
-            var answers;
+            let answers;
             answers = this.survey.getValues({
                 markAttempt: true,
                 highlight: true
@@ -156,21 +156,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'practice.htm',
         cb: function(){
-            var symbols = ['3', '4', '1', '2', '6', '5'];
-            var neighborsDiv = W.gid('players');
-            var ybtn = W.gid('ybtn');
-            var angle = 180 / (symbols.length + 1);
-            var offset = 180;
+            let symbols = ['3', '4', '1', '2', '6', '5'];
+            let neighborsDiv = W.gid('players');
+            let ybtn = W.gid('ybtn');
+            let angle = 180 / (symbols.length + 1);
+            let offset = 180;
             this.neighbors = [];
-            for(var i=0; i<symbols.length; i++){
+            for(let i=0; i<symbols.length; i++){
                 this.neighbors[i] = document.createElement('button');
                 this.neighbors[i].setAttribute('type', 'button');
                 this.neighbors[i].setAttribute('class', 'circle-badge btn');
                 this.neighbors[i].innerHTML = symbols[i];
                 this.neighbors[i].style.position = 'relative';
-                var rads = (offset + angle * (i+1)) * Math.PI / 180;
-                var x = Math.cos(rads) * 18 + 22;
-                var y = Math.sin(rads) * -80;
+                let rads = (offset + angle * (i+1)) * Math.PI / 180;
+                let x = Math.cos(rads) * 18 + 22;
+                let y = Math.sin(rads) * -80;
                 this.neighbors[i].style.left = x + '%';
                 this.neighbors[i].style.top = y + '%';
                 neighborsDiv.appendChild(this.neighbors[i]);
@@ -187,8 +187,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'practice_respond.htm',
         cb: function(){
-           var zbtn = W.gid('zbtn');
-           var container = W.gid('container');
+           let zbtn = W.gid('zbtn');
+           let container = W.gid('container');
            zbtn.onclick = function(){
                container.innerHTML = '<br/><br/><p>You earned 100 points by responding to a player with action "Z".</p>' +
                '<p class="outline">The points earned from responding to a visit will be shown here.</p>';
