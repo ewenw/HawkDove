@@ -15,6 +15,7 @@ const stepRules = ngc.stepRules;
 const constants = ngc.constants;
 const J = ngc.JSUS;
 let counter = 0;
+const path = require('path');
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
@@ -30,10 +31,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
             if(node.game.survey){
-                let path = channel.getGameDir() + '/experiments/survey/' + msg.from + '.json';
-                console.log("Saving survey data to " + path);
+                let tmpPath = path.join(channel.getGameDir(),'experiments','survey' , msg.from +'.json');
+                console.log("Saving survey data to " + tmpPath);
                 let dataString = JSON.stringify(node.game.survey, null, 2) + ',';
-                fs.appendFile(path, dataString, function (err) {
+                fs.appendFile(tmpPath, dataString, function (err) {
                     if (err) {
                         console.log(err);
                     }
