@@ -10,13 +10,13 @@
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    var channel = gameRoom.channel;
-    var node = gameRoom.node;
-    var ngc =  require('nodegame-client');
+    let channel = gameRoom.channel;
+    let node = gameRoom.node;
+    const ngc =  require('nodegame-client');
 
-    var game, stager;
+    var stager;
 
-    game = gameRoom.getClientType('player');
+    let game = gameRoom.getClientType('player');
     game.env.auto = true;
     game.nodename = 'autoplay';
 
