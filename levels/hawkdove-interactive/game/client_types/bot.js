@@ -7,35 +7,35 @@
  * ---
  */
 
-var ngc = require('nodegame-client');
-var Stager = ngc.Stager;
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
+const ngc = require('nodegame-client');
+const Stager = ngc.Stager;
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
 
 // Export the game-creating function.
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
-    
+
     "use strict";
 
-    var game;
+    let game;
 
-    var channel = gameRoom.channel;
-    var logic = gameRoom.node;
+    let channel = gameRoom.channel;
+    let logic = gameRoom.node;
 
-    var visitWeights, respondWeights;
+    let visitWeights, respondWeights;
 
-    var node;
+    let node;
     debugger
 
     stager.setDefaultStepRule(stepRules.WAIT);
-   
+
     /**
      * Shuffles array in place.
      * @param {Array} a items An array containing the items.
     */
-    var shuffle = function (a) {
-        var j, x, i;
+    let shuffle = function (a) {
+        let j, x, i;
         for (i = 0; i < a.length; i++) {
             j = Math.floor(Math.random() * (i + 1));
             x = a[i];
@@ -46,12 +46,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     };
 
     // Picks an index out of array by corresponding weights
-    var pickWeightedIndex = function (weights) {
-        for (var i = 1; i < weights.length; i++) {
+    let pickWeightedIndex = function (weights) {
+        for (let i = 1; i < weights.length; i++) {
             weights[i] += weights[i - 1];
         }
-        var rand = Math.random() * weights[weights.length - 1];
-        for (var i = 0; i < weights.length; i++) {
+        let rand = Math.random() * weights[weights.length - 1];
+        for (let i = 0; i < weights.length; i++) {
             if (rand > weights[i])
                 continue;
             else return i;
@@ -65,11 +65,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     }
     else if (settings.BOT_STRATEGY === 'REINFORCEMENT') {
         stager.setOnInit(function () {
-            var lastStrategy;
+            let lastStrategy;
             node = this.node;
             visitWeights = settings.BOT_WEIGHTS.visit;
             respondWeights = settings.BOT_WEIGHTS.respond;
-            
+
             // A queue of visits to be responded to
             node.game.visitsQueue = [];
 
@@ -101,9 +101,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         stager.extendStep('visit',
             {
                 cb: function () {
-                    var that = this;
-                    var weights = [];
-                    var hostWeights = node.game.hostWeights;
+                    let that = this;
+                    let weights = [];
+                    let hostWeights = node.game.hostWeights;
                     node.game.pl.db.forEach(function (host) {
                         if (!hostWeights[host.id]) {
                             hostWeights[host.id] = settings.BOT_WEIGHTS.hostWeight;
@@ -116,12 +116,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         stager.extendStep('respond', {
             cb: function () {
-                var that = this;
-                var order = [];
+                let that = this;
+                let order = [];
                 // shuffle visits
                 shuffle(node.game.visitsQueue);
 
-                for (var visit of node.game.visitsQueue) {
+                for (let visit of node.game.visitsQueue) {
                     order.push(visit.visitor);
                 }
 
@@ -133,7 +133,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 }
                 else {
                     node.game.visitsQueue.forEach(function (visit) {
-                        var strategy = pickWeightedIndex([respondWeights.H, respondWeights.D]) == 0 ? 'H' : 'D';
+                        let strategy = pickWeightedIndex([respondWeights.H, respondWeights.D]) == 0 ? 'H' : 'D';
                         node.say('response', 'SERVER', {
                             visitor: visit.visitor,
                             visitee: node.player.id,
