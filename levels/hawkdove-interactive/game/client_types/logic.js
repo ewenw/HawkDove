@@ -14,6 +14,7 @@ const fs = require('fs');
 const stepRules = ngc.stepRules;
 const constants = ngc.constants;
 const J = ngc.JSUS;
+const path = require('path');
 let counter = 0;
 
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
@@ -141,19 +142,19 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('endSurvey', {
         cb: function () {
-            let path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
-            console.log("Saving game data to " + path);
-            fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
+            let surveyPath = path.join(channel.getGameDir(), 'experiments', 'data_' + node.nodename + '.json');
+            console.log("Saving game data to " + surveyPath);
+            fs.writeFile(surveyPath, JSON.stringify(node.game.gameData, null, 2), function (err) {
                 if (err) {
                     console.log(err);
                 }
             });
             node.on.data('done', function (msg) {
                 if (msg.data.surveyData) {
-                    let path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
-                    console.log("Saving survey data to " + path);
+                    let surveyPath = path.join(channel.getGameDir(), 'experiments', 'survey', msg.from + '.json');
+                    console.log("Saving survey data to " + surveyPath);
                     let dataString = JSON.stringify(msg.data.surveyData, null, 2);
-                    fs.appendFile(path, dataString, function (err) {
+                    fs.appendFile(surveyPath, dataString, function (err) {
                         if (err) {
                             console.log(err);
                         }
