@@ -14,8 +14,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     let node = gameRoom.node;
     const ngc =  require('nodegame-client');
 
-    var stager;
-
     let game = gameRoom.getClientType('player');
     game.env.auto = true;
     game.nodename = 'autoplay';
