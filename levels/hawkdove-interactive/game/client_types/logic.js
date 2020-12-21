@@ -9,17 +9,18 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var fs = require('fs');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var J = ngc.JSUS;
-var counter = 0;
+const ngc = require('nodegame-client');
+const fs = require('fs');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const J = ngc.JSUS;
+const path = require('path');
+let counter = 0;
 
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
-    var node = gameRoom.node;
-    var channel = gameRoom.channel;
+    let node = gameRoom.node;
+    let channel = gameRoom.channel;
 
     // Must implement the stages here.
 
@@ -31,14 +32,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function () {
         // initialize data container (props) in object for given player
-        var initDataContainer = function (pid) {
+        let initDataContainer = function (pid) {
             if (!node.game.gameData[pid]) {
                 node.game.gameData[pid] = {};
                 node.game.gameData[pid].visits = [];
                 node.game.gameData[pid].orders = [];
                 node.game.gameData[pid].totalEarnings = 0;
                 node.game.gameData[pid].timeups = 0;
-                var plFiltered = node.game.pl.db.filter(function (x) {
+                let plFiltered = node.game.pl.db.filter(function (x) {
                     return x.id === pid;
                 });
                 if (plFiltered.length === 0) {
@@ -69,11 +70,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         });
 
         node.on.data('response', function (msg) {
-            var visitorClient = channel.registry.getClient(msg.data.visitor);
-            var visiteeClient = channel.registry.getClient(msg.data.visitee);
+            let visitorClient = channel.registry.getClient(msg.data.visitor);
+            let visiteeClient = channel.registry.getClient(msg.data.visitee);
             initDataContainer(msg.data.visitor);
-            var visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
-            var visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
+            let visitorEarning = node.game.payoffs[msg.data.visitStrategy + msg.data.responseStrategy]
+            let visiteeEarning = node.game.payoffs[msg.data.responseStrategy + msg.data.visitStrategy];
             // penalized players if they ran out of time
             if (msg.data.visitorTimeup) {
                 visitorEarning = Math.floor(node.game.gameData[msg.data.visitor].totalEarnings * - settings.PERCENT_PENALTY);
@@ -121,11 +122,11 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 broadcastPlayerEarnings();
             }
             node.on.data('done', function (msg) {
-                var visitor = msg.from;
-                var visitee = msg.data.visitee;
-                var strategy = msg.data.strategy;
-                var visitTime = msg.data.decisionTime;
-                var timeup = msg.data.timeup;
+                let visitor = msg.from;
+                let visitee = msg.data.visitee;
+                let strategy = msg.data.strategy;
+                let visitTime = msg.data.decisionTime;
+                let timeup = msg.data.timeup;
                 node.say('addVisit', visitee, { visitor: visitor, strategy: strategy, visitTime: visitTime, visitorTimeup: timeup });
             })
         }
@@ -141,19 +142,19 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('endSurvey', {
         cb: function () {
-            var path = channel.getGameDir() + 'experiments/data_' + node.nodename + '.json';
-            console.log("Saving game data to " + path);
-            fs.writeFile(path, JSON.stringify(node.game.gameData, null, 2), function (err) {
+            let surveyPath = path.join(channel.getGameDir(), 'experiments', 'data_' + node.nodename + '.json');
+            console.log("Saving game data to " + surveyPath);
+            fs.writeFile(surveyPath, JSON.stringify(node.game.gameData, null, 2), function (err) {
                 if (err) {
                     console.log(err);
                 }
             });
             node.on.data('done', function (msg) {
                 if (msg.data.surveyData) {
-                    var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
-                    console.log("Saving survey data to " + path);
-                    var dataString = JSON.stringify(msg.data.surveyData, null, 2);
-                    fs.appendFile(path, dataString, function (err) {
+                    let surveyPath = path.join(channel.getGameDir(), 'experiments', 'survey', msg.from + '.json');
+                    console.log("Saving survey data to " + surveyPath);
+                    let dataString = JSON.stringify(msg.data.surveyData, null, 2);
+                    fs.appendFile(surveyPath, dataString, function (err) {
                         if (err) {
                             console.log(err);
                         }
@@ -176,7 +177,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
             // Do something with eventual incoming data from EndScreen.
             node.on.data('email', function (msg) {
-                // Store msg to file.           
+                // Store msg to file.
             });
             node.on.data('feedback', function (msg) {
                 // Store msg to file.
@@ -189,12 +190,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     });
 
     // Adds base pay to players who have completed enough rounds
-    var addBasePay = function () {
-        var data = node.game.gameData;
-        for (var pid in data) {
+    let addBasePay = function () {
+        let data = node.game.gameData;
+        for (let pid in data) {
             if (data.hasOwnProperty(pid)) {
                 if (data[pid].timeups < settings.REPEAT / 2) {
-                    var client = channel.registry.getClient(pid);
+                    let client = channel.registry.getClient(pid);
                     if (client)
                         client.win += settings.BASEPAY;
                 }
@@ -202,10 +203,10 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     };
 
-    var broadcastPlayerEarnings = function () {
-        var data = node.game.gameData;
-        for (var player in data) {
-            var visits = data[player].visits;
+    let broadcastPlayerEarnings = function () {
+        let data = node.game.gameData;
+        for (let player in data) {
+            let visits = data[player].visits;
             if (visits[visits.length - 1]) {
                 node.say('updateEarnings', player, {
                     lastRound: visits[visits.length - 1].visitorEarning,
@@ -215,14 +216,14 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
         }
     };
 
-    var broadcastPayoffs = function (payoffs) {
-        for (var player of node.game.pl.db) {
+    let broadcastPayoffs = function (payoffs) {
+        for (let player of node.game.pl.db) {
             node.say('updatePayoffs', player.id, payoffs);
         }
     };
 
-    var broadcastDropOut = function (id) {
-        for (var player of node.game.pl.db) {
+    let broadcastDropOut = function (id) {
+        for (let player of node.game.pl.db) {
             node.say('dropOut', player.id, id);
         }
     };

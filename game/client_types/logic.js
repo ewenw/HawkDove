@@ -9,17 +9,18 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var fs = require('fs');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var J = ngc.JSUS;
-var counter = 0;
+const ngc = require('nodegame-client');
+const fs = require('fs');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const J = ngc.JSUS;
+let counter = 0;
+const path = require('path');
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    var node = gameRoom.node;
-    var channel =  gameRoom.channel;
+    let node = gameRoom.node;
+    let channel =  gameRoom.channel;
 
     // Must implement the stages here.
 
@@ -30,10 +31,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function() {
         node.on.data('practice-done', function(msg) {
             if(node.game.survey){
-                var path = channel.getGameDir() + 'experiments/survey/' + msg.from + '.json';
-                console.log("Saving survey data to " + path);
-                var dataString = JSON.stringify(node.game.survey, null, 2) + ',';
-                fs.appendFile(path, dataString, function (err) {
+                let tmpPath = path.join(channel.getGameDir(), 'experiments','survey', msg.from +'.json');
+                console.log("Saving survey data to " + tmpPath);
+                let dataString = JSON.stringify(node.game.survey, null, 2) + ',';
+                fs.appendFile(tmpPath, dataString, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -42,9 +43,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
             console.log('Moving player ' + msg.from + ' to waiting room.');
             channel.moveClientToGameLevel(msg.from, 'hawkdove-interactive',
-                                              gameRoom.name);	
+                                              gameRoom.name);
         });
-        
+
         node.on.data('survey', function(msg){
             if(!node.game.survey)
             node.game.survey = {};

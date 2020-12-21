@@ -13,14 +13,14 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var publishLevels = constants.publishLevels;
+const ngc = require('nodegame-client');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const publishLevels = constants.publishLevels;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
-    var game;
+    let game;
     stager.setDefaultStepRule(stepRules.SOLO_STEP);
     stager.setOnInit(function() {
 
@@ -44,11 +44,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         this.header = W.generateHeader();
         frame = W.generateFrame();
 
-        
+
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
-       
+
         this.backButton = document.createElement('input');
         this.backButton.setAttribute('type', 'button');
         this.backButton.setAttribute('id', 'backbutton');
@@ -61,13 +61,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 curStage.step = curStage.step-1;
                 node.game.gotoStep(curStage);
             }
-            
+
         }
         this.header.appendChild(this.backButton);
 
         this.doneButton = node.widgets.append('DoneButton', this.header);
-        this.doneButton._setText('Done');
-        
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
@@ -76,7 +74,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('welcome', {
         frame: 'welcome.htm',
         cb: function(){
-           // this.doneButton.button.style.visibility = "hidden"; 
+           // this.doneButton.button.style.visibility = "hidden";
            // this.nextButton.style.visibility = "visible";
         }
     });
@@ -84,19 +82,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
         cb: function(){
-            //this.doneButton.button.style.visibility = "hidden"; 
+            //this.doneButton.button.style.visibility = "hidden";
             //this.nextButton.style.visibility = "visible";
         }
     });
 
-    stager.extendStep('survey', 
+    stager.extendStep('survey',
     {
         frame: 'survey.htm',
         cb: function(){
             var root = document.body;
             var widgetsDiv = W.gid('widgets');
             var w = node.widgets;
-           // this.nextButton.style.visibility = "hidden"; 
+           // this.nextButton.style.visibility = "hidden";
            // this.doneButton.button.style.visibility = "visible";
             this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
                 id: 'survey',
@@ -140,7 +138,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         requiredChoice: true
                     })
                 ]
-            });        
+            });
         },
         done: function() {
             var answers;
@@ -194,7 +192,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
            zbtn.onclick = function(){
                container.innerHTML = '<br/><br/><p>You earned 100 points by responding to a player with action "Z".</p>' +
                '<p class="outline">The points earned from responding to a visit will be shown here.</p>';
-               
+
                setTimeout(function (){
                     container.innerHTML = '<br/><br/><p>You earned 50 points by visiting player 1 with action "Y".</p>' +
                     '<p class="outline">The points earned from your most recent visit to another player will be shown here.</p>';

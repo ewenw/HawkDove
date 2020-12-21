@@ -13,14 +13,14 @@
 
 "use strict";
 
-var ngc = require('nodegame-client');
-var stepRules = ngc.stepRules;
-var constants = ngc.constants;
-var publishLevels = constants.publishLevels;
+const ngc = require('nodegame-client');
+const stepRules = ngc.stepRules;
+const constants = ngc.constants;
+const publishLevels = constants.publishLevels;
 
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
-    var game;
+    let game;
 
     stager.setDefaultStepRule(stepRules.WAIT);
     stager.setOnInit(function () {
@@ -148,7 +148,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 visitorTimeup: visit.visitorTimeup,
                 visiteeTimeup: timeup
             });
-            setTimeout(function () {
+            node.timer.setTimeout(function () {
                 if (node.game.visitsQueue.length == 0) {
                     node.done();
                     respondDiv.innerHTML = '';
@@ -200,12 +200,12 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             node.game.payoffs = msg.data;
         });
 
-        
+
         // Enable scroll bar at all times
         var scrollStyle = document.createElement('style');
         scrollStyle.innerHTML = "body {overflow-y: scroll;}";
         document.head.appendChild(scrollStyle);
-        
+
     });
 
     stager.extendStep('visit', {
@@ -216,7 +216,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             var container = W.gid('container');
             container.innerHTML = '<br/><center><h2><b>You ran out of time and have been penalized.</b></h2></center>';
             //node.game.penalties++;
-            setTimeout(function () {
+           node.timer.setTimeout(function () {
                 var playerList = node.game.pl.db;
                 var index = Math.floor(Math.random() * playerList.length);
                 that.visit(Math.random() < 0.5 ? 'H' : 'D', playerList[index].id, that.symbols[index], true);
@@ -261,7 +261,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var strat = that.choices[that.strategies.indexOf(node.game.lastVisit.strategy)];
                 visitEarnings.innerHTML = 'Your visit to  <button class="circle-badge-icon btn"><b>' + symbol +
                     '</b></button> with action <button class="btn btn-secondary btn-s"><b>' + strat + '</b></button> earned <u>' + msg.data.lastRound + '</u> points.';
-                setTimeout(function () {
+               node.timer.setTimeout(function () {
                     node.game.earnings = msg.data;
                     earnings.style.display = 'block';
                     lastRoundEarnings.innerHTML = node.game.earnings.lastRound;
@@ -294,7 +294,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = '<br/><br/><center><h2><b>You ran out of time and have been penalized.</b></h2></center>';
             //node.game.penalties++;
-            setTimeout(function () {
+           node.timer.setTimeout(function () {
                 that.respond(Math.random() < 0.5 ? 'H' : 'D', true);
             }, 1300);
         },
@@ -326,7 +326,7 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                 var waitScreenDiv = W.gid('ng_waitScreen');
                 waitScreenDiv.style.opacity = 0;
                 respondDiv.innerHTML = '<br/><br/><h2><center>No visitors this round.</center></h2>';
-                setTimeout(function () {
+               node.timer.setTimeout(function () {
                     node.done();
                 }, 1000);
             }
