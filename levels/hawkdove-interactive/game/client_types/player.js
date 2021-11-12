@@ -15,8 +15,6 @@
 
 const ngc = require('nodegame-client');
 const stepRules = ngc.stepRules;
-const constants = ngc.constants;
-const publishLevels = constants.publishLevels;
 
 module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
@@ -26,8 +24,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
     stager.setOnInit(function () {
 
         // Initialize the client.
-
-        var frame;
 
         // A queue of visits to be responded to
         node.game.visitsQueue = [];
@@ -66,7 +62,8 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         // Setup page: header + frame.
         this.header = W.generateHeader();
-        frame = W.generateFrame();
+        W.generateFrame();
+
         // Add widgets.
         this.visualRounds = node.widgets.append('VisualRound', this.header);
         this.visualTimer = node.widgets.append('VisualTimer', this.header);
@@ -122,8 +119,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
         this.respond = function (strategy, timeup) {
             var visit = node.game.visitsQueue.pop();
-            var xbtn = W.gid('xbtn');
-            var ybtn = W.gid('ybtn');
             var result = W.gid('result');
             var respondDiv = W.gid('respond');
             node.game.timer.restart();
@@ -135,8 +130,9 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
                     '</u> points by responding with action <button class="btn btn-secondary btn-s"><b>' + strat + '</b></button>.</center>';
                 node.game.lastResponseEarnings += node.game.payoffs[strategy + visit.strategy];
             }
-            else
+            else {
                 node.game.lastResponseEarnings += node.game.earnings.total * -node.game.settings.PERCENT_PENALTY;
+            }
             node.say('response', 'SERVER', {
                 visitor: visit.visitor,
                 visitee: node.player.id,
@@ -210,7 +206,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('visit', {
         donebutton: false,
-        frame: 'visit.htm',
         timeup: function () {
             var that = this;
             var container = W.gid('container');
@@ -285,7 +280,6 @@ module.exports = function (treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('respond', {
         donebutton: false,
-        frame: 'respond.htm',
         timeup: function () {
             var that = this;
             var resultDiv = W.gid('result');

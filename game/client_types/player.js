@@ -16,7 +16,6 @@
 const ngc = require('nodegame-client');
 const stepRules = ngc.stepRules;
 const constants = ngc.constants;
-const publishLevels = constants.publishLevels;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
@@ -26,35 +25,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // Initialize the client.
 
-        var frame;
-
-        // Bid is valid if it is a number between 0 and 100.
-        this.isValidBid = function(n) {
-            return node.JSUS.isInt(n, -1, 101);
-        };
-
-        this.randomOffer = function(offer, submitOffer) {
-            var n;
-            n = JSUS.randomInt(-1,100);
-            offer.value = n;
-            submitOffer.click();
-        };
-
         // Setup page: header + frame.
         this.header = W.generateHeader();
-        frame = W.generateFrame();
+        W.generateFrame();
 
 
         // Add widgets.
         this.visualRound = node.widgets.append('VisualRound', this.header);
-        this.visualTimer = node.widgets.append('VisualTimer', this.header);
 
         this.backButton = document.createElement('input');
         this.backButton.setAttribute('type', 'button');
         this.backButton.setAttribute('id', 'backbutton');
         this.backButton.setAttribute('class', 'btn btn-lg btn-secondary');
         this.backButton.setAttribute('value', 'Back');
-        this.backButton.onclick = function(){
+        this.backButton.onclick = function() {
             var curStage = node.game.getCurrentGameStage();
             var stepId = curStage.step;
             if(stepId > 1){
@@ -71,31 +55,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // this.debugInfo = node.widgets.append('DebugInfo', header)
     });
 
-    stager.extendStep('welcome', {
-        frame: 'welcome.htm',
-        cb: function(){
-           // this.doneButton.button.style.visibility = "hidden";
-           // this.nextButton.style.visibility = "visible";
-        }
-    });
-
-    stager.extendStep('instructions', {
-        frame: 'instructions.htm',
-        cb: function(){
-            //this.doneButton.button.style.visibility = "hidden";
-            //this.nextButton.style.visibility = "visible";
-        }
-    });
-
-    stager.extendStep('survey',
-    {
-        frame: 'survey.htm',
-        cb: function(){
-            var root = document.body;
+    stager.extendStep('survey', {
+        cb: function() {
             var widgetsDiv = W.gid('widgets');
             var w = node.widgets;
-           // this.nextButton.style.visibility = "hidden";
-           // this.doneButton.button.style.visibility = "visible";
+
             this.survey = node.widgets.append('ChoiceManager', widgetsDiv, {
                 id: 'survey',
                 title: false,
@@ -154,8 +118,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('practice', {
         donebutton: false,
-        frame: 'practice.htm',
-        cb: function(){
+        cb: function() {
             var symbols = ['3', '4', '1', '2', '6', '5'];
             var neighborsDiv = W.gid('players');
             var ybtn = W.gid('ybtn');
@@ -177,7 +140,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
             this.neighbors[2].setAttribute('data-toggle', 'modal');
             this.neighbors[2].setAttribute('data-target', '#visit');
-            ybtn.onclick = function(){
+            ybtn.onclick = function() {
                 node.done();
             };
         }
@@ -185,15 +148,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('practice_respond', {
         donebutton: false,
-        frame: 'practice_respond.htm',
-        cb: function(){
+        cb: function() {
            var zbtn = W.gid('zbtn');
            var container = W.gid('container');
-           zbtn.onclick = function(){
+           zbtn.onclick = function() {
                container.innerHTML = '<br/><br/><p>You earned 100 points by responding to a player with action "Z".</p>' +
                '<p class="outline">The points earned from responding to a visit will be shown here.</p>';
 
-               setTimeout(function (){
+               setTimeout(function () {
                     container.innerHTML = '<br/><br/><p>You earned 50 points by visiting player 1 with action "Y".</p>' +
                     '<p class="outline">The points earned from your most recent visit to another player will be shown here.</p>';
                     W.gid('donebutton').disabled = false;
@@ -205,7 +167,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('practice_end', {
         donebutton: true,
         frame: 'practice_over.htm',
-        done: function(){
+        done: function() {
             node.say('practice-done');
         }
     });

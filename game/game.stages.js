@@ -10,6 +10,7 @@
  */
 
 module.exports = function (stager, settings) {
+
     if (settings.TUTORIAL) {
         stager
             .stage('tutorial')
@@ -33,8 +34,9 @@ module.exports = function (stager, settings) {
             .stage('end')
             .step('practice_end')
             .gameover();
+
         stager.skip('tutorial');
         stager.skip('game');
     }
-    return stager.getState();
+
 };

@@ -20,51 +20,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager = ngc.getStager(game.plot);
 
-    stager.extendAllSteps(function(o) {
-        var role;
-        if (o.roles) {
-            o._roles = {};
-            for (role in o.roles) {
-                if (o.roles.hasOwnProperty(role)) {
-                    // Copy only cb property.
-                    o._roles[role] = o.roles[role].cb;
-                    // Make a new one.
-                    o.roles[role].cb = function() {
-                        var _cb, stepObj, id;
-                        stepObj = this.getCurrentStepObj();
-                        id = stepObj.id
+    stager.setOnInit(function() {
+        // Call the original init function, if found.
+        let origInit = node.game.getProperty('origInit');
+        if (origInit) origInit.call(this);
 
-                        _cb = stepObj._roles[this.role];
-                        _cb.call(this);
+        // TODO: implement it.
 
-                        if ((this.role === 'DICTATOR' && id === 'game')) {
-                            node.on('PLAYING', function() {
-                                node.timer.randomExec(function() {
-                                    node.game.timer.doTimeUp();
-                                });
-                            });
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            o._cb = o.cb;
-            o.cb = function() {
-                var _cb, stepObj, id;
-                stepObj = this.getCurrentStepObj();
-                id = stepObj.id
+        // Auto play, depedending on the step.
+        node.on('PLAYING', function() {
+            node.timer.setTimeout(function() {
+                node.timer.random.timeup();
+            }, 2000);
+        });
 
-                _cb = stepObj._cb;
-                _cb.call(this);
-
-                // TODO: Adapt to specific steps.
-                // if (id === XXX) ...
-
-                node.timer.randomDone(2000);
-            };
-        }
-        return o;
     });
 
     game.plot = stager.getState();
