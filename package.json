@@ -4,9 +4,9 @@
     "description": "The HawkDove game on a dynamic network.",
     "version": "4",
     "card": {
-        "description": "The HawkDove game on a dynamic network (BETA)",
+        "description": "The HawkDove game on a dynamic network",
         "url": "https://github.com/ewenw/hawkdove",
-        "publication": "https://arxiv.org/abs/1802.08298",
+        "publication": "https://royalsocietypublishing.org/doi/10.1098/rsif.2017.0835",
         "icon": "loop"
     },
     "author": {
